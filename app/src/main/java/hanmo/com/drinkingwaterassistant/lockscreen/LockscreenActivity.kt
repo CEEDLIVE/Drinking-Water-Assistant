@@ -11,6 +11,8 @@ import android.view.WindowManager
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLock
+import hanmo.com.drinkingwaterassistant.realm.RealmHelper
+import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_lockscreen.*
 
@@ -58,16 +60,24 @@ class LockscreenActivity : AppCompatActivity() {
         compositeDisposable = CompositeDisposable()
         val intentFilter = IntentFilter()
         intentFilter.addAction(Intent.ACTION_TIME_TICK)
-        intentFilter.addAction(Intent.ACTION_TIME_CHANGED)
 
         registerReceiver(mTimeReceiver, intentFilter)
         setUnlock()
         setWave()
+        setGoals()
         DWApplication.lockScreenShow = true
     }
 
+    private fun setGoals() {
+        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
+        goals?.let {
+            val txtGoal = it.goal.toString() + "ml"
+            lcGoals.text = txtGoal
+        }
+    }
+
     private fun setWave() {
-        waveLottie.speed = 2f
+        waveLottie.speed = 1.5f
     }
 
     private fun setUnlock() {

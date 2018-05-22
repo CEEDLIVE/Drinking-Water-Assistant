@@ -2,6 +2,18 @@
 
 buildscript {
     ext.kotlin_version = '1.2.41'
+    ext.RXBINDING_LIBRARY_VERSION = '2.1.1'
+    ext.RXJAVA_LIBRARY_VERSION = '2.1.4'
+    ext.RXANDROID_LIBRARY_VERSION = '2.0.2'
+    ext.REALM_LIBRARY_VERSION = '5.0.0'
+    ext.MOCKITO_LIBRARY_VERSION = '1.5.0'
+    ext.anko_version='0.10.3'
+    ext.RETROFIT_VERSION = '2.3.0'
+    ext.OKHTTP_VERSION = '3.9.1'
+    ext.SUPPORT_VERSION = '27.1.1'
+    ext.anko_version = '0.10.3'
+    ext.LOTTIE = '2.5.4'
+
     repositories {
         google()
         jcenter()
@@ -9,7 +21,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath "io.realm:realm-gradle-plugin:$REALM_LIBRARY_VERSION"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

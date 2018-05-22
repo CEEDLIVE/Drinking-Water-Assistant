@@ -1,7 +1,6 @@
 package hanmo.com.drinkingwaterassistant.lockscreen.util
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation

@@ -15,9 +15,6 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 class LockScreenService : Service() {
 
     private var mServiceStartId : Int? = null
-    private lateinit var context: Context
-    private lateinit var mNM: NotificationManager
-    private var currentTime : Int = 0
 
     private val mLockscreenReceiver = object : BroadcastReceiver() {
 
@@ -45,8 +42,6 @@ class LockScreenService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        context = this
-        mNM = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -73,7 +68,7 @@ class LockScreenService : Service() {
     }
 
     private fun startLockScreenActivity() {
-        val startLockScreenActIntent = Intent(context, LockscreenActivity::class.java)
+        val startLockScreenActIntent = Intent(this@LockScreenService, LockscreenActivity::class.java)
         startLockScreenActIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(startLockScreenActIntent)
     }

@@ -7,7 +7,7 @@ import hanmo.com.drinkingwaterassistant.BuildConfig
  * Created by hanmo on 2018. 5. 22..
  */
 object DLog {
-    private val TAG = "DrinkingWater"
+    private const val TAG = "DrinkingWater"
 
     /**
      * Log Level Error
@@ -54,7 +54,7 @@ object DLog {
         }
     }
 
-    fun buildLogMsg(message: String): String {
+    private fun buildLogMsg(message: String): String {
         val ste = Thread.currentThread().stackTrace[4]
         val sb = StringBuilder()
         sb.append("[")

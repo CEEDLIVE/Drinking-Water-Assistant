@@ -42,6 +42,7 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
 
+    @Suppress("DEPRECATION")
     override fun onAttachedToWindow() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD

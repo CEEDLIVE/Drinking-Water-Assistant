@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private fun setSwitch() {
         Lockscreen.instance.init(this@MainActivity)
 
-        lockscreenSwitch.setOnCheckedChangeListener({ buttonView, isChecked ->
+        lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
             if (isChecked) {
                 Lockscreen.instance.active()
             } else {

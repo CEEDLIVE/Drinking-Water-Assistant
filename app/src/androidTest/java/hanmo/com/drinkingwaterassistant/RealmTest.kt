@@ -43,6 +43,7 @@ class RealmTest {
         val goals = Goals()
         goals.id = 1
         goals.goal = 100
+        goals.today = 0
         goals.hasLockScreen = true
 
         realm.executeTransaction {
@@ -53,6 +54,7 @@ class RealmTest {
         assertNotNull(testGoals)
         testGoals?.let {
             assertEquals(1, it.id)
+            assertEquals(0, it.today)
             assertEquals(100, it.goal)
             assertEquals(true, it.hasLockScreen)
         }

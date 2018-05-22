@@ -8,13 +8,17 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
+import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
+import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLock
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_lockscreen.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by hanmo on 2018. 5. 22..
@@ -65,7 +69,26 @@ class LockscreenActivity : AppCompatActivity() {
         setUnlock()
         setWave()
         setGoals()
+        setToday()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setToday() {
+        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
+        goals?.let {
+            Const.todayWater = it.today
+            val txtGoal = it.today.toString() + "ml"
+            todayWater.text = txtGoal
+
+            plusButton.clicks()
+                    .debounce(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .subscribe {
+                        Const.todayWater = Const.todayWater?.plus(100)
+                        val txtGoall = Const.todayWater.toString() + "ml"
+                        todayWater.text = txtGoall
+                    }
+                    .apply { compositeDisposable.add(this) }
+        }
     }
 
     private fun setGoals() {
@@ -98,6 +121,7 @@ class LockscreenActivity : AppCompatActivity() {
         super.onPause()
         compositeDisposable.clear()
         unregisterReceiver(mTimeReceiver)
+        RealmHelper.instance.updateTodayWater(Const.todayWater)
         DWApplication.lockScreenShow = false
     }
 

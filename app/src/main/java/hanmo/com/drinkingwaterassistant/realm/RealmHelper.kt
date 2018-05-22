@@ -35,6 +35,7 @@ class RealmHelper {
         val goals = Goals()
         goals.id = 1
         goals.goal = 0
+        goals.today = 0
         goals.hasLockScreen = true
         addData(goals)
     }
@@ -48,11 +49,20 @@ class RealmHelper {
         }
     }
 
-    fun updateHasLockScreen(hasLockScreen: Boolean) {
+    fun updateHasLockScreen(hasLockScreen: Boolean?) {
         val goals = queryFirst(Goals::class.java)
         goals?.let {
             realm.executeTransaction {
                 goals.hasLockScreen = hasLockScreen
+            }
+        }
+    }
+
+    fun updateTodayWater(todayWater: Int?) {
+        val goals = queryFirst(Goals::class.java)
+        goals?.let {
+            realm.executeTransaction {
+                goals.today = todayWater
             }
         }
     }

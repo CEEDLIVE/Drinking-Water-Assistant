@@ -40,6 +40,7 @@
             android:layout_height="48dp" />
         <EditText
             android:id="@+id/todayGoal"
+            android:hint="0"
             android:layout_width="match_parent"
             android:layout_height="48dp" />
     </LinearLayout>

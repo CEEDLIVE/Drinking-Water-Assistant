@@ -2,6 +2,7 @@ package hanmo.com.drinkingwaterassistant
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
@@ -27,7 +28,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButton() {
         confirmButton.clicks()
-                .throttleFirst(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .doOnNext {
+                    Snackbar.make(confirmButton, "입력 완료!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                }
                 .subscribe {
                     RealmHelper.instance.updateGoal(todayGoal.text.toString().toInt())
                 }
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         Lockscreen.instance.init(this@MainActivity)
         val goals = RealmHelper.instance.queryFirst(Goals::class.java)
         goals?.let {
+            lockscreenSwitch.isChecked = it.hasLockScreen!!
             if (it.hasLockScreen!!) {
                 Lockscreen.instance.active()
             } else {

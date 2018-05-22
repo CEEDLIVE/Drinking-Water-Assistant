@@ -16,6 +16,9 @@ open class Goals : RealmObject() {
     open var goal : Int? = null
 
     @Required
+    open var today : Int? = null
+
+    @Required
     open var hasLockScreen : Boolean? = null
 
 }

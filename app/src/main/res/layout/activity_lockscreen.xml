@@ -2,34 +2,33 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/space"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/waveLottie"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="mild_waves.json"
-        app:lottie_loop="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <View
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/lockScreenView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="#00000000"
+        android:background="@drawable/space"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/waveLottie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="mild_waves.json"
+            app:lottie_loop="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -11,13 +11,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
         android:checked="false"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:thumb="@drawable/switch_thumb_custom"
         android:track="@drawable/switch_track_custom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:text="@string/todayGoal"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp" />
+        <EditText
+            android:id="@+id/todayGoal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:text="check!!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package hanmo.com.drinkingwaterassistant.lockscreen.util
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -9,7 +10,7 @@ import android.view.animation.TranslateAnimation
 /**
  * Created by hanmo on 2018. 5. 22..
  */
-open class UnLock(val context: Context, val lockScreenView: View) : View.OnTouchListener {
+open class UnLock(val context: Context, val lockScreenView: ConstraintLayout) : View.OnTouchListener {
 
     private var firstTouchX = 0f
     private var layoutPrevX = 0f

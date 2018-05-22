@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Drinking Water Assistant</string>
+    <string name="todayGoal">오늘 목표 :</string>
 </resources>

@@ -62,7 +62,12 @@ class LockscreenActivity : AppCompatActivity() {
 
         registerReceiver(mTimeReceiver, intentFilter)
         setUnlock()
+        setWave()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setWave() {
+        waveLottie.speed = 2f
     }
 
     private fun setUnlock() {

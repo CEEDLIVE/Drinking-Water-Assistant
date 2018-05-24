@@ -9,12 +9,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import com.jakewharton.rxbinding2.view.clicks
+import com.triggertrap.seekarc.SeekArc
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLock
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.util.DLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_lockscreen.*
@@ -66,11 +68,16 @@ class LockscreenActivity : AppCompatActivity() {
         intentFilter.addAction(Intent.ACTION_TIME_TICK)
 
         registerReceiver(mTimeReceiver, intentFilter)
+        setWaterProgress()
         setUnlock()
         setWave()
         setGoals()
         setToday()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setWaterProgress() {
+        waterProgress.progress = 40
     }
 
     private fun setToday() {
@@ -104,6 +111,7 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     private fun setUnlock() {
+        lockScreenView.x = 0f
         lockScreenView.setOnTouchListener(object : UnLock(this, lockScreenView) {
             override fun onFinish() {
                 finish()

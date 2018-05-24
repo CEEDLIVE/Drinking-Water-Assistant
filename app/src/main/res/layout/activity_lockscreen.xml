@@ -17,6 +17,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.triggertrap.seekarc.SeekArc
+            xmlns:seekarc="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/waterProgress"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:padding="30dp"
+            seekarc:rotation="360"
+            seekarc:startAngle="0"
+            seekarc:sweepAngle="360"
+            seekarc:touchInside="false"
+            seekarc:max="100"
+            seekarc:progress="0"
+            seekarc:progressColor="#7896CF"
+            seekarc:progressWidth="9dp"
+            seekarc:arcWidth="9dp"
+            seekarc:arcColor="#969DAC"
+            app:thumb="@drawable/ic_aaaa"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <LinearLayout
             android:id="@+id/goalForm"
             android:layout_width="wrap_content"

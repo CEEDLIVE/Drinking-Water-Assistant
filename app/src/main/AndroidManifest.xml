@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="hanmo.com.drinkingwaterassistant">
 
     <!--잠금화면 퍼미션-->
@@ -15,6 +16,7 @@
     <application
         android:name=".DWApplication"
         android:allowBackup="true"
+        tools:replace="android:allowBackup, icon, label"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"

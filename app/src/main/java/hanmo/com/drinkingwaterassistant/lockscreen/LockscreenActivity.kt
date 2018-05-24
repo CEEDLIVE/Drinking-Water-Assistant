@@ -77,7 +77,11 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     private fun setWaterProgress() {
-        waterProgress.progress = 40
+        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
+        waterProgress.maxProgress = goals?.goal!!
+        waterProgress.setCurrentProgress(goals.today!!)
+
+
     }
 
     private fun setToday() {
@@ -90,6 +94,10 @@ class LockscreenActivity : AppCompatActivity() {
             plusButton.clicks()
                     .debounce(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .subscribe {
+
+                        val dd = Const.todayWater?.plus(100)
+                        waterProgress.setProgress(Const.todayWater!!, dd!!)
+
                         Const.todayWater = Const.todayWater?.plus(100)
                         val txtGoall = Const.todayWater.toString() + "ml"
                         todayWater.text = txtGoall

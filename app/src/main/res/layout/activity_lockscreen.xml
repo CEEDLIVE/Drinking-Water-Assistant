@@ -17,24 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.triggertrap.seekarc.SeekArc
-            xmlns:seekarc="http://schemas.android.com/apk/res-auto"
+        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
             android:id="@+id/waterProgress"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            xmlns:progress="http://schemas.android.com/apk/res-auto"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
             android:layout_gravity="center"
-            android:padding="30dp"
-            seekarc:rotation="360"
-            seekarc:startAngle="0"
-            seekarc:sweepAngle="360"
-            seekarc:touchInside="false"
-            seekarc:max="100"
-            seekarc:progress="0"
-            seekarc:progressColor="#7896CF"
-            seekarc:progressWidth="9dp"
-            seekarc:arcWidth="9dp"
-            seekarc:arcColor="#969DAC"
-            app:thumb="@drawable/ic_aaaa"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            progress:progressColor="#7896CF"
+            progress:progressBackgroundColor="#ffffff"
+            progress:progressStrokeWidth="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +44,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="오늘 목표 : "
                 android:textColor="@color/whiteColor"

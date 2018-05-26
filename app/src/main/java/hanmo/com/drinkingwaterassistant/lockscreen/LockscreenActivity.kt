@@ -5,22 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import com.jakewharton.rxbinding2.view.clicks
-import com.triggertrap.seekarc.SeekArc
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLock
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
-import hanmo.com.drinkingwaterassistant.util.DLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_lockscreen.*
 import java.util.concurrent.TimeUnit
+import android.os.SystemClock
+import hanmo.com.drinkingwaterassistant.util.DLog
+
 
 /**
  * Created by hanmo on 2018. 5. 22..
@@ -78,27 +80,50 @@ class LockscreenActivity : AppCompatActivity() {
 
     private fun setWaterProgress() {
         val goals = RealmHelper.instance.queryFirst(Goals::class.java)
-        waterProgress.maxProgress = goals?.goal!!
-        waterProgress.setCurrentProgress(goals.today!!)
-
+        goals?.let {
+            with(waterProgress) {
+                setProgress(it.today!!, it.goal!!)
+                val percent = 100 * (it.today!!.toDouble() / it.goal!!.toDouble())
+                percentLoop(0.0, percent)
+            }
+        }
 
     }
+
+    private fun percentLoop(current : Double, percent: Double) {
+        val mHandler = Handler()
+        var k = current
+        Thread(Runnable {
+            while (k < percent) {
+                k += 1.0
+                SystemClock.sleep(10L)
+                mHandler.post {
+                    val percentTxt = Math.floor(k).toInt().toString() + "%"
+                    waterPercent.text = percentTxt
+                }
+            }
+            Const.waterPercent = Math.floor(k).toInt()
+        }).start()
+    }
+
 
     private fun setToday() {
         val goals = RealmHelper.instance.queryFirst(Goals::class.java)
         goals?.let {
-            Const.todayWater = it.today
+            Const.todayWater = it.today!!
+            Const.goal = it.goal!!
             val txtGoal = it.today.toString() + "ml"
             todayWater.text = txtGoal
 
             plusButton.clicks()
-                    .debounce(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .debounce(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .subscribe {
+                        Const.todayWater = Const.todayWater.plus(100)
 
-                        val dd = Const.todayWater?.plus(100)
-                        waterProgress.setProgress(Const.todayWater!!, dd!!)
+                        waterProgress.setProgress(Const.todayWater, Const.goal)
+                        val percent = 100 * (Const.todayWater.toDouble() / Const.goal.toDouble())
+                        percentLoop(Const.waterPercent.toDouble(), percent)
 
-                        Const.todayWater = Const.todayWater?.plus(100)
                         val txtGoall = Const.todayWater.toString() + "ml"
                         todayWater.text = txtGoall
                     }

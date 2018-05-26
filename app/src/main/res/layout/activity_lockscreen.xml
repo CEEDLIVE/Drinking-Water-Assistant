@@ -14,24 +14,52 @@
         android:background="@drawable/space"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
-        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-            android:id="@+id/waterProgress"
-            xmlns:progress="http://schemas.android.com/apk/res-auto"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            progress:progressColor="#7896CF"
-            progress:progressBackgroundColor="#ffffff"
-            progress:progressStrokeWidth="3dp"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/waveLottie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="mild_waves.json"
+            app:lottie_loop="true" />
+
+        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+            xmlns:progress="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/waterProgress"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            progress:progressBackgroundColor="#ffffff"
+            progress:progressColor="#7896CF"
+            progress:progressStrokeWidth="3dp"
+            progress:textColor="@android:color/transparent" />
+
+        <TextView
+            android:id="@+id/waterPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="20%"
+            android:textColor="#ffffff"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toTopOf="@id/goalForm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/goalForm"
@@ -40,7 +68,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,9 +91,9 @@
             android:id="@+id/todayWater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:textColor="#5F8EB6"
             android:fontFamily="sans-serif-smallcaps"
+            android:textColor="#5F8EB6"
+            android:textSize="30dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,24 +103,11 @@
             android:id="@+id/plusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_aaaa"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/todayWater"/>
-
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/waveLottie"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="mild_waves.json"
-            app:lottie_loop="true" />
+            android:layout_marginTop="216dp"
+            app:layout_constraintEnd_toEndOf="@+id/waterProgress"
+            app:layout_constraintStart_toStartOf="@+id/waterProgress"
+            app:layout_constraintTop_toTopOf="@+id/waterProgress"
+            app:srcCompat="@drawable/ic_aaaa" />
 
     </android.support.constraint.ConstraintLayout>
 

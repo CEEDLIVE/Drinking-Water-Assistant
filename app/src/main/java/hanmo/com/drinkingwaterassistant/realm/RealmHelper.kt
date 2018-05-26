@@ -61,7 +61,7 @@ class RealmHelper {
     fun updateTodayWater(todayWater: Int?) {
         val goals = queryFirst(Goals::class.java)
         goals?.let {
-            realm.executeTransaction {
+            realm.executeTransactionAsync {
                 goals.today = todayWater
             }
         }

@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_lockscreen.*
 import java.util.concurrent.TimeUnit
 import android.os.SystemClock
 import hanmo.com.drinkingwaterassistant.util.DLog
+import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
 
 
 /**
@@ -116,8 +118,8 @@ class LockscreenActivity : AppCompatActivity() {
             todayWater.text = txtGoal
 
             plusButton.clicks()
-                    .debounce(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .subscribe {
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext {
                         Const.todayWater = Const.todayWater.plus(100)
 
                         waterProgress.setProgress(Const.todayWater, Const.goal)
@@ -126,6 +128,17 @@ class LockscreenActivity : AppCompatActivity() {
 
                         val txtGoall = Const.todayWater.toString() + "ml"
                         todayWater.text = txtGoall
+                    }
+                    .throttleFirst(1, TimeUnit.SECONDS)
+                    .observeOn(Schedulers.io())
+                    .subscribe {
+                        val realm = Realm.getDefaultInstance()
+                        val goals = realm.where(Goals::class.java).findFirst()
+                        goals?.let {
+                            realm.executeTransaction {
+                                goals.today = Const.todayWater
+                            }
+                        }
                     }
                     .apply { compositeDisposable.add(this) }
         }
@@ -162,7 +175,6 @@ class LockscreenActivity : AppCompatActivity() {
         super.onPause()
         compositeDisposable.clear()
         unregisterReceiver(mTimeReceiver)
-        RealmHelper.instance.updateTodayWater(Const.todayWater)
         DWApplication.lockScreenShow = false
     }
 

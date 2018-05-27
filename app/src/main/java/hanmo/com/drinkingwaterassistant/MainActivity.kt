@@ -22,8 +22,16 @@ class MainActivity : AppCompatActivity() {
 
         compositeDisposable = CompositeDisposable()
 
+        setGoals()
         setSwitch()
         setButton()
+    }
+
+    private fun setGoals() {
+        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
+        goals?.let {
+            todayGoal.setText(it.goal!!)
+        }
     }
 
     private fun setButton() {
@@ -34,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 .subscribe {
                     RealmHelper.instance.updateGoal(todayGoal.text.toString().toInt())
+                    todayGoal.text.clear()
                 }
                 .apply { compositeDisposable.add(this) }
     }

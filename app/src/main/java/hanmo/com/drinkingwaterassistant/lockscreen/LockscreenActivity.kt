@@ -24,6 +24,7 @@ import android.os.SystemClock
 import hanmo.com.drinkingwaterassistant.util.DLog
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import java.util.*
 
 
 /**
@@ -39,7 +40,7 @@ class LockscreenActivity : AppCompatActivity() {
 
             when(intent?.action) {
                 Intent.ACTION_TIME_TICK -> {
-
+                    setTime()
                 }
             }
 
@@ -77,7 +78,29 @@ class LockscreenActivity : AppCompatActivity() {
         setWave()
         setGoals()
         setToday()
+        setTime()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setTime() {
+
+        val c = Calendar.getInstance()
+        val cMonth = c.get(Calendar.MONTH)
+        val month = cMonth + 1
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        val week = c.get(Calendar.DAY_OF_WEEK)
+        var hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+        val UntilTime = StringBuilder()
+        val targetText = StringBuilder()
+
+        val leftHour = 24 - hour
+
+        if (minute < 10) {
+            lockscreenTime.text = "$hour:0$minute"
+        } else {
+            lockscreenTime.text = "$hour:$minute"
+        }
     }
 
     private fun setWaterProgress() {

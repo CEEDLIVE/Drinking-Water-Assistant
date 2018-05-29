@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun setGoals() {
         val goals = RealmHelper.instance.queryFirst(Goals::class.java)
         goals?.let {
-            todayGoal.setText(it.goal!!)
+            todayGoal.setText(it.goal.toString())
         }
     }
 

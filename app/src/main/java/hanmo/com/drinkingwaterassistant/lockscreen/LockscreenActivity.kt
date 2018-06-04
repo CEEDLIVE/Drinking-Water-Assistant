@@ -21,6 +21,11 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_lockscreen.*
 import java.util.concurrent.TimeUnit
 import android.os.SystemClock
+import android.support.design.widget.FloatingActionButton
+import android.widget.ImageView
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton.*
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import hanmo.com.drinkingwaterassistant.util.DLog
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -79,7 +84,26 @@ class LockscreenActivity : AppCompatActivity() {
         setGoals()
         setToday()
         setTime()
+        setWaterSetting()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setWaterSetting() {
+
+        val fabIconNew = ImageView(this@LockscreenActivity)
+        fabIconNew.setImageDrawable(resources.getDrawable(R.drawable.ic_water_setting))
+        val fab = com.oguzdev.circularfloatingactionmenu.library
+                .FloatingActionButton.Builder(this@LockscreenActivity)
+                .setContentView(fabIconNew).build()
+
+        val itemBuilder = SubActionButton.Builder(this@LockscreenActivity)
+        val itemIcon = ImageView(this@LockscreenActivity)
+        itemIcon.setImageDrawable(resources.getDrawable(R.drawable.ic_aaaa))
+        val menu1 = itemBuilder.setContentView(itemIcon).build()
+
+        val actionMenu = FloatingActionMenu.Builder(this@LockscreenActivity).addSubActionView(menu1).attachTo(fab).build()
+        
+
     }
 
     private fun setTime() {

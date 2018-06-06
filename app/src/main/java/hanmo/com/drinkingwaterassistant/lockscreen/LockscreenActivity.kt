@@ -102,7 +102,7 @@ class LockscreenActivity : AppCompatActivity() {
         val menu1 = itemBuilder.setContentView(itemIcon).build()
 
         val actionMenu = FloatingActionMenu.Builder(this@LockscreenActivity).addSubActionView(menu1).attachTo(fab).build()
-        
+
 
     }
 

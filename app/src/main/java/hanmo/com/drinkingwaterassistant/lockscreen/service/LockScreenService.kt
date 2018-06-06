@@ -70,6 +70,7 @@ class LockScreenService : Service() {
     private fun startLockScreenActivity() {
         val startLockScreenActIntent = Intent(this@LockScreenService, LockscreenActivity::class.java)
         startLockScreenActIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startLockScreenActIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         startActivity(startLockScreenActIntent)
     }
 }

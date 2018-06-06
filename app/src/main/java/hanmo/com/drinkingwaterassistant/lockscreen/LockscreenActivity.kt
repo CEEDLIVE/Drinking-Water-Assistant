@@ -26,9 +26,11 @@ import android.widget.ImageView
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton.*
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
+import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreenMenuAdapter
 import hanmo.com.drinkingwaterassistant.util.DLog
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 import java.util.*
 
 
@@ -49,6 +51,28 @@ class LockscreenActivity : AppCompatActivity() {
                 }
             }
 
+        }
+
+    }
+
+    private val onItemClickListener = object : LockScreenMenuAdapter.OnItemClickListener {
+        override fun onItemClick(view: View, position: Int) {
+            val menu = view.menuTitle.text.toString()
+            when (menu) {
+                "menu 1" -> {
+
+                }
+                "menu 2" -> {
+
+                }
+                "menu 3" -> {
+
+                }
+                "menu 4" -> {
+
+                }
+            }
+            //lcMenuList.visibility = View.GONE
         }
 
     }
@@ -84,8 +108,13 @@ class LockscreenActivity : AppCompatActivity() {
         setGoals()
         setToday()
         setTime()
+        setMenu()
         setWaterSetting()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setMenu() {
+
     }
 
     private fun setWaterSetting() {

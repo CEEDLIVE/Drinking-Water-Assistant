@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_lockscreen.*
 import java.util.concurrent.TimeUnit
 import android.os.SystemClock
 import android.support.design.widget.FloatingActionButton
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton.*
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
@@ -31,6 +32,7 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 
@@ -60,19 +62,19 @@ class LockscreenActivity : AppCompatActivity() {
             val menu = view.menuTitle.text.toString()
             when (menu) {
                 "menu 1" -> {
-
+                    toast("메뉴 1")
                 }
                 "menu 2" -> {
-
+                    toast("메뉴 2")
                 }
                 "menu 3" -> {
-
+                    toast("메뉴 3")
                 }
                 "menu 4" -> {
-
+                    toast("메뉴 4")
                 }
             }
-            //lcMenuList.visibility = View.GONE
+            lcMenuList.visibility = View.GONE
         }
 
     }
@@ -114,7 +116,36 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     private fun setMenu() {
+        lcMenuList.visibility = View.GONE
 
+        menuButton.clicks()
+                .throttleFirst(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (lcMenuList.visibility == View.GONE) {
+                        lcMenuList.visibility = View.VISIBLE
+                        getMenuList()
+                    } else {
+                        lcMenuList.visibility = View.GONE
+                    }
+                }.apply { compositeDisposable.add(this) }
+    }
+
+
+    private fun getMenuList() {
+
+        val menuList = arrayOf("menu 1", "menu 2", "menu 3", "menu 4")
+
+        val resId = R.anim.layout_animation_fall_down
+        val animation = AnimationUtils.loadLayoutAnimation(applicationContext, resId)
+
+        with(lcMenuList) {
+            layoutAnimation = animation
+            setHasFixedSize(true)
+            layoutManager = android.support.v7.widget.LinearLayoutManager(applicationContext)
+            val menuAdapter = LockScreenMenuAdapter(menuList)
+            menuAdapter.setOnItemClickListener(onItemClickListener)
+            adapter = menuAdapter
+        }
     }
 
     private fun setWaterSetting() {
@@ -254,6 +285,7 @@ class LockscreenActivity : AppCompatActivity() {
             }
 
             override fun onTouched() {
+                lcMenuList.visibility = View.GONE
                 super.onTouched()
             }
         })
@@ -268,7 +300,7 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-
+        lcMenuList.visibility = View.GONE
     }
 }
 

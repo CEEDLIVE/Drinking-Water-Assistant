@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -31,14 +32,28 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 import org.jetbrains.anko.toast
 import java.util.*
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper
+import com.wangjie.rapidfloatingactionbutton.util.RFABTextUtil.dip2px
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList
+import kotlin.collections.ArrayList
 
 
 /**
  * Created by hanmo on 2018. 5. 22..
  */
-class LockscreenActivity : AppCompatActivity() {
+class LockscreenActivity : AppCompatActivity(), RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener<Int> {
+    override fun onRFACItemIconClick(position: Int, item: RFACLabelItem<Int>?) {
+        rfabHelper.toggleContent()
+    }
+
+    override fun onRFACItemLabelClick(position: Int, item: RFACLabelItem<Int>?) {
+        rfabHelper.toggleContent()
+    }
 
     private lateinit var compositeDisposable: CompositeDisposable
+
+    lateinit var rfabHelper : RapidFloatingActionHelper
 
     private val mTimeReceiver = object : BroadcastReceiver() {
 
@@ -147,6 +162,52 @@ class LockscreenActivity : AppCompatActivity() {
 
     private fun setWaterSetting() {
 
+        val rfaContent = RapidFloatingActionContentLabelList(this@LockscreenActivity)
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this)
+        val items = ArrayList<RFACLabelItem<Int>>()
+        items.add(RFACLabelItem<Int>()
+                .setLabel("Github: wangjiegulu")
+                .setResId(R.drawable.ic_aaaa)
+                .setIconNormalColor(-0x27bceb)
+                .setIconPressedColor(-0x40c9f4)
+                .setWrapper(0)
+        )
+        items.add(RFACLabelItem<Int>()
+                .setLabel("tiantian.china.2@gmail.com")
+                .setResId(R.drawable.ic_aaaa)
+                .setIconNormalColor(-0xb1cbd2)
+                .setIconPressedColor(-0xc1d8dd)
+                .setLabelColor(Color.WHITE)
+                .setLabelSizeSp(14)
+                .setWrapper(1)
+        )
+        items.add(RFACLabelItem<Int>()
+                .setLabel("WangJie")
+                .setResId(R.drawable.ic_aaaa)
+                .setIconNormalColor(-0xfa9100)
+                .setIconPressedColor(-0xf2acfe)
+                .setLabelColor(-0xfa9100)
+                .setWrapper(2)
+        )
+        items.add(RFACLabelItem<Int>()
+                .setLabel("Compose")
+                .setResId(R.drawable.ic_aaaa)
+                .setIconNormalColor(-0xd7ca6d)
+                .setIconPressedColor(-0xe5dc82)
+                .setLabelColor(-0xd7ca6d)
+                .setWrapper(3)
+        )
+        rfaContent
+                .setItems(items as List<RFACLabelItem<Int>>)
+                .setIconShadowRadius(17)
+                .setIconShadowColor(-0x777778)
+                .setIconShadowDy(20)
+        rfabHelper = RapidFloatingActionHelper(
+                this@LockscreenActivity,
+                activity_main_rfal,
+                activity_main_rfab,
+                rfaContent
+        ).build()
 
     }
 

@@ -160,6 +160,36 @@
 
         </android.support.v7.widget.RecyclerView>
 
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+            xmlns:rfal="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/activity_main_rfal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/menuButton"
+            app:layout_constraintStart_toStartOf="parent"
+            rfal:rfal_frame_alpha="0.7"
+            rfal:rfal_frame_color="#ffffff">
+
+
+            <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/activity_main_rfab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:padding="8dp"
+                rfab:rfab_color_normal="@android:color/transparent"
+                rfab:rfab_color_pressed="#ffffff"
+                rfab:rfab_drawable="@drawable/ic_water_setting"
+                rfab:rfab_shadow_color="#999999"
+                rfab:rfab_shadow_dx="0dp"
+                rfab:rfab_shadow_dy="5dp"
+                rfab:rfab_shadow_radius="7dp"
+                rfab:rfab_size="mini" />
+        </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

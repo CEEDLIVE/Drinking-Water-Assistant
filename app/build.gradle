@@ -72,9 +72,8 @@ dependencies {
     //CircularProgressIndicator
     implementation 'com.github.antonKozyriatskyi:CircularProgressIndicator:1.0.5'
 
-    //FAB
-    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
-
+    //FAB Library
+    implementation 'com.github.wangjiegulu:rfab:2.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

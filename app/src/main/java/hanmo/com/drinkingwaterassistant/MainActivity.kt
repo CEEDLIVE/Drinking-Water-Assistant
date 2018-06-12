@@ -2,15 +2,12 @@ package hanmo.com.drinkingwaterassistant
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
-import io.reactivex.android.schedulers.AndroidSchedulers
+import hanmo.com.drinkingwaterassistant.util.DLog
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,29 +19,22 @@ class MainActivity : AppCompatActivity() {
 
         compositeDisposable = CompositeDisposable()
 
-        setGoals()
+        initView()
         setSwitch()
-        setButton()
     }
 
-    private fun setGoals() {
+    private fun initView() {
         val goals = RealmHelper.instance.queryFirst(Goals::class.java)
         goals?.let {
-            todayGoal.setText(it.goal.toString())
+            DLog.e(it.toString())
+            it.goal?.let {
+                if (it == 0) {
+                    val myTargetIntent = MyTargetWaterActivity.newIntent(this@MainActivity)
+                    startActivity(myTargetIntent)
+                }
+           }
         }
-    }
 
-    private fun setButton() {
-        confirmButton.clicks()
-                .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .doOnNext {
-                    Snackbar.make(confirmButton, "입력 완료!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-                }
-                .subscribe {
-                    RealmHelper.instance.updateGoal(todayGoal.text.toString().toInt())
-                    todayGoal.text.clear()
-                }
-                .apply { compositeDisposable.add(this) }
     }
 
     private fun setSwitch() {

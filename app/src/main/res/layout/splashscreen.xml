@@ -24,9 +24,9 @@
 
             <TextView
                 android:text="@string/water_tracker"
-                android:fontFamily="sans-serif-smallcaps"
-                android:textColor="@color/whiteColor"
-                android:textSize="12sp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/splashFontColor1"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -40,8 +40,9 @@
 
         <TextView
             android:text="WaterPin"
-            android:textColor="@color/whiteColor"
-            android:textSize="35sp"
+            android:fontFamily="@font/nanumbrush"
+            android:textColor="@color/splashFontColor2"
+            android:textSize="43sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

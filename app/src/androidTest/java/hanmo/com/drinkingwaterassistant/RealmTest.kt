@@ -105,6 +105,13 @@ class RealmTest {
         }
     }
 
+    @Test
+    fun D_delete() {
+        val goals = realm.where(Goals::class.java).findFirst()
+        realm.executeTransaction {
+            goals?.deleteFromRealm()
+        }
+    }
 
     @After
     fun Z_closeDB() {

@@ -15,11 +15,8 @@
         </clip>
     </item>
     <item android:id="@android:id/progress" android:top="1dp">
-        <clip>
-            <shape>
-                <corners android:radius="255dp" />
-                <solid android:color="#6A5FF0" />
-            </shape>
-        </clip>
+        <scale
+            android:drawable="@drawable/custom_progress_primary"
+            android:scaleWidth="98%" />
     </item>
 </layer-list>

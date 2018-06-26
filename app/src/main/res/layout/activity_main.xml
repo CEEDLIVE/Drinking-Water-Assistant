@@ -11,48 +11,91 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:checked="false"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:thumb="@drawable/switch_thumb_custom"
         android:track="@drawable/switch_track_custom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="64dp"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:text="@string/todayGoal"
-            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="48dp" />
-        <EditText
-            android:id="@+id/todayGoal"
-            android:hint="0"
-            android:layout_width="match_parent"
-            android:layout_height="48dp" />
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/blackColor"
+            android:textStyle="bold"
+            android:text="@string/todayWaterText" />
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"
+                android:text="1200" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"
+                android:text="/" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/mainColor"
+                android:text="2000ml" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_percent"
+                android:textSize="14sp"
+                android:textColor="@color/mainColor"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="60%" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#BDBDBD"
+            android:textSize="13sp"
+            android:text="목표량까지 800ml 남았어요!" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/confirmButton"
-        android:text="check!!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

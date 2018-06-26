@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.widget.textChanges
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_mytarget.*
 import org.jetbrains.anko.toast
 import java.util.concurrent.TimeUnit
@@ -36,7 +38,8 @@ class MyTargetWaterActivity : AppCompatActivity() {
         compositeDisposable = CompositeDisposable()
 
         setMyTarget()
-        setButton()
+        setConfirmButton()
+        setMyTargetText()
     }
 
     private fun setMyTarget() {
@@ -49,7 +52,22 @@ class MyTargetWaterActivity : AppCompatActivity() {
         }
     }
 
-    private fun setButton() {
+    private fun setMyTargetText() {
+        //Trim 제거해야할듯 (화이트스페이스)
+        //00이면? 0으로 처리해야함
+        //숫자이외의 것을 적으면 버튼 활성화 안되도록
+
+        myTargetText.textChanges()
+                .skipInitialValue()
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+
+                }
+                .apply { compositeDisposable.add(this) }
+    }
+
+    private fun setConfirmButton() {
         myTargetConfirmButton.clicks()
                 .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .doOnNext {

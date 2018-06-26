@@ -11,4 +11,5 @@
     <string name="water_tracker">water tracker</string>
     <string name="inputMyTargetText">나의 목표 섭취량</string>
     <string name="startConfirm">시작하기</string>
+    <string name="todayWaterText">오늘 섭취량</string>
 </resources>

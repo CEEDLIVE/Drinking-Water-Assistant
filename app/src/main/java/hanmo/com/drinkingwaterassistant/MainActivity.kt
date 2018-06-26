@@ -19,22 +19,8 @@ class MainActivity : AppCompatActivity() {
 
         compositeDisposable = CompositeDisposable()
 
-        initView()
+
         setSwitch()
-    }
-
-    private fun initView() {
-        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
-        goals?.let {
-            DLog.e(it.toString())
-            it.goal?.let {
-                if (it == 0) {
-                    val myTargetIntent = MyTargetWaterActivity.newIntent(this@MainActivity)
-                    startActivity(myTargetIntent)
-                }
-           }
-        }
-
     }
 
     private fun setSwitch() {

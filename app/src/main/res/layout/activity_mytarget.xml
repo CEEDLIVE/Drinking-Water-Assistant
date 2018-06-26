@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumbrush"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:text="WaterPin"
                 android:textColor="@color/logoFontColor"
                 android:textSize="30sp" />
@@ -88,6 +88,7 @@
                 android:textSize="14sp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
+                android:inputType="number"
                 android:hint="목표 섭취량을 입력해 주세요"
                 android:textColorHint="#BDBDBD"
                 android:layout_width="match_parent"

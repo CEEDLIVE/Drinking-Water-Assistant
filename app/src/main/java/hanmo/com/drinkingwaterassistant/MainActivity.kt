@@ -7,6 +7,7 @@ import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.util.DLog
+import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,7 +41,11 @@ class MainActivity : AppCompatActivity() {
             val percent : Int = (100 * (it.today!!.toDouble() / it.goal!!.toDouble())).toInt()
             waterPercent.text = "$percent%"
             waterProgressbar.max = it.goal!!
-            waterProgressbar.progress = it.today!!
+
+            val anim = ProgressBarAnimation(waterProgressbar, 0f, it.today!!.toFloat())
+            anim.duration = 1000
+            waterProgressbar.startAnimation(anim)
+            //waterProgressbar.progress = it.today!!
             todayLeftWaterText.text = "목표량까지${it.goal!! - it.today!!}ml 남았어요!"
         }
     }

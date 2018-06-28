@@ -157,6 +157,21 @@
 
         </android.support.v7.widget.RecyclerView>
 
+        <!--<android.support.design.widget.FloatingActionButton
+            android:id="@+id/addWaterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:backgroundTint="#D4D3DC"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add"
+            app:useCompatPadding="true" />-->
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -36,6 +36,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper
 import com.wangjie.rapidfloatingactionbutton.util.RFABTextUtil.dip2px
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList
+import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import kotlin.collections.ArrayList
 
 
@@ -119,7 +120,13 @@ class LockscreenActivity : AppCompatActivity() {
             val percent : Int = (100 * (it.today!!.toDouble() / it.goal!!.toDouble())).toInt()
             waterPercent.text = "$percent%"
             waterProgressbar.max = it.goal!!
-            waterProgressbar.progress = it.today!!
+
+            val anim = ProgressBarAnimation(waterProgressbar, 0f, it.today!!.toFloat())
+            anim.duration = 1000
+            waterProgressbar.startAnimation(anim)
+
+            //waterProgressbar.progress = it.today!!
+
             todayLeftWaterText.text = "목표량까지${it.goal!! - it.today!!}ml 남았어요!"
         }
     }

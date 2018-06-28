@@ -42,31 +42,19 @@ import kotlin.collections.ArrayList
 /**
  * Created by hanmo on 2018. 5. 22..
  */
-class LockscreenActivity : AppCompatActivity(), RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener<Int> {
-    override fun onRFACItemIconClick(position: Int, item: RFACLabelItem<Int>?) {
-        rfabHelper.toggleContent()
-    }
+class LockscreenActivity : AppCompatActivity() {
 
-    override fun onRFACItemLabelClick(position: Int, item: RFACLabelItem<Int>?) {
-        rfabHelper.toggleContent()
-    }
-
+    private var waterTable : Goals? = null
     private lateinit var compositeDisposable: CompositeDisposable
-
-    lateinit var rfabHelper : RapidFloatingActionHelper
-
     private val mTimeReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context?, intent: Intent?) {
-
             when(intent?.action) {
                 Intent.ACTION_TIME_TICK -> {
                     setTime()
                 }
             }
-
         }
-
     }
 
     private val onItemClickListener = object : LockScreenMenuAdapter.OnItemClickListener {
@@ -116,15 +104,24 @@ class LockscreenActivity : AppCompatActivity(), RapidFloatingActionContentLabelL
         intentFilter.addAction(Intent.ACTION_TIME_TICK)
 
         registerReceiver(mTimeReceiver, intentFilter)
-        setWaterProgress()
+        waterTable = RealmHelper.instance.queryFirst(Goals::class.java)
+        setProgressBar()
         setUnlock()
-        setWave()
-        setGoals()
-        setToday()
         setTime()
         setMenu()
-        setWaterSetting()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setProgressBar() {
+        waterTable?.let {
+            waterGoal.text = it.goal?.toString()
+            todayWater.text = it.today?.toString()
+            val percent : Int = (100 * (it.today!!.toDouble() / it.goal!!.toDouble())).toInt()
+            waterPercent.text = "$percent%"
+            waterProgressbar.max = it.goal!!
+            waterProgressbar.progress = it.today!!
+            todayLeftWaterText.text = "목표량까지${it.goal!! - it.today!!}ml 남았어요!"
+        }
     }
 
     private fun setMenu() {
@@ -160,57 +157,6 @@ class LockscreenActivity : AppCompatActivity(), RapidFloatingActionContentLabelL
         }
     }
 
-    private fun setWaterSetting() {
-
-        val rfaContent = RapidFloatingActionContentLabelList(this@LockscreenActivity)
-        rfaContent.setOnRapidFloatingActionContentLabelListListener(this)
-        val items = ArrayList<RFACLabelItem<Int>>()
-        items.add(RFACLabelItem<Int>()
-                .setLabel("Github: wangjiegulu")
-                .setResId(R.drawable.ic_aaaa)
-                .setIconNormalColor(-0x27bceb)
-                .setIconPressedColor(-0x40c9f4)
-                .setWrapper(0)
-        )
-        items.add(RFACLabelItem<Int>()
-                .setLabel("tiantian.china.2@gmail.com")
-                .setResId(R.drawable.ic_aaaa)
-                .setIconNormalColor(-0xb1cbd2)
-                .setIconPressedColor(-0xc1d8dd)
-                .setLabelColor(Color.WHITE)
-                .setLabelSizeSp(14)
-                .setWrapper(1)
-        )
-        items.add(RFACLabelItem<Int>()
-                .setLabel("WangJie")
-                .setResId(R.drawable.ic_aaaa)
-                .setIconNormalColor(-0xfa9100)
-                .setIconPressedColor(-0xf2acfe)
-                .setLabelColor(-0xfa9100)
-                .setWrapper(2)
-        )
-        items.add(RFACLabelItem<Int>()
-                .setLabel("Compose")
-                .setResId(R.drawable.ic_aaaa)
-                .setIconNormalColor(-0xd7ca6d)
-                .setIconPressedColor(-0xe5dc82)
-                .setLabelColor(-0xd7ca6d)
-                .setWrapper(3)
-        )
-        rfaContent
-                .setItems(items as List<RFACLabelItem<Int>>)
-                .setIconShadowRadius(17)
-                .setIconShadowColor(-0x777778)
-                .setIconShadowDy(20)
-        rfabHelper = RapidFloatingActionHelper(
-                this@LockscreenActivity,
-                activity_main_rfal,
-                activity_main_rfab,
-                rfaContent
-        ).build()
-
-    }
-
     private fun setTime() {
 
         val c = Calendar.getInstance()
@@ -218,7 +164,7 @@ class LockscreenActivity : AppCompatActivity(), RapidFloatingActionContentLabelL
         val month = cMonth + 1
         val day = c.get(Calendar.DAY_OF_MONTH)
         val week = c.get(Calendar.DAY_OF_WEEK)
-        var hour = c.get(Calendar.HOUR_OF_DAY)
+        val hour = c.get(Calendar.HOUR_OF_DAY)
         val minute = c.get(Calendar.MINUTE)
 
         if (minute < 10) {
@@ -243,82 +189,6 @@ class LockscreenActivity : AppCompatActivity(), RapidFloatingActionContentLabelL
         }
 
         return DayOfWeek
-    }
-
-    private fun setWaterProgress() {
-        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
-        goals?.let {
-            with(waterProgress) {
-                setProgress(it.today!!, it.goal!!)
-                val percent = 100 * (it.today!!.toDouble() / it.goal!!.toDouble())
-                percentLoop(0.0, percent)
-            }
-        }
-
-    }
-
-    private fun percentLoop(current : Double, percent: Double) {
-        val mHandler = Handler()
-        var k = current
-        Thread(Runnable {
-            while (k < percent) {
-                k += 1.0
-                SystemClock.sleep(10L)
-                mHandler.post {
-                    val percentTxt = Math.floor(k).toInt().toString() + "%"
-                    waterPercent.text = percentTxt
-                }
-            }
-            Const.waterPercent = Math.floor(k).toInt()
-        }).start()
-    }
-
-
-    private fun setToday() {
-        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
-        goals?.let {
-            Const.todayWater = it.today!!
-            Const.goal = it.goal!!
-            val txtGoal = it.today.toString() + "ml"
-            todayWater.text = txtGoal
-
-            plusButton.clicks()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext {
-                        Const.todayWater = Const.todayWater.plus(100)
-
-                        waterProgress.setProgress(Const.todayWater, Const.goal)
-                        val percent = 100 * (Const.todayWater.toDouble() / Const.goal.toDouble())
-                        percentLoop(Const.waterPercent.toDouble(), percent)
-
-                        val txtGoall = Const.todayWater.toString() + "ml"
-                        todayWater.text = txtGoall
-                    }
-                    .throttleFirst(1, TimeUnit.SECONDS)
-                    .observeOn(Schedulers.io())
-                    .subscribe {
-                        val realm = Realm.getDefaultInstance()
-                        val goals = realm.where(Goals::class.java).findFirst()
-                        goals?.let {
-                            realm.executeTransaction {
-                                goals.today = Const.todayWater
-                            }
-                        }
-                    }
-                    .apply { compositeDisposable.add(this) }
-        }
-    }
-
-    private fun setGoals() {
-        val goals = RealmHelper.instance.queryFirst(Goals::class.java)
-        goals?.let {
-            val txtGoal = it.goal.toString() + "ml"
-            lcGoals.text = txtGoal
-        }
-    }
-
-    private fun setWave() {
-        waveLottie.speed = 2.5f
     }
 
     private fun setUnlock() {

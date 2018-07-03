@@ -69,7 +69,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
 
     private fun setConfirmButton() {
         myTargetConfirmButton.clicks()
-                .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .doOnNext {
                     Snackbar.make(myTargetConfirmButton, "입력 완료!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 }

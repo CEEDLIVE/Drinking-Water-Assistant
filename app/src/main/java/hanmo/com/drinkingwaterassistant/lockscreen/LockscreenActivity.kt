@@ -106,11 +106,26 @@ class LockscreenActivity : AppCompatActivity() {
 
         registerReceiver(mTimeReceiver, intentFilter)
         waterTable = RealmHelper.instance.queryFirst(Goals::class.java)
+        setAddButton()
         setProgressBar()
         setUnlock()
         setTime()
         setMenu()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setAddButton() {
+        addWaterButton.clicks()
+                //.filter { }
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext {
+
+                }
+                .throttleLast(1000, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe {
+
+                }.apply { compositeDisposable.add(this) }
     }
 
     private fun setProgressBar() {

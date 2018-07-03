@@ -66,7 +66,7 @@ class RealmHelper {
             }
         }
     }
-
+    
 
     //Insert To Realm
     fun <T : RealmObject> addData(data: T) {

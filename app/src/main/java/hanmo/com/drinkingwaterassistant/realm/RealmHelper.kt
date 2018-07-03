@@ -1,11 +1,14 @@
 package hanmo.com.drinkingwaterassistant.realm
 
 import android.util.Log
+import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmObject
 import io.realm.RealmResults
+import java.util.*
 
 /**
  * Created by hanmo on 2018. 5. 22..
@@ -34,8 +37,10 @@ class RealmHelper {
     fun initDB() {
         val goals = Goals()
         goals.id = 1
-        goals.goal = 0
-        goals.today = 0
+        goals.goalWater = 0
+        goals.todayWater = 0
+        goals.waterType = Const.type200
+        goals.todayDate = System.currentTimeMillis()
         goals.hasLockScreen = true
         addData(goals)
     }
@@ -44,7 +49,7 @@ class RealmHelper {
         val goals = queryFirst(Goals::class.java)
         goals?.let {
             realm.executeTransaction {
-                goals.goal = goal
+                goals.goalWater = goal
             }
         }
     }
@@ -62,11 +67,27 @@ class RealmHelper {
         val goals = queryFirst(Goals::class.java)
         goals?.let {
             realm.executeTransactionAsync {
-                goals.today = todayWater
+                goals.todayWater = todayWater
             }
         }
     }
-    
+
+    /*fun addWaterButtonClick() {
+
+        val currentIdNum = realm.where(WaterHistory::class.java).max("id")
+        val nextId = when (currentIdNum) {
+            null -> {
+                1
+            }
+            else -> {
+                currentIdNum.toInt() + 1
+            }
+        }
+
+        val addWater = WaterHistory()
+        addWater.id = nextId
+        addWater.waterType = queryFirst(Goals::class.java)
+    }*/
 
     //Insert To Realm
     fun <T : RealmObject> addData(data: T) {

@@ -2,10 +2,8 @@ package hanmo.com.drinkingwaterassistant
 
 import android.support.test.InstrumentationRegistry
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
-import hanmo.com.drinkingwaterassistant.util.DLog
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import junit.framework.Assert
 import junit.framework.Assert.*
 import org.junit.After
 import org.junit.Before
@@ -42,8 +40,8 @@ class RealmTest {
     fun A_initUserPreference() {
         val goals = Goals()
         goals.id = 1
-        goals.goal = 100
-        goals.today = 0
+        goals.goalWater = 100
+        goals.todayWater = 0
         goals.hasLockScreen = true
 
         realm.executeTransaction {
@@ -54,8 +52,8 @@ class RealmTest {
         assertNotNull(testGoals)
         testGoals?.let {
             assertEquals(1, it.id)
-            assertEquals(0, it.today)
-            assertEquals(100, it.goal)
+            assertEquals(0, it.todayWater)
+            assertEquals(100, it.goalWater)
             assertEquals(true, it.hasLockScreen)
         }
 
@@ -67,18 +65,18 @@ class RealmTest {
         assertNotNull(goals)
         goals?.let {
             assertEquals(1, it.id)
-            assertEquals(100, it.goal)
+            assertEquals(100, it.goalWater)
             assertEquals(true, it.hasLockScreen)
         }
         realm.executeTransaction {
-            goals?.goal = 1200
+            goals?.goalWater = 1200
         }
 
         val testGoals = realm.where(Goals::class.java).findFirst()
         assertNotNull(testGoals)
         testGoals?.let {
             assertEquals(1, it.id)
-            assertEquals(1200, it.goal)
+            assertEquals(1200, it.goalWater)
             assertEquals(true, it.hasLockScreen)
         }
     }
@@ -89,7 +87,7 @@ class RealmTest {
         assertNotNull(goals)
         goals?.let {
             assertEquals(1, it.id)
-            assertEquals(1200, it.goal)
+            assertEquals(1200, it.goalWater)
             assertEquals(true, it.hasLockScreen)
         }
         realm.executeTransaction {
@@ -100,7 +98,7 @@ class RealmTest {
         assertNotNull(testGoals)
         testGoals?.let {
             assertEquals(1, it.id)
-            assertEquals(1200, it.goal)
+            assertEquals(1200, it.goalWater)
             assertEquals(false, it.hasLockScreen)
         }
     }

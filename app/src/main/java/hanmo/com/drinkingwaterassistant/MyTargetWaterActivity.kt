@@ -45,9 +45,9 @@ class MyTargetWaterActivity : AppCompatActivity() {
     private fun setMyTarget() {
         val goals = RealmHelper.instance.queryFirst(Goals::class.java)
         goals?.let {
-            if (it.goal != 0){
+            if (it.goalWater != 0){
                 status = true
-                myTargetText.setText(it.goal.toString())
+                myTargetText.setText(it.goalWater.toString())
             }
         }
     }

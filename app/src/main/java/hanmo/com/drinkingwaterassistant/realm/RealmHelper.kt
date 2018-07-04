@@ -40,7 +40,9 @@ class RealmHelper {
         goals.goalWater = 0
         goals.todayWater = 0
         goals.waterType = Const.type200
-        goals.todayDate = System.currentTimeMillis()
+        goals.todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+        goals.todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+        goals.todayYear = Calendar.getInstance().get(Calendar.YEAR)
         goals.hasLockScreen = true
         addData(goals)
     }
@@ -49,6 +51,9 @@ class RealmHelper {
         val goals = queryFirst(Goals::class.java)
         goals?.let {
             realm.executeTransaction {
+                goals.todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+                goals.todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+                goals.todayYear = Calendar.getInstance().get(Calendar.YEAR)
                 goals.goalWater = goal
             }
         }
@@ -72,8 +77,9 @@ class RealmHelper {
         }
     }
 
-    /*fun addWaterButtonClick() {
+    fun addWaterButtonClick() {
 
+        val goals = queryFirst(Goals::class.java)
         val currentIdNum = realm.where(WaterHistory::class.java).max("id")
         val nextId = when (currentIdNum) {
             null -> {
@@ -86,8 +92,15 @@ class RealmHelper {
 
         val addWater = WaterHistory()
         addWater.id = nextId
-        addWater.waterType = queryFirst(Goals::class.java)
-    }*/
+        addWater.waterType = goals?.waterType
+        addWater.todayDate = goals?.todayDate
+        addWater.todayMonth = goals?.todayMonth
+        addWater.todayYear = goals?.todayYear
+        addWater.addWaterTime = System.currentTimeMillis()
+
+        addData(addWater)
+
+    }
 
     //Insert To Realm
     fun <T : RealmObject> addData(data: T) {

@@ -13,7 +13,13 @@ open class WaterHistory : RealmObject() {
     open var id : Int = 0
 
     @Required
-    open var waterDate : Long? = null
+    open var todayDate : Int? = null
+
+    @Required
+    open var todayMonth : Int? = null
+
+    @Required
+    open var todayYear : Int? = null
 
     @Required
     open var waterType : Int? = null

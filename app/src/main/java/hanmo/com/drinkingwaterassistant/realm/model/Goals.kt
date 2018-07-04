@@ -20,7 +20,13 @@ open class Goals : RealmObject() {
     open var todayWater : Int? = null
 
     @Required
-    open var todayDate : Long? = null
+    open var todayDate : Int? = null
+
+    @Required
+    open var todayMonth : Int? = null
+
+    @Required
+    open var todayYear : Int? = null
 
     @Required
     open var waterType : Int? = null

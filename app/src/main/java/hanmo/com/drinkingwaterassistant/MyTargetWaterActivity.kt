@@ -62,7 +62,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
                 .observeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-
+                    status = true
                 }
                 .apply { compositeDisposable.add(this) }
     }

@@ -20,11 +20,13 @@ import kotlinx.android.synthetic.main.activity_lockscreen.*
 import java.util.concurrent.TimeUnit
 import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreenMenuAdapter
+import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 import org.jetbrains.anko.toast
 import java.util.*
 import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
+import io.realm.Realm
 
 
 /**
@@ -105,14 +107,40 @@ class LockscreenActivity : AppCompatActivity() {
         addWaterButton.clicks()
                 //.filter { }
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext {
-
-                }
-                .throttleLast(1000, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.io())
                 .subscribe {
-
+                    updateProgressBar()
                 }.apply { compositeDisposable.add(this) }
+    }
+
+    private fun updateProgressBar() {
+        val realm = Realm.getDefaultInstance()
+        val goals = realm.where(Goals::class.java).findFirst()
+        val currentIdNum = realm.where(WaterHistory::class.java).max("id")
+        val nextId = when (currentIdNum) {
+            null -> { 1 }
+            else -> { currentIdNum.toInt() + 1 }
+        }
+
+        goals?.apply {
+
+            val addWater = WaterHistory()
+            addWater.id = nextId
+            addWater.waterType = this.waterType
+            addWater.todayDate = this.todayDate
+            addWater.todayMonth = this.todayMonth
+            addWater.todayYear = this.todayYear
+            addWater.addWaterTime = System.currentTimeMillis()
+
+            realm.executeTransaction {
+                this.todayWater = this.todayWater?.plus(this.waterType!!)
+
+                realm.copyToRealm(addWater)
+
+                waterTable = realm.where(Goals::class.java).findFirst()
+            }
+        }
+
+        setProgressBar()
     }
 
     private fun setProgressBar() {

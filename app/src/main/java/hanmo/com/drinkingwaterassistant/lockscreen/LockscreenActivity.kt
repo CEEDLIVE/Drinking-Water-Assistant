@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit
 import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreenMenuAdapter
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 import org.jetbrains.anko.toast
 import java.util.*
@@ -108,11 +107,11 @@ class LockscreenActivity : AppCompatActivity() {
                 //.filter { }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    updateProgressBar()
+                    updateWaterData()
                 }.apply { compositeDisposable.add(this) }
     }
 
-    private fun updateProgressBar() {
+    private fun updateWaterData() {
         val realm = Realm.getDefaultInstance()
         val goals = realm.where(Goals::class.java).findFirst()
         val currentIdNum = realm.where(WaterHistory::class.java).max("id")
@@ -133,14 +132,11 @@ class LockscreenActivity : AppCompatActivity() {
 
             realm.executeTransaction {
                 this.todayWater = this.todayWater?.plus(this.waterType!!)
-
                 realm.copyToRealm(addWater)
-
-                waterTable = realm.where(Goals::class.java).findFirst()
             }
         }
-
-        setProgressBar()
+        val updateTable = realm.where(Goals::class.java).findFirst()
+        updateProgressBar(updateTable)
     }
 
     private fun setProgressBar() {
@@ -159,6 +155,26 @@ class LockscreenActivity : AppCompatActivity() {
 
             todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
         }
+    }
+
+    private fun updateProgressBar(currentWaterTable : Goals?) {
+        currentWaterTable?.let {
+            waterGoal.text = it.goalWater?.toString()
+            todayWater.text = it.todayWater?.toString()
+            val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
+            waterPercent.text = "$percent%"
+            waterProgressbar.max = it.goalWater!!
+
+            val anim = ProgressBarAnimation(waterProgressbar, waterTable?.todayWater!!.toFloat(), it.todayWater!!.toFloat())
+            anim.duration = 1000
+            waterProgressbar.startAnimation(anim)
+
+            //waterProgressbar.progress = it.todayWater!!
+
+            todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
+        }
+
+        waterTable = currentWaterTable
     }
 
     private fun setMenu() {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +31,16 @@ class MainActivity : AppCompatActivity() {
         waterTable = RealmHelper.instance.queryFirst(Goals::class.java)
         setSwitch()
         setProgressBar()
+        setAddWaterList()
+    }
+
+    private fun setAddWaterList() {
+        val addWaterData = RealmHelper.instance.queryAll(WaterHistory::class.java)
+        with(waterList) {
+            addWaterData?.forEach {
+                
+            }
+        }
     }
 
     private fun setProgressBar() {

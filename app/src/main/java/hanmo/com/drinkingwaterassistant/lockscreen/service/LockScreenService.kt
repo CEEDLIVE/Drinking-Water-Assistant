@@ -6,7 +6,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
 import android.app.*
+import android.os.Build
+import android.support.v4.app.NotificationCompat
+import android.widget.RemoteViews
+import hanmo.com.drinkingwaterassistant.DWApplication
+import hanmo.com.drinkingwaterassistant.MainActivity
+import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.lockscreen.LockscreenActivity
+import hanmo.com.drinkingwaterassistant.notification.NotificationManager
 import hanmo.com.drinkingwaterassistant.util.DLog
 
 /**
@@ -15,6 +22,7 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 class LockScreenService : Service() {
 
     private var mServiceStartId : Int? = null
+    private lateinit var context: Context
 
     private val mLockscreenReceiver = object : BroadcastReceiver() {
 
@@ -42,6 +50,36 @@ class LockScreenService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        context = this@LockScreenService
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+            if (mNotificationManager.getNotificationChannel(NotificationManager(context).getMainNotificationId()) == null) {
+                DLog.e("Lockscreen Service notification is NULL!!")
+            } else {
+                DLog.e("Lockscreen Service notification is NOT NULL!!")
+            }
+
+            startForeground(DWApplication.notificationId, createNotificationCompatBuilder(context).build())
+        }
+    }
+
+    private fun createNotificationCompatBuilder(context: Context): NotificationCompat.Builder {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+
+            /*val intent_noti = Intent(this, MainActivity::class.java)
+            intent_noti.action = Intent.ACTION_MAIN
+            intent_noti.addCategory(Intent.CATEGORY_HOME)*/
+
+            //val contentIntent = PendingIntent.getActivity(this, 0, intent_noti, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            val mBuilder = NotificationCompat.Builder(this, NotificationManager(context).getMainNotificationId())
+            return mBuilder
+        } else {
+            return NotificationCompat.Builder(context)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

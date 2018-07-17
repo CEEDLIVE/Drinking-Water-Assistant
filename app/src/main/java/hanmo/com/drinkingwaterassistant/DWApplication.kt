@@ -14,6 +14,7 @@ class DWApplication : MultiDexApplication() {
 
     companion object {
         var lockScreenShow = false
+        val notificationId: Int = 1
     }
 
     override fun onCreate() {

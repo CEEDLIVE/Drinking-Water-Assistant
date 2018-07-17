@@ -3,6 +3,7 @@ package hanmo.com.drinkingwaterassistant.lockscreen.util
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import hanmo.com.drinkingwaterassistant.lockscreen.service.LockScreenService
 
 /**
@@ -25,7 +26,13 @@ class Lockscreen {
     }
 
     fun active() {
-        context?.startService(Intent(context, LockScreenService::class.java))
+        context?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context?.startForegroundService(Intent(context, LockScreenService::class.java))
+            } else {
+                context?.startService(Intent(context, LockScreenService::class.java))
+            }
+        }
     }
 
     fun deactivate() {

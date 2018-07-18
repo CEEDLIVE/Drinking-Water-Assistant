@@ -145,5 +145,4 @@ class RealmHelper {
                 .findAll()
                 .sort("addWaterTime", Sort.DESCENDING)
     }
-
 }

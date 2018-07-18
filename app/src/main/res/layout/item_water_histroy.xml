@@ -33,16 +33,14 @@
         app:layout_constraintEnd_toStartOf="@id/deleteHistoryButton"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/deleteHistoryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="8dp"
-        android:text="삭제"
-        android:textColor="#DFDFDF"
-        android:textSize="18sp"
+        android:src="@drawable/ic_action_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

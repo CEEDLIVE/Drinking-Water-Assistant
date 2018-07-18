@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit
 import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreenMenuAdapter
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
+import hanmo.com.drinkingwaterassistant.util.DLog
 import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 import org.jetbrains.anko.toast
 import java.util.*
@@ -138,6 +139,9 @@ class LockscreenActivity : AppCompatActivity() {
                 waterTable = realm.where(Goals::class.java).findFirst()
             }
         }
+
+        val dd = realm.where(WaterHistory::class.java).findAll()
+        DLog.e("ddddd" + dd.toString())
 
         setProgressBar()
     }

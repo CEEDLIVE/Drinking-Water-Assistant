@@ -137,11 +137,11 @@ class RealmHelper {
     fun todayWaterHistory(): RealmResults<WaterHistory>? {
 
         return realm.where(WaterHistory::class.java)
-                .equalTo("todayYear", Calendar.getInstance().get(Calendar.DAY_OF_YEAR))
+                .equalTo("todayYear", Calendar.getInstance().get(Calendar.YEAR))
                 .and()
                 .equalTo("todayMonth", Calendar.getInstance().get(Calendar.MONTH))
                 .and()
-                .equalTo("todayDate", Calendar.getInstance().get(Calendar.YEAR))
+                .equalTo("todayDate", Calendar.getInstance().get(Calendar.DAY_OF_YEAR))
                 .findAll()
                 .sort("addWaterTime", Sort.DESCENDING)
     }

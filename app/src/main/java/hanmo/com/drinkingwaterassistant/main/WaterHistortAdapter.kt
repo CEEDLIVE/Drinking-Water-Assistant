@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import io.realm.RealmResults
+import kotlinx.android.synthetic.main.item_water_histroy.view.*
+import java.text.SimpleDateFormat
 
 /**
  * Created by hanmo on 2018. 7. 18..
@@ -47,7 +49,16 @@ class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?) : Recyc
         }
 
         fun bindView(waterHistoryData: WaterHistory?) {
+            with(itemView) {
+                val hourFormat = SimpleDateFormat("hh")
+                val minFormat = SimpleDateFormat("mm")
 
+                val hour = hourFormat.format(waterHistoryData?.addWaterTime)
+                val min = minFormat.format(waterHistoryData?.addWaterTime)
+
+                this.waterHistoryWater.text = "+ ${waterHistoryData?.waterType!!} ml"
+                this.waterHistoryTime.text = "${hour}시 ${min}분"
+            }
         }
 
         override fun onClick(v: View?) {

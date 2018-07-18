@@ -12,6 +12,7 @@ import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.reactivex.disposables.CompositeDisposable
+import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAddWaterList() {
-        val addWaterData = RealmHelper.instance.queryAll(WaterHistory::class.java)
+        val addWaterData = RealmHelper.instance.todayWaterHistory()
         with(waterList) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(applicationContext)

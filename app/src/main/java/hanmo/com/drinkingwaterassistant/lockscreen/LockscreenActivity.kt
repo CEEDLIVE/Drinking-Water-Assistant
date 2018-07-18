@@ -125,9 +125,9 @@ class LockscreenActivity : AppCompatActivity() {
             val addWater = WaterHistory()
             addWater.id = nextId
             addWater.waterType = this.waterType
-            addWater.todayDate = this.todayDate
-            addWater.todayMonth = this.todayMonth
-            addWater.todayYear = this.todayYear
+            addWater.todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+            addWater.todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+            addWater.todayYear = Calendar.getInstance().get(Calendar.YEAR)
             addWater.addWaterTime = System.currentTimeMillis()
 
             realm.executeTransaction {

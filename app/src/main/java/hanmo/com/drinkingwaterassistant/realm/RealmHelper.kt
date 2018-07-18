@@ -4,10 +4,7 @@ import android.util.Log
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmObject
-import io.realm.RealmResults
+import io.realm.*
 import java.util.*
 
 /**
@@ -135,6 +132,18 @@ class RealmHelper {
                 }
                 return INSTANCE as RealmHelper
             }
+    }
+
+    fun todayWaterHistory(): RealmResults<WaterHistory>? {
+
+        return realm.where(WaterHistory::class.java)
+                .equalTo("todayYear", Calendar.getInstance().get(Calendar.DAY_OF_YEAR))
+                .and()
+                .equalTo("todayMonth", Calendar.getInstance().get(Calendar.MONTH))
+                .and()
+                .equalTo("todayDate", Calendar.getInstance().get(Calendar.YEAR))
+                .findAll()
+                .sort("addWaterTime", Sort.DESCENDING)
     }
 
 }

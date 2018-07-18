@@ -1,13 +1,9 @@
 package hanmo.com.drinkingwaterassistant
 
-import android.animation.Animator
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.splashscreen.*
-import android.support.v4.content.ContextCompat.startActivity
-import android.content.Intent
-
+import hanmo.com.drinkingwaterassistant.main.MainActivity
 
 
 /**

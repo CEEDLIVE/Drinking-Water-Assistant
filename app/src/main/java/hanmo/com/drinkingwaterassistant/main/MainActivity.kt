@@ -1,7 +1,11 @@
-package hanmo.com.drinkingwaterassistant
+package hanmo.com.drinkingwaterassistant.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
+import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
@@ -14,6 +18,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var compositeDisposable: CompositeDisposable
     private var waterTable : Goals? = null
+
+    private val onItemClickListener = object : WaterHistortAdapter.OnItemClickListener {
+        override fun onItemClick(view: View, position: Int) {
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +47,11 @@ class MainActivity : AppCompatActivity() {
     private fun setAddWaterList() {
         val addWaterData = RealmHelper.instance.queryAll(WaterHistory::class.java)
         with(waterList) {
-            addWaterData?.forEach {
-                
-            }
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(applicationContext)
+            val historyAdapter = WaterHistortAdapter(addWaterData)
+            historyAdapter.setOnItemClickListener(onItemClickListener)
+            adapter = historyAdapter
         }
     }
 

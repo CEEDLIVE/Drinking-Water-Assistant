@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".main.MainActivity"/>
         <activity android:name=".MyTargetWaterActivity"/>
 
         <activity android:name=".lockscreen.LockscreenActivity"

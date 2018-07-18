@@ -8,10 +8,7 @@ import android.os.IBinder
 import android.app.*
 import android.os.Build
 import android.support.v4.app.NotificationCompat
-import android.widget.RemoteViews
 import hanmo.com.drinkingwaterassistant.DWApplication
-import hanmo.com.drinkingwaterassistant.MainActivity
-import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.lockscreen.LockscreenActivity
 import hanmo.com.drinkingwaterassistant.notification.NotificationManager
 import hanmo.com.drinkingwaterassistant.util.DLog

@@ -65,11 +65,16 @@ class RealmHelper {
         }
     }
 
-    fun updateTodayWater(todayWater: Int?) {
+    fun updateTodayWater(todayWater: Int?, cal: String) {
         val goals = queryFirst(Goals::class.java)
         goals?.let {
-            realm.executeTransactionAsync {
-                goals.todayWater = todayWater
+            realm.executeTransaction {
+                if (cal.equals(Const.MINUS)){
+                    goals.todayWater = goals.todayWater!! - todayWater!!
+                } else {
+                    goals.todayWater = goals.todayWater!! + todayWater!!
+                }
+
             }
         }
     }

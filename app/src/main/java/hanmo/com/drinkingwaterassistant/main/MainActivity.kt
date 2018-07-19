@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
+import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
@@ -15,17 +16,24 @@ import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_water_histroy.view.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var compositeDisposable: CompositeDisposable
     private var waterTable : Goals? = null
+    private lateinit var historyAdapter : WaterHistortAdapter
 
-    /*private val onItemClickListener = object : WaterHistortAdapter.OnItemClickListener {
+    private val onItemClickListener = object : WaterHistortAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
+            historyAdapter.notifyItemRemoved(position)
+            historyAdapter.notifyDataSetChanged()
+            RealmHelper.instance.deleteHistory(view.historyId.text.toString().toInt())
+            RealmHelper.instance.updateTodayWater(view.historyWaterType.text.toString().toInt(), Const.MINUS)
 
+            setProgressBar()
         }
-    }*/
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +49,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
         }
 
-        waterTable = RealmHelper.instance.queryFirst(Goals::class.java)
         setSwitch()
         setProgressBar()
         setAddWaterList()
@@ -53,14 +60,14 @@ class MainActivity : AppCompatActivity() {
         with(waterList) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(applicationContext)
-            val historyAdapter = WaterHistortAdapter(addWaterData)
-            //historyAdapter.notifyDataSetChanged()
-            //historyAdapter.setOnItemClickListener(onItemClickListener)
+            historyAdapter = WaterHistortAdapter(addWaterData)
+            historyAdapter.setOnItemClickListener(onItemClickListener)
             adapter = historyAdapter
         }
     }
 
-    private fun setProgressBar() {
+    fun setProgressBar() {
+        waterTable = RealmHelper.instance.queryFirst(Goals::class.java)
         waterTable?.let {
             waterGoal.text = it.goalWater?.toString()
             todayWater.text = it.todayWater?.toString()

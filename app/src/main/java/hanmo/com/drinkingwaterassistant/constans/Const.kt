@@ -8,6 +8,9 @@ object Const {
     var goal : Int = 0
     var waterPercent : Int = 0
 
+    const val MINUS = "Minus"
+    const val PULS = "Plus"
+
     const val type100 : Int = 100
     const val type150 : Int = 150
     const val type200 : Int = 200

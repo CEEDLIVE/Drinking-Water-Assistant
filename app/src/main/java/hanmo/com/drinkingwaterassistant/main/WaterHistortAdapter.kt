@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import hanmo.com.drinkingwaterassistant.R
+import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
@@ -15,15 +16,15 @@ import java.text.SimpleDateFormat
  */
 class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var itemClickListener : OnItemClickListener
+    //lateinit var itemClickListener : OnItemClickListener
 
-    fun setOnItemClickListener(itemClickListener : OnItemClickListener) {
-        this.itemClickListener = itemClickListener
+    /*fun setOnItemClickListener(itemClickListener : OnItemClickListener) {
+        //this.itemClickListener = itemClickListener
     }
 
     interface OnItemClickListener {
         fun onItemClick(view : View, position: Int)
-    }
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return LcMenuViewHolder(parent)
@@ -58,11 +59,17 @@ class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?) : Recyc
 
                 this.waterHistoryWater.text = "+ ${waterHistoryData?.waterType!!} ml"
                 this.waterHistoryTime.text = "${hour}시 ${min}분"
+
+                this.deleteHistoryButton.setOnClickListener {
+                    notifyItemRemoved(adapterPosition)
+                    notifyDataSetChanged()
+                    RealmHelper.instance.deleteHistory(waterHistoryData.id)
+                }
             }
         }
 
         override fun onClick(v: View?) {
-            itemClickListener.onItemClick(itemView, adapterPosition)
+            //itemClickListener.onItemClick(itemView, adapterPosition)
         }
     }
 }

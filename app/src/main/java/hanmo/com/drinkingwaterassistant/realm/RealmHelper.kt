@@ -145,4 +145,20 @@ class RealmHelper {
                 .findAll()
                 .sort("addWaterTime", Sort.DESCENDING)
     }
+
+    fun deleteHistory(id: Int) {
+        realm.executeTransaction {
+            val results = realm.where(WaterHistory::class.java).equalTo("id", id).findFirst()
+            results?.deleteFromRealm()
+
+        }
+        /*realm.executeTransactionAsync({ bgRealm ->
+            val results = bgRealm.where(WaterHistory::class.java).equalTo("id", id).findFirst()
+            results?.deleteFromRealm()
+        }, {
+            // 트랜잭션이 성공하였습니다.
+        }, {
+            // 트랜잭션이 실패했고 자동으로 취소되었습니다.
+        })*/
+    }
 }

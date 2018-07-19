@@ -21,11 +21,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var compositeDisposable: CompositeDisposable
     private var waterTable : Goals? = null
 
-    private val onItemClickListener = object : WaterHistortAdapter.OnItemClickListener {
+    /*private val onItemClickListener = object : WaterHistortAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
 
         }
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        DLog.e("Call onResume!!")
 
         todayWaterText.setOnClickListener {
             startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
@@ -53,7 +54,8 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(applicationContext)
             val historyAdapter = WaterHistortAdapter(addWaterData)
-            historyAdapter.setOnItemClickListener(onItemClickListener)
+            //historyAdapter.notifyDataSetChanged()
+            //historyAdapter.setOnItemClickListener(onItemClickListener)
             adapter = historyAdapter
         }
     }

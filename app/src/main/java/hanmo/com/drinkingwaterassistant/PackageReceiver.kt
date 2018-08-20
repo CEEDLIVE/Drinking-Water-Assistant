@@ -20,10 +20,10 @@ class PackageReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.run {
             //내 앱에서만 설치 및 삭제가 캐치 되도록
-            if (dataString.contains(BuildConfig.APPLICATION_ID)) { }
+            //if (dataString.contains(BuildConfig.APPLICATION_ID)) { }
             when (action) {
-                Intent.ACTION_PACKAGE_ADDED -> { }
-                Intent.ACTION_PACKAGE_REMOVED -> { }
+                //Intent.ACTION_PACKAGE_ADDED -> { }
+                //Intent.ACTION_PACKAGE_REMOVED -> { }
                 Intent.ACTION_MY_PACKAGE_REPLACED -> {
                     DLog.d("ACTION_MY_PACKAGE_REPLACED() called!!")
                     if (RealmHelper.instance.getHasLockScreenBool()) {

@@ -35,12 +35,12 @@
         <activity android:name=".main.MainActivity"/>
         <activity android:name=".MyTargetWaterActivity"/>
 
-        <activity android:name=".lockscreen.LockscreenActivity"
+        <activity android:name=".lockScreenBool.LockscreenActivity"
             android:showOnLockScreen="true"
             android:launchMode="singleInstance"
             android:theme="@style/lockscreenView"/>
 
-        <service android:name=".lockscreen.service.LockScreenService" />
+        <service android:name=".lockScreenBool.service.LockScreenService" />
 
         <receiver
             android:name=".BootReceiver"

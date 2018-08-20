@@ -74,9 +74,12 @@ class RealmHelper {
                 } else {
                     goals.todayWater = goals.todayWater!! + todayWater!!
                 }
-
             }
         }
+    }
+
+    fun getHasLockScreenBool() : Boolean {
+        return realm.where(Goals::class.java).findFirst()?.hasLockScreen!!
     }
 
     fun addWaterButtonClick() {

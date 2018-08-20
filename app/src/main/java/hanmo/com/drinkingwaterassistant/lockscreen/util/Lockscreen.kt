@@ -19,7 +19,7 @@ class Lockscreen {
             false
         }
 
-    fun init(context: Context) {
+    fun init(context: Context?) {
         this.context = context
 
 
@@ -51,7 +51,6 @@ class Lockscreen {
 
     companion object {
         private var singleton: Lockscreen? = null
-
         val instance: Lockscreen
             get() {
                 if (singleton == null) {

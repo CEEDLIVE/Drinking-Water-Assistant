@@ -35,12 +35,23 @@
         <activity android:name=".main.MainActivity"/>
         <activity android:name=".MyTargetWaterActivity"/>
 
-        <activity android:name=".lockScreenBool.LockscreenActivity"
+        <activity android:name=".lockscreen.LockscreenActivity"
             android:showOnLockScreen="true"
             android:launchMode="singleInstance"
             android:theme="@style/lockscreenView"/>
 
-        <service android:name=".lockScreenBool.service.LockScreenService" />
+        <service android:name=".lockscreen.service.LockScreenService" />
+
+        <receiver
+            android:name=".PackageReceiver"
+            android:exported="true">
+            <intent-filter android:priority="9999">
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name=".BootReceiver"

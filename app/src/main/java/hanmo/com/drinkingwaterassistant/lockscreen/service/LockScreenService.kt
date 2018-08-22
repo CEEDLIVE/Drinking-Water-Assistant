@@ -10,7 +10,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.lockscreen.LockscreenActivity
-import hanmo.com.drinkingwaterassistant.notification.NotificationManager
+import hanmo.com.drinkingwaterassistant.notification.MyNotificationManager
 import hanmo.com.drinkingwaterassistant.util.DLog
 
 /**
@@ -51,7 +51,7 @@ class LockScreenService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
-            if (mNotificationManager.getNotificationChannel(NotificationManager(context).getMainNotificationId()) == null) {
+            if (mNotificationManager.getNotificationChannel(MyNotificationManager(context).getMainNotificationId()) == null) {
                 DLog.e("Lockscreen Service notification is NULL!!")
             } else {
                 DLog.e("Lockscreen Service notification is NOT NULL!!")
@@ -70,7 +70,7 @@ class LockScreenService : Service() {
 
             //val contentIntent = PendingIntent.getActivity(this, 0, intent_noti, PendingIntent.FLAG_UPDATE_CURRENT)
 
-            val mBuilder = NotificationCompat.Builder(this, NotificationManager(context).getMainNotificationId())
+            val mBuilder = NotificationCompat.Builder(this, MyNotificationManager(context).getMainNotificationId())
             return mBuilder
         } else {
             return NotificationCompat.Builder(context, "")

@@ -8,7 +8,7 @@ import android.support.annotation.RequiresApi
 /**
  * Created by hanmo on 2018. 7. 17..
  */
-class NotificationManager(private val context : Context) {
+class MyNotificationManager(private val context : Context) {
 
     companion object {
         private val CHANNEL_ID = "Water Assistant ID"

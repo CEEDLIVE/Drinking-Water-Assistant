@@ -2,6 +2,10 @@
 
 buildscript {
     ext.kotlin_version = '1.2.41'
+    ext.googleServiceVersion = '4.0.1'
+    ext.gradleVersion = '3.1.4'
+    ext.firebaseMessageVersion = '17.1.0'
+    ext.firebaseCoreVersion = '16.0.1'
     ext.RXBINDING_LIBRARY_VERSION = '2.1.1'
     ext.RXJAVA_LIBRARY_VERSION = '2.1.4'
     ext.RXANDROID_LIBRARY_VERSION = '2.0.2'
@@ -11,7 +15,6 @@ buildscript {
     ext.RETROFIT_VERSION = '2.3.0'
     ext.OKHTTP_VERSION = '3.9.1'
     ext.SUPPORT_VERSION = '27.1.1'
-    ext.anko_version = '0.10.3'
     ext.LOTTIE = '2.5.4'
 
     repositories {
@@ -19,9 +22,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.realm:realm-gradle-plugin:$REALM_LIBRARY_VERSION"
+        classpath "com.google.gms:google-services:$googleServiceVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

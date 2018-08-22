@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 /**
  * Created by hanmo on 2018. 6. 6..
  */
-class LockScreenMenuAdapter(val menuList: Array<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LockScreenMenuAdapter(private val menuList: Array<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var itemClickListener : OnItemClickListener
 
@@ -32,9 +32,7 @@ class LockScreenMenuAdapter(val menuList: Array<String>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
-            is LcMenuViewHolder -> {
-                holder.bindView(menuList[position])
-            }
+            is LcMenuViewHolder -> holder.bindView(menuList[position])
         }
     }
 

@@ -1,5 +1,6 @@
 package hanmo.com.drinkingwaterassistant.lockscreen.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.view.MotionEvent
@@ -19,6 +20,7 @@ open class UnLock(val context: Context, val lockScreenView: ConstraintLayout) : 
     private var isLockOpen = false
     private var touchMoveX = 0
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(v: View, event: MotionEvent): Boolean {
 
         when (event.action and MotionEvent.ACTION_MASK) {
@@ -72,11 +74,10 @@ open class UnLock(val context: Context, val lockScreenView: ConstraintLayout) : 
         val mDevideDeviceWidth = mDeviceWidth / 6
 
         if (forgroundX < mDevideDeviceWidth) {
-            var startPostion = 0
-            startPostion = mDevideDeviceWidth
-            while (startPostion >= 0) {
-                lockScreenView.x = startPostion.toFloat()
-                startPostion--
+            var startPosition = mDevideDeviceWidth
+            while (startPosition >= 0) {
+                lockScreenView.x = startPosition.toFloat()
+                startPosition--
             }
         } else {
             val animation = TranslateAnimation(0f, mDeviceWidth.toFloat(), 0f, 0f)

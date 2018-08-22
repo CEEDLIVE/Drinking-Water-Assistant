@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "295283414322",
+    "firebase_url": "https://hanmo-portfolio.firebaseio.com",
+    "project_id": "hanmo-portfolio",
+    "storage_bucket": "hanmo-portfolio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295283414322:android:1c7044f8ce48e47b",
+        "android_client_info": {
+          "package_name": "com.portfolio.hanmo.hanmo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295283414322-4hft758tlmt39935ia227nspuhlq4b52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSuMLPU-yRRz8kvYOflBT603CqfCovlJo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295283414322:android:cf284d7a128fdb8b",
+        "android_client_info": {
+          "package_name": "hanmo.com.drinkingwaterassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295283414322-4hft758tlmt39935ia227nspuhlq4b52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSuMLPU-yRRz8kvYOflBT603CqfCovlJo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

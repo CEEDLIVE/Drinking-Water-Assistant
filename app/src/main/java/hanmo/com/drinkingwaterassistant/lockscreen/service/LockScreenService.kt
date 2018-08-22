@@ -28,7 +28,6 @@ class LockScreenService : Service() {
                 val actionName = intent.action
                 when(actionName) {
                     Intent.ACTION_SCREEN_OFF -> { startLockScreenActivity() }
-                    else -> {  }
                 }
             }
         }
@@ -65,7 +64,6 @@ class LockScreenService : Service() {
     private fun createNotificationCompatBuilder(context: Context): NotificationCompat.Builder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-
             /*val intent_noti = Intent(this, MainActivity::class.java)
             intent_noti.action = Intent.ACTION_MAIN
             intent_noti.addCategory(Intent.CATEGORY_HOME)*/
@@ -75,7 +73,7 @@ class LockScreenService : Service() {
             val mBuilder = NotificationCompat.Builder(this, NotificationManager(context).getMainNotificationId())
             return mBuilder
         } else {
-            return NotificationCompat.Builder(context)
+            return NotificationCompat.Builder(context, "")
         }
     }
 

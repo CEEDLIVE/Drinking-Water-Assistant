@@ -28,10 +28,9 @@ class HistoryFragment : Fragment() {
         view.historyList?.run {
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(activity)
-            val historyAdapter = WaterHistoryAdapter(RealmHelper.instance.getSortWaterHistory("todayMonth"), Const.allHistory)
+            val historyAdapter = WaterHistoryAdapter(RealmHelper.instance.getSortWaterHistory("todayDate"), Const.allHistory)
             adapter = historyAdapter
             setHasFixedSize(true)
-
         }
 
     }

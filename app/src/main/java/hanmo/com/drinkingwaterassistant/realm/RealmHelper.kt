@@ -85,6 +85,9 @@ class RealmHelper {
     fun getSortWaterHistory(sortValue : String) : RealmResults<WaterHistory>? {
         return realm.where(WaterHistory::class.java).sort(sortValue, Sort.ASCENDING).findAll()
     }
+    fun getTotalTodayWater(todayDate : Int?): RealmResults<WaterHistory>? {
+        return realm.where(WaterHistory::class.java).equalTo("todayDate", todayDate).findAll()
+    }
 
     fun addWaterButtonClick() {
 

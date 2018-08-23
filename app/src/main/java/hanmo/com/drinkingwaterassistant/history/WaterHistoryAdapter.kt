@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
+import hanmo.com.drinkingwaterassistant.util.WaterCalculateUtil
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.item_history_today_goal.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
@@ -91,8 +92,9 @@ class WaterHistoryAdapter(private val waterHistory: RealmResults<WaterHistory>?,
 
         fun bindView(waterHistoryData: WaterHistory?) {
             with(itemView) {
+                itemTodayGoal.text = WaterCalculateUtil.totalTodayWater(waterHistoryData?.todayDate).toString()
                 waterHistoryData?.let {
-                    itemTodayGoal
+                    
                 }
             }
         }

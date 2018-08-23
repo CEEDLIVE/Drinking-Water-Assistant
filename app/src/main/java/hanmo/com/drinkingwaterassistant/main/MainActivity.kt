@@ -7,6 +7,7 @@ import android.view.View
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.history.WaterHistortAdapter
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         with(waterList) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(applicationContext)
-            historyAdapter = WaterHistortAdapter(addWaterData)
+            historyAdapter = WaterHistortAdapter(addWaterData, Const.todayHistory)
             historyAdapter.setOnItemClickListener(onItemClickListener)
             adapter = historyAdapter
         }

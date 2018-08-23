@@ -8,6 +8,9 @@ object Const {
     var goal : Int = 0
     var waterPercent : Int = 0
 
+    const val todayHistory = 1
+    const val allHistory = 0
+
     const val MINUS = "Minus"
     const val PULS = "Plus"
 

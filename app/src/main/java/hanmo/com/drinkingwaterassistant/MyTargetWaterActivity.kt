@@ -26,8 +26,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
 
     companion object {
         fun newIntent(context: Context?) : Intent {
-            val intent = Intent(context, MyTargetWaterActivity::class.java)
-            return intent
+            return Intent(context, MyTargetWaterActivity::class.java)
         }
     }
 

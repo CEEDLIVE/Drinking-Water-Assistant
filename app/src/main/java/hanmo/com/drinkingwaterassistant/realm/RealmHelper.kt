@@ -82,6 +82,10 @@ class RealmHelper {
         return realm.where(Goals::class.java).findFirst()?.hasLockScreen!!
     }
 
+    fun getSortWaterHistory(sortValue : String) : RealmResults<WaterHistory>? {
+        return realm.where(WaterHistory::class.java).sort(sortValue, Sort.ASCENDING).findAll()
+    }
+
     fun addWaterButtonClick() {
 
         val goals = queryFirst(Goals::class.java)

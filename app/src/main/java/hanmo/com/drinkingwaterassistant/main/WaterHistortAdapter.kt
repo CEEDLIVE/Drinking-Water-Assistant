@@ -52,17 +52,19 @@ class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?) : Recyc
 
         fun bindView(waterHistoryData: WaterHistory?) {
             with(itemView) {
-                val hourFormat = SimpleDateFormat("hh")
-                val minFormat = SimpleDateFormat("mm")
+                waterHistoryData?.let {
+                    val hourFormat = SimpleDateFormat("hh")
+                    val minFormat = SimpleDateFormat("mm")
 
-                val hour = hourFormat.format(waterHistoryData?.addWaterTime)
-                val min = minFormat.format(waterHistoryData?.addWaterTime)
+                    val hour = hourFormat.format(it.addWaterTime)
+                    val min = minFormat.format(it.addWaterTime)
 
-                this.waterHistoryWater.text = "+ ${waterHistoryData?.waterType!!} ml"
-                this.waterHistoryTime.text = "${hour}시 ${min}분"
+                    waterHistoryWater.text = "+ ${it.waterType} ml"
+                    waterHistoryTime.text = "${hour}시 ${min}분"
 
-                this.historyId.text = waterHistoryData.id.toString()
-                this.historyWaterType.text = waterHistoryData.waterType.toString()
+                    historyId.text = it.id.toString()
+                    historyWaterType.text = it.waterType.toString()
+                }
             }
         }
 

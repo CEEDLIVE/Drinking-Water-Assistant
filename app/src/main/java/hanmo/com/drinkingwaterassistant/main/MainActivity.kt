@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
             historyAdapter.notifyDataSetChanged()
             RealmHelper.instance.deleteHistory(view.historyId.text.toString().toInt())
             RealmHelper.instance.updateTodayWater(view.historyWaterType.text.toString().toInt(), Const.MINUS)
-
             setProgressBar()
         }
     }
@@ -95,7 +94,6 @@ class MainActivity : AppCompatActivity() {
 
         lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
             RealmHelper.instance.updateHasLockScreen(isChecked)
-
             if (isChecked) {
                 Lockscreen.instance.active()
             } else {

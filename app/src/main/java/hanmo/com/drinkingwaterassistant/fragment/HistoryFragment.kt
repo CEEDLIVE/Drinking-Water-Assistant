@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import hanmo.com.drinkingwaterassistant.R
+import hanmo.com.drinkingwaterassistant.realm.RealmHelper
+import kotlinx.android.synthetic.main.fragment_history.view.*
 
 /**
  * Created by hanmo on 2018. 7. 19..
@@ -13,9 +15,18 @@ import hanmo.com.drinkingwaterassistant.R
 class HistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater?.inflate(R.layout.fragment_history, container, false)
+        return inflater?.inflate(R.layout.fragment_history, container, false)
+    }
 
-        return rootView
+    override fun onResume() {
+        super.onResume()
+
+        view.historyList?.run {
+            RealmHelper.instance.getSortWaterHistory("todayMonth")?.run {
+                
+            }
+        }
+
     }
 
 }

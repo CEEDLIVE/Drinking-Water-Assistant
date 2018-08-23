@@ -20,7 +20,7 @@ import hanmo.com.drinkingwaterassistant.util.DLog
  */
 class DWFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val TAG = "FirebaseService"
+    private lateinit var context : Context
 
     /**
      * FirebaseInstanceIdService is deprecated.
@@ -35,7 +35,7 @@ class DWFirebaseMessagingService : FirebaseMessagingService() {
      */
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         DLog.d("From: " + remoteMessage.from)
-
+        context = this@DWFirebaseMessagingService
         if(remoteMessage.notification != null) {
             DLog.d("Notification Message Body: ${remoteMessage.notification?.body}")
             sendNotification(remoteMessage.notification?.body)
@@ -44,13 +44,13 @@ class DWFirebaseMessagingService : FirebaseMessagingService() {
 
 
     private fun sendNotification(body: String?) {
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("Notification", body)
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            MyNotificationManager(this@DWFirebaseMessagingService).createMainNotificationChannel()
+            MyNotificationManager(context).createMainNotificationChannel()
         }
 
         startForeground(DWApplication.notificationId, createNotificationCompatBuilder(body, intent).build())
@@ -58,23 +58,22 @@ class DWFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun createNotificationCompatBuilder(body: String?, intent: Intent): NotificationCompat.Builder {
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //커스텀 화면 만들기
-            return NotificationCompat.Builder(this@DWFirebaseMessagingService, MyNotificationManager(this@DWFirebaseMessagingService).getMainNotificationId())
-                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
-                    .setContentTitle("Drinking Water Notification")
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return NotificationCompat.Builder(context,"Notification")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("Push Notification FCM")
                     .setContentText(body)
                     .setAutoCancel(true)
                     .setSound(notificationSound)
                     .setContentIntent(pendingIntent)
         } else {
-            return NotificationCompat.Builder(this@DWFirebaseMessagingService,"Notification")
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle("Push Notification FCM")
+            return NotificationCompat.Builder(context, MyNotificationManager(context).getMainNotificationId())
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle("Drinking Water Notification")
                     .setContentText(body)
                     .setAutoCancel(true)
                     .setSound(notificationSound)

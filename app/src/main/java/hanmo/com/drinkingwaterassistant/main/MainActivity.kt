@@ -1,5 +1,6 @@
 package hanmo.com.drinkingwaterassistant.main
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -7,6 +8,7 @@ import android.view.View
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.history.HistoryFragment
 import hanmo.com.drinkingwaterassistant.history.WaterHistoryAdapter
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         compositeDisposable = CompositeDisposable()
+
     }
 
     override fun onResume() {
@@ -44,7 +47,8 @@ class MainActivity : AppCompatActivity() {
         DLog.e("Call onResume!!")
 
         todayWaterText.setOnClickListener {
-            startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
+            //startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
+            startActivity(Intent(this, HistoryFragment::class.java))
         }
 
         setSwitch()

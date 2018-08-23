@@ -21,11 +21,10 @@ class Lockscreen {
 
     fun init(context: Context?) {
         this.context = context
-
-
     }
 
     fun active() {
+        context
         context?.run {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(Intent(context, LockScreenService::class.java))
@@ -50,16 +49,14 @@ class Lockscreen {
     }
 
     companion object {
-
+        var singleton: Lockscreen? = null
         val instance: Lockscreen
             get() {
-                var singleton: Lockscreen? = null
-
                 if (singleton == null) {
                     singleton = Lockscreen()
 
                 }
-                return singleton
+                return singleton as Lockscreen
             }
     }
 

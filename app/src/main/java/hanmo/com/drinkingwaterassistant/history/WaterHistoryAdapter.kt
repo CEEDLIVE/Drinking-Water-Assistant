@@ -13,6 +13,12 @@ import io.realm.RealmResults
 import kotlinx.android.synthetic.main.item_history_today_goal.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 import java.text.SimpleDateFormat
+import android.widget.LinearLayout
+import android.support.v4.content.ContextCompat
+import android.view.Gravity
+import android.widget.TextView
+
+
 
 /**
  * Created by hanmo on 2018. 7. 18..
@@ -49,7 +55,10 @@ class WaterHistoryAdapter(private val waterHistory: RealmResults<WaterHistory>?,
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is LcMenuViewHolder -> holder.bindView(waterHistory?.get(position))
-            is AllHistoryViewHolder -> holder.bindView(waterHistory?.get(position))
+            is AllHistoryViewHolder -> {
+
+                holder.bindView(waterHistory?.get(position))
+            }
         }
     }
 
@@ -87,20 +96,57 @@ class WaterHistoryAdapter(private val waterHistory: RealmResults<WaterHistory>?,
             LayoutInflater.from(parent.context).inflate(R.layout.item_history_today_goal, parent, false)), View.OnClickListener {
 
         init {
-            itemView.deleteHistoryButton.setOnClickListener(this)
+            itemView.itemParentLayout.setOnClickListener(this)
         }
 
         fun bindView(waterHistoryData: WaterHistory?) {
             with(itemView) {
-                itemTodayGoal.text = WaterCalculateUtil.totalTodayWater(waterHistoryData?.todayDate).toString()
+
+                itemChildLayout.visibility = View.GONE
+
                 waterHistoryData?.let {
-                    
+                    itemTodayGoal.text = WaterCalculateUtil.totalTodayWater(it.todayDate).toString()
+                    /*waterHistory?.forEach {
+                        val intMaxSizeTemp = dummyParentDataItems.get(index).getChildDataItems().size()
+                        if (intMaxSizeTemp > intMaxNoOfChild) intMaxNoOfChild = intMaxSizeTemp
+                    }*/
+                    for (indexView in 0 until waterHistory?.size!!) {
+                        val textView = TextView(context)
+                        textView.id = indexView
+                        textView.setPadding(0, 20, 0, 20)
+                        textView.gravity = Gravity.CENTER
+                        //textView.background = ContextCompat.getDrawable(context, R.drawable.background_sub_module_text)
+                        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                        itemChildLayout.addView(textView, layoutParams)
+                    }
+                }
+                val noOfChildTextViews = itemChildLayout.childCount
+                val noOfChild = waterHistory?.size!!
+                if (noOfChild < noOfChildTextViews) {
+                    for (index in noOfChild until noOfChildTextViews) {
+                        val currentTextView = itemChildLayout.getChildAt(index) as TextView
+                        currentTextView.visibility = View.GONE
+                    }
+                }
+                for (textViewIndex in 0 until noOfChild) {
+                    val currentTextView = itemChildLayout.getChildAt(textViewIndex) as TextView
+                    currentTextView.text = waterHistory[textViewIndex]?.waterType.toString()
+                    /*currentTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(mContext, "" + ((TextView) view).getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });*/
                 }
             }
         }
 
         override fun onClick(v: View?) {
-
+            if (v?.itemChildLayout?.visibility == View.VISIBLE) {
+                v.itemChildLayout.visibility = View.GONE;
+            } else {
+                v?.itemChildLayout?.visibility = View.VISIBLE;
+            }
         }
     }
 }

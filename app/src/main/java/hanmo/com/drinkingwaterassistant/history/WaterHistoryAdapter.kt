@@ -1,5 +1,6 @@
 package hanmo.com.drinkingwaterassistant.history
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +9,14 @@ import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import io.realm.RealmResults
+import kotlinx.android.synthetic.main.item_history_today_goal.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 import java.text.SimpleDateFormat
 
 /**
  * Created by hanmo on 2018. 7. 18..
  */
-class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?, val type : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WaterHistoryAdapter(private val waterHistory: RealmResults<WaterHistory>?, private val type : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var itemClickListener : OnItemClickListener
 
@@ -32,7 +34,7 @@ class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?, val typ
             Const.allHistory -> return AllHistoryViewHolder(parent)
         }
 
-        throw IllegalArgumentException()
+        throw IllegalArgumentException("ViewType is not valid")
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -57,6 +59,7 @@ class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?, val typ
             itemView.deleteHistoryButton.setOnClickListener(this)
         }
 
+        @SuppressLint("SetTextI18n", "SimpleDateFormat")
         fun bindView(waterHistoryData: WaterHistory?) {
             with(itemView) {
                 waterHistoryData?.let {
@@ -80,7 +83,7 @@ class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?, val typ
     }
 
     inner class AllHistoryViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder (
-            LayoutInflater.from(parent.context).inflate(R.layout.item_water_histroy, parent, false)), View.OnClickListener {
+            LayoutInflater.from(parent.context).inflate(R.layout.item_history_today_goal, parent, false)), View.OnClickListener {
 
         init {
             itemView.deleteHistoryButton.setOnClickListener(this)
@@ -89,7 +92,7 @@ class WaterHistortAdapter(val waterHistory: RealmResults<WaterHistory>?, val typ
         fun bindView(waterHistoryData: WaterHistory?) {
             with(itemView) {
                 waterHistoryData?.let {
-                    
+                    itemTodayGoal
                 }
             }
         }

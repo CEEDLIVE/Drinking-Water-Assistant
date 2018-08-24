@@ -83,6 +83,10 @@ class RealmHelper {
     }
 
     fun getSortWaterHistory(sortValue : String) : RealmResults<WaterHistory>? {
+        return realm.where(WaterHistory::class.java).distinct(sortValue).sort(sortValue, Sort.ASCENDING).findAll()
+    }
+
+    fun getSortWaterHistoryDays(sortValue : String) : RealmResults<WaterHistory>? {
         return realm.where(WaterHistory::class.java).sort(sortValue, Sort.ASCENDING).findAll()
     }
     fun getTotalTodayWater(todayDate : Int?): RealmResults<WaterHistory>? {

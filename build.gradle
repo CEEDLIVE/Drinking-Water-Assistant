@@ -3,7 +3,7 @@
 buildscript {
     ext.kotlin_version = '1.2.41'
     ext.googleServiceVersion = '4.0.1'
-    ext.gradleVersion = '3.1.4'
+    ext.gradleVersion = '3.1.0'
     ext.firebaseMessageVersion = '17.1.0'
     ext.firebaseCoreVersion = '16.0.1'
     ext.RXBINDING_LIBRARY_VERSION = '2.1.1'

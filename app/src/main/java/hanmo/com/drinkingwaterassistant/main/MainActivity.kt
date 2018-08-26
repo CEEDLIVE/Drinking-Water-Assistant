@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
-import hanmo.com.drinkingwaterassistant.history.HistoryFragment
+import hanmo.com.drinkingwaterassistant.history.WaterHistoryActivity
 import hanmo.com.drinkingwaterassistant.history.WaterHistoryAdapter
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
@@ -21,6 +21,10 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 
+/**
+ * 24시가 되면 ToayGoals 값 0으로 바꿔야 한다.
+ * 목표량 넘으면 문구 바꿔서 노출 -값이 아닌 초과하셨어요! 라든지
+ */
 @SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity() {
 
@@ -50,8 +54,12 @@ class MainActivity : AppCompatActivity() {
         DLog.e("Call onResume!!")
 
         todayWaterText.setOnClickListener {
-            //startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
-            startActivity(Intent(this, HistoryFragment::class.java))
+            startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
+
+        }
+
+        waterHistoryButton.setOnClickListener {
+            startActivity(WaterHistoryActivity.newIntent(this@MainActivity))
         }
 
         setSwitch()
@@ -66,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         with(waterList) {
             layoutAnimation = slideDownAnim
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(applicationContext)
+            layoutManager = LinearLayoutManager(this@MainActivity)
             historyAdapter = WaterHistoryAdapter(this@MainActivity, addWaterData, Const.todayHistory)
             historyAdapter.setOnItemClickListener(onItemClickListener)
             adapter = historyAdapter

@@ -34,7 +34,7 @@
 
         <activity android:name=".main.MainActivity"/>
         <activity android:name=".MyTargetWaterActivity"/>
-        <activity android:name=".history.HistoryFragment"/>
+        <activity android:name=".history.WaterHistoryActivity"/>
 
         <activity android:name=".lockscreen.LockscreenActivity"
             android:showOnLockScreen="true"

@@ -139,10 +139,6 @@ class LockscreenActivity : AppCompatActivity() {
                 waterTable = realm.where(Goals::class.java).findFirst()
             }
         }
-
-        val dd = realm.where(WaterHistory::class.java).findAll()
-        DLog.e("ddddd" + dd.toString())
-
         setProgressBar()
     }
 
@@ -217,18 +213,18 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     private fun getWeek(week: Int): String {
-        var DayOfWeek = ""
+        var dayOfWeek = ""
         when(week) {
-            2 -> { DayOfWeek = resources.getString(R.string.monday) }
-            3 -> { DayOfWeek = resources.getString(R.string.tuesday) }
-            4 -> { DayOfWeek = resources.getString(R.string.wednesday) }
-            5 -> { DayOfWeek = resources.getString(R.string.thursday) }
-            6 -> { DayOfWeek = resources.getString(R.string.friday) }
-            7 -> { DayOfWeek = resources.getString(R.string.saturday) }
-            1 -> { DayOfWeek = resources.getString(R.string.sunday) }
+            2 -> { dayOfWeek = resources.getString(R.string.monday) }
+            3 -> { dayOfWeek = resources.getString(R.string.tuesday) }
+            4 -> { dayOfWeek = resources.getString(R.string.wednesday) }
+            5 -> { dayOfWeek = resources.getString(R.string.thursday) }
+            6 -> { dayOfWeek = resources.getString(R.string.friday) }
+            7 -> { dayOfWeek = resources.getString(R.string.saturday) }
+            1 -> { dayOfWeek = resources.getString(R.string.sunday) }
         }
 
-        return DayOfWeek
+        return dayOfWeek
     }
 
     private fun setUnlock() {

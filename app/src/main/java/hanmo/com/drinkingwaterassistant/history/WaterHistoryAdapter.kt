@@ -104,8 +104,8 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                 itemChildLayout.visibility = View.GONE
                 waterHistoryData?.let {
                     val childItems = RealmHelper.instance.getTotalTodayWater(it.todayDate)
-                    itemTodayGoal.text = WaterCalculateUtil.totalTodayWater(it.todayDate).toString()
-                    itemTodayGoalDate.text = it.todayDate?.toString()
+                    itemTodayGoal.text = "${WaterCalculateUtil.totalTodayWater(it.todayDate)}ml"
+                    itemTodayGoalDate.text = WaterCalculateUtil.formatCurrentTime(it.addWaterTime)
 
                     for (indexView in 0 until childItems?.size!!) {
                         val textView = TextView(context)

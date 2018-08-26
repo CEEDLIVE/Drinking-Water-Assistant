@@ -20,6 +20,7 @@ import android.view.Gravity
 import android.widget.TextView
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import android.view.animation.AnimationUtils
+import kotlinx.android.synthetic.main.item_history_today_water.view.*
 
 
 /**
@@ -103,33 +104,17 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
             with(itemView) {
                 itemChildLayout.visibility = View.GONE
                 waterHistoryData?.let {
-                    val childItems = RealmHelper.instance.getTotalTodayWater(it.todayDate)
                     itemTodayGoal.text = "${WaterCalculateUtil.totalTodayWater(it.todayDate)}ml"
-                    itemTodayGoalDate.text = WaterCalculateUtil.formatCurrentTime(it.addWaterTime)
+                    itemTodayGoalDate.text = WaterCalculateUtil.formatDate(it.addWaterTime, true)
 
-                    for (indexView in 0 until childItems?.size!!) {
-                        val textView = TextView(context)
-                        textView.id = indexView
-                        textView.setTextColor(Color.parseColor("#000000"))
-                        textView.setPadding(0, 20, 0, 20)
-                        textView.gravity = Gravity.CENTER
-                        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                        itemChildLayout.addView(textView, layoutParams)
+                    RealmHelper.instance.getTotalTodayWater(it.todayDate)?.forEach {
+                        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                        val childView = inflater.inflate(R.layout.item_history_today_water, itemChildLayout, false)
+                        childView.itemTodayWater.text = "+ ${it.waterType}ml"
+                        childView.itemTodayWaterDate.text = WaterCalculateUtil.formatDate(it.addWaterTime, false)
+                        itemChildLayout.addView(childView)
                     }
 
-                    val noOfChildTextViews = itemChildLayout.childCount
-                    val noOfChild = childItems.size
-                    if (noOfChild < noOfChildTextViews) {
-                        for (index in noOfChild until noOfChildTextViews) {
-                            val currentTextView = itemChildLayout.getChildAt(index)
-                            currentTextView.visibility = View.GONE
-                        }
-                    }
-                    for (textViewIndex in 0 until noOfChild) {
-                        val currentTextView = itemChildLayout.getChildAt(textViewIndex) as TextView
-                        currentTextView.text = childItems[textViewIndex]?.waterType.toString()
-                        currentTextView.setOnClickListener(this@AllHistoryViewHolder)
-                    }
                 }
             }
         }

@@ -19,9 +19,16 @@ class WaterCalculateUtil {
             return totalTodayWater
         }
 
-        fun formatCurrentTime(addWaterTime: Long?) : String {
-            val formatter = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
-            return formatter.format(addWaterTime)
+        fun formatDate(addWaterTime: Long?, parent : Boolean) : String {
+            return if (parent) {
+                val formatter = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+                formatter.format(addWaterTime)
+            } else {
+                val hourFormat = SimpleDateFormat("HH", Locale.KOREA)
+                val minFormat = SimpleDateFormat("mm", Locale.KOREA)
+                "${hourFormat.format(addWaterTime)}시 ${minFormat.format(addWaterTime)}분"
+            }
+
         }
     }
 }

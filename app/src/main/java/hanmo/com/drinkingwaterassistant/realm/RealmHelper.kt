@@ -86,11 +86,12 @@ class RealmHelper {
         return realm.where(WaterHistory::class.java).distinct(sortValue).sort(sortValue, Sort.ASCENDING).findAll()
     }
 
-    fun getSortWaterHistoryDays(sortValue : String) : RealmResults<WaterHistory>? {
-        return realm.where(WaterHistory::class.java).sort(sortValue, Sort.ASCENDING).findAll()
-    }
     fun getTotalTodayWater(todayDate : Int?): RealmResults<WaterHistory>? {
         return realm.where(WaterHistory::class.java).equalTo("todayDate", todayDate).findAll()
+    }
+
+    fun getTodayWaterGoal() : Goals? {
+        return realm.where(Goals::class.java).equalTo("todayDate", Calendar.getInstance().get(Calendar.DAY_OF_YEAR)).findFirst()
     }
 
     fun addWaterButtonClick() {

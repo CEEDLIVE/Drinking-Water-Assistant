@@ -94,7 +94,7 @@ class LockscreenActivity : AppCompatActivity() {
         intentFilter.addAction(Intent.ACTION_TIME_TICK)
 
         registerReceiver(mTimeReceiver, intentFilter)
-        waterTable = RealmHelper.instance.queryFirst(Goals::class.java)
+        waterTable = RealmHelper.instance.getTodayWaterGoal()
         setAddButton()
         setProgressBar()
         setUnlock()
@@ -125,14 +125,17 @@ class LockscreenActivity : AppCompatActivity() {
 
             val addWater = WaterHistory()
             addWater.id = nextId
-            addWater.waterType = this.waterType
+            addWater.waterType = waterType
             addWater.todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
             addWater.todayMonth = Calendar.getInstance().get(Calendar.MONTH)
             addWater.todayYear = Calendar.getInstance().get(Calendar.YEAR)
             addWater.addWaterTime = System.currentTimeMillis()
 
             realm.executeTransaction {
-                this.todayWater = this.todayWater?.plus(this.waterType!!)
+                todayWater = todayWater?.plus(waterType!!)
+                todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+                todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+                todayYear = Calendar.getInstance().get(Calendar.YEAR)
 
                 realm.copyToRealm(addWater)
 

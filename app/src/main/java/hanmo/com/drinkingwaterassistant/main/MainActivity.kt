@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setProgressBar() {
-        waterTable = RealmHelper.instance.queryFirst(Goals::class.java)
+        waterTable = RealmHelper.instance.getTodayWaterGoal()
         waterTable?.let {
             waterGoal.text = it.goalWater?.toString()
             todayWater.text = it.todayWater?.toString()

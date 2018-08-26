@@ -4,6 +4,7 @@ import android.util.Log
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
+import hanmo.com.drinkingwaterassistant.util.DLog
 import io.realm.*
 import java.util.*
 
@@ -67,7 +68,7 @@ class RealmHelper {
 
     fun updateTodayWater(todayWater: Int?, cal: String) {
         val goals = queryFirst(Goals::class.java)
-        goals?.let {
+        goals?.run {
             realm.executeTransaction {
                 if (cal.equals(Const.MINUS)){
                     goals.todayWater = goals.todayWater!! - todayWater!!
@@ -91,6 +92,14 @@ class RealmHelper {
     }
 
     fun getTodayWaterGoal() : Goals? {
+        val todayWaterGoals = realm.where(Goals::class.java).equalTo("todayDate", Calendar.getInstance().get(Calendar.DAY_OF_YEAR)).findFirst()
+        todayWaterGoals?.apply {
+            DLog.e("오늘 마신 물이 없습니다!!")
+        } ?: kotlin.run {
+            realm.executeTransaction {
+                todayWaterGoals?.todayWater = 0
+            }
+        }
         return realm.where(Goals::class.java).equalTo("todayDate", Calendar.getInstance().get(Calendar.DAY_OF_YEAR)).findFirst()
     }
 

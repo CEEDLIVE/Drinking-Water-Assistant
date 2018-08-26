@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 
 /**
- * 24시가 되면 ToayGoals 값 0으로 바꿔야 한다.
+ * 24시가 되면 ToayGoals 값 0으로 바꿔야 한다. 잡스케줄러 사용해서
  * 목표량 넘으면 문구 바꿔서 노출 -값이 아닌 초과하셨어요! 라든지
  */
 @SuppressLint("SetTextI18n")

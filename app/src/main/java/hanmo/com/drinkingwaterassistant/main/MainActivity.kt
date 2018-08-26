@@ -1,10 +1,12 @@
 package hanmo.com.drinkingwaterassistant.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
@@ -19,6 +21,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 
+@SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var compositeDisposable: CompositeDisposable
@@ -59,10 +62,12 @@ class MainActivity : AppCompatActivity() {
     private fun setAddWaterList() {
         val addWaterData = RealmHelper.instance.todayWaterHistory()
         DLog.e(addWaterData.toString())
+        val slideDownAnim= AnimationUtils.loadLayoutAnimation(this@MainActivity, R.anim.layout_animation_fall_down)
         with(waterList) {
+            layoutAnimation = slideDownAnim
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(applicationContext)
-            historyAdapter = WaterHistoryAdapter(addWaterData, Const.todayHistory)
+            historyAdapter = WaterHistoryAdapter(this@MainActivity, addWaterData, Const.todayHistory)
             historyAdapter.setOnItemClickListener(onItemClickListener)
             adapter = historyAdapter
         }

@@ -1,6 +1,7 @@
 package hanmo.com.drinkingwaterassistant.history
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,18 +16,19 @@ import kotlinx.android.synthetic.main.item_history_today_goal.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 import java.text.SimpleDateFormat
 import android.widget.LinearLayout
-import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.TextView
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
+import android.view.animation.AnimationUtils
 
 
 /**
  * Created by hanmo on 2018. 7. 18..
  */
-class WaterHistoryAdapter(private val waterHistory: RealmResults<WaterHistory>?, private val type : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WaterHistoryAdapter(private val context : Context, private val waterHistory: RealmResults<WaterHistory>?, private val type : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var itemClickListener : OnItemClickListener
+
 
     fun setOnItemClickListener(itemClickListener : OnItemClickListener) {
         this.itemClickListener = itemClickListener
@@ -56,10 +58,7 @@ class WaterHistoryAdapter(private val waterHistory: RealmResults<WaterHistory>?,
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is LcMenuViewHolder -> holder.bindView(waterHistory?.get(position))
-            is AllHistoryViewHolder -> {
-
-                holder.bindView(waterHistory?.get(position))
-            }
+            is AllHistoryViewHolder -> holder.bindView(waterHistory?.get(position))
         }
     }
 
@@ -102,52 +101,46 @@ class WaterHistoryAdapter(private val waterHistory: RealmResults<WaterHistory>?,
 
         fun bindView(waterHistoryData: WaterHistory?) {
             with(itemView) {
-
                 itemChildLayout.visibility = View.GONE
-
                 waterHistoryData?.let {
+                    val childItems = RealmHelper.instance.getTotalTodayWater(it.todayDate)
                     itemTodayGoal.text = WaterCalculateUtil.totalTodayWater(it.todayDate).toString()
-                    /*waterHistory?.forEach {
-                        val intMaxSizeTemp = dummyParentDataItems.get(index).getChildDataItems().size()
-                        if (intMaxSizeTemp > intMaxNoOfChild) intMaxNoOfChild = intMaxSizeTemp
-                    }*/
-                    for (indexView in 0 until RealmHelper.instance.getTotalTodayWater(waterHistoryData.todayDate)?.size!!) {
+                    itemTodayGoalDate.text = it.todayDate?.toString()
+
+                    for (indexView in 0 until childItems?.size!!) {
                         val textView = TextView(context)
                         textView.id = indexView
                         textView.setTextColor(Color.parseColor("#000000"))
                         textView.setPadding(0, 20, 0, 20)
                         textView.gravity = Gravity.CENTER
-                        //textView.background = ContextCompat.getDrawable(context, R.drawable.background_sub_module_text)
                         val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         itemChildLayout.addView(textView, layoutParams)
                     }
-                }
-                val noOfChildTextViews = itemChildLayout.childCount
-                val noOfChild = RealmHelper.instance.getTotalTodayWater(waterHistoryData?.todayDate)?.size!!
-                if (noOfChild < noOfChildTextViews) {
-                    for (index in noOfChild until noOfChildTextViews) {
-                        val currentTextView = itemChildLayout.getChildAt(index) as TextView
-                        currentTextView.visibility = View.GONE
+
+                    val noOfChildTextViews = itemChildLayout.childCount
+                    val noOfChild = childItems.size
+                    if (noOfChild < noOfChildTextViews) {
+                        for (index in noOfChild until noOfChildTextViews) {
+                            val currentTextView = itemChildLayout.getChildAt(index)
+                            currentTextView.visibility = View.GONE
+                        }
                     }
-                }
-                for (textViewIndex in 0 until noOfChild) {
-                    val currentTextView = itemChildLayout.getChildAt(textViewIndex) as TextView
-                    currentTextView.text = RealmHelper.instance.getTotalTodayWater(waterHistoryData?.todayDate)?.get(textViewIndex)?.waterType.toString()
-                    /*currentTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(mContext, "" + ((TextView) view).getText().toString(), Toast.LENGTH_SHORT).show();
+                    for (textViewIndex in 0 until noOfChild) {
+                        val currentTextView = itemChildLayout.getChildAt(textViewIndex) as TextView
+                        currentTextView.text = childItems[textViewIndex]?.waterType.toString()
+                        currentTextView.setOnClickListener(this@AllHistoryViewHolder)
                     }
-                });*/
                 }
             }
         }
 
         override fun onClick(v: View?) {
-            if (itemView.itemChildLayout?.visibility == View.VISIBLE) {
+            if (itemView.itemChildLayout.visibility == View.VISIBLE) {
                 itemView.itemChildLayout.visibility = View.GONE
             } else {
-                itemView?.itemChildLayout?.visibility = View.VISIBLE
+                val slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down_animation)
+                itemView.itemChildLayout.visibility = View.VISIBLE
+                itemView.itemChildLayout.startAnimation(slideDown)
             }
         }
     }

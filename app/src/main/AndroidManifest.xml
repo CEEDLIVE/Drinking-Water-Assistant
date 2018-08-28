@@ -44,7 +44,7 @@
         <service android:name=".lockscreen.service.LockScreenService" />
 
         <receiver
-            android:name=".PackageReceiver"
+            android:name=".receiver.PackageReceiver"
             android:exported="true">
             <intent-filter android:priority="9999">
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
@@ -55,7 +55,7 @@
         </receiver>
 
         <receiver
-            android:name=".BootReceiver"
+            android:name=".receiver.BootReceiver"
             android:enabled="true"
             android:exported="false"
             android:label="BOOTReceiver">

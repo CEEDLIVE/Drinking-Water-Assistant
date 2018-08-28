@@ -1,4 +1,4 @@
-package hanmo.com.drinkingwaterassistant
+package hanmo.com.drinkingwaterassistant.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

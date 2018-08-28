@@ -8,6 +8,7 @@ import android.os.Build
 import hanmo.com.drinkingwaterassistant.constans.RequestCodes
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.receiver.AlarmReceiver
 import java.util.*
 
 /**

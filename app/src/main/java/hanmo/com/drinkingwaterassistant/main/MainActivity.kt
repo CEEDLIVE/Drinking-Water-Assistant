@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.jakewharton.rxbinding2.widget.checkedChanges
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
@@ -109,6 +110,8 @@ class MainActivity : AppCompatActivity() {
                 Lockscreen.instance.deactivate()
             }
         }
+        //rxCompoundButton Switch
+        //lockscreenSwitch.checkedChanges().skipInitialValue().subscribe {  }
 
         lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
             RealmHelper.instance.updateHasLockScreen(isChecked)

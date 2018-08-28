@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.item_history_today_water.view.*
 
 
 /**
+ *
  * Created by hanmo on 2018. 7. 18..
  */
 @SuppressLint("SetTextI18n")
@@ -103,7 +104,6 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                         childView.itemTodayWaterDate.text = WaterCalculateUtil.formatDate(it.addWaterTime, false)
                         itemChildLayout.addView(childView)
                     }
-
                 }
             }
         }

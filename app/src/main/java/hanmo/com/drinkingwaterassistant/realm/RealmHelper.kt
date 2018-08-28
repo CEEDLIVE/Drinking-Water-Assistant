@@ -9,6 +9,7 @@ import io.realm.*
 import java.util.*
 
 /**
+ *
  * Created by hanmo on 2018. 5. 22..
  */
 class RealmHelper {
@@ -47,21 +48,21 @@ class RealmHelper {
 
     fun updateGoal(goal : Int?) {
         val goals = queryFirst(Goals::class.java)
-        goals?.let {
+        goals?.apply {
             realm.executeTransaction {
-                goals.todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
-                goals.todayMonth = Calendar.getInstance().get(Calendar.MONTH)
-                goals.todayYear = Calendar.getInstance().get(Calendar.YEAR)
-                goals.goalWater = goal
+                todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+                todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+                todayYear = Calendar.getInstance().get(Calendar.YEAR)
+                goalWater = goal
             }
         }
     }
 
     fun updateHasLockScreen(hasLockScreen: Boolean?) {
         val goals = queryFirst(Goals::class.java)
-        goals?.let {
+        goals?.apply {
             realm.executeTransaction {
-                goals.hasLockScreen = hasLockScreen
+                this.hasLockScreen = hasLockScreen
             }
         }
     }
@@ -71,9 +72,9 @@ class RealmHelper {
         goals?.run {
             realm.executeTransaction {
                 if (cal.equals(Const.MINUS)){
-                    goals.todayWater = goals.todayWater!! - todayWater!!
+                    this.todayWater = this.todayWater!! - todayWater!!
                 } else {
-                    goals.todayWater = goals.todayWater!! + todayWater!!
+                    this.todayWater = this.todayWater!! + todayWater!!
                 }
             }
         }
@@ -171,8 +172,9 @@ class RealmHelper {
                 .equalTo("todayMonth", Calendar.getInstance().get(Calendar.MONTH))
                 .and()
                 .equalTo("todayDate", Calendar.getInstance().get(Calendar.DAY_OF_YEAR))
-                .findAll()
                 .sort("addWaterTime", Sort.DESCENDING)
+                .findAll()
+
     }
 
     fun deleteHistory(id: Int) {

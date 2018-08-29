@@ -48,6 +48,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         compositeDisposable = CompositeDisposable()
 
+        /*DailyWorkerUtil.getWorksState().observe(this, Observer {
+            if (it == null || it.isEmpty()) return@Observer
+            val listOfWorkState = it[0]
+
+            with(listOfWorkState) {
+                val isFinished = state.isFinished
+
+            }
+        })*/
     }
 
     override fun onResume() {

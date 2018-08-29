@@ -21,11 +21,16 @@ object DailyWorkerUtil {
         WorkManager.getInstance()
     }
 
-    private val savedWorkState: LiveData<List<WorkStatus>> by lazy {
+    private val savedMidNightWorkState: LiveData<List<WorkStatus>> by lazy {
         workManager.getStatusesByTag(Const.DAILY_WORKER_TAG)
     }
 
-    fun getWorksState(): LiveData<List<WorkStatus>> = savedWorkState
+    private val savedDailyWorkState: LiveData<List<WorkStatus>> by lazy {
+        workManager.getStatusesByTag(Const.DAILY_WORKER)
+    }
+
+    fun getMidNightWorksState(): LiveData<List<WorkStatus>> = savedMidNightWorkState
+    fun getDailyWorksState(): LiveData<List<WorkStatus>> = savedDailyWorkState
 
     @SuppressLint("SimpleDateFormat")
     private fun getDelayTime(): Long {
@@ -39,32 +44,39 @@ object DailyWorkerUtil {
                 set(Calendar.MILLISECOND, 999)
             }
 
-        val delayTime = (cal.timeInMillis - System.currentTimeMillis()) / 1000
-        val aaa = cal.timeInMillis / 1000
-        val bbb = System.currentTimeMillis() / 1000
+        val dataFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
+        val midnightTime = cal.timeInMillis / 1000
+        val currentTime = System.currentTimeMillis() / 1000
 
-        DLog.e("WorkManager midnight : $aaa")
-        DLog.e("WorkManager current : $bbb")
+        val delayTime = midnightTime - currentTime
+
+        DLog.e("WorkManager midnight : $midnightTime")
+        DLog.e("WorkManager current : $currentTime")
         DLog.e("WorkManager delay : $delayTime")
 
-        DLog.e("WorkManager midnight Times for Delay : ${SimpleDateFormat("HH:mm:ss").format(aaa)}")
-        DLog.e("WorkManager current Times for Delay : ${SimpleDateFormat("HH:mm:ss").format(bbb)}")
-        DLog.e("WorkManager onRequest Delay time : ${SimpleDateFormat("HH:mm:ss").format(delayTime)}")
+
+        DLog.e("WorkManager midnight Times for Delay : ${dataFormat.format(midnightTime)}")
+        DLog.e("WorkManager current Times for Delay : ${dataFormat.format(currentTime)}")
+        DLog.e("WorkManager onRequest Delay time : ${dataFormat.format(delayTime)}")
 
         return delayTime
 
     }
 
-    fun applyMidnightWorker() {
+    private fun getConstraints(): Constraints {
 
-        val constraints = Constraints.Builder()
+        return Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
                 .build()
+    }
+
+
+    fun applyMidnightWorker() {
 
         val onTimeDailyWorker = OneTimeWorkRequest
                 .Builder(MidnightAlarmWorker::class.java)
                 .setInitialDelay(getDelayTime(), TimeUnit.SECONDS)
-                .setConstraints(constraints)
+                .setConstraints(getConstraints())
                 .build()
 
         val workerContinuation =
@@ -80,11 +92,12 @@ object DailyWorkerUtil {
 
     fun applyDailyWorker() {
 
-        /*PeriodicWorkRequest.Builder(DailyWorker::class.java, 15, TimeUnit.MINUTES).addTag(LocationWork.TAG)
-                .setConstraints(constraints).build()
-                .also {
-                    workerContinuation = workerContinuation.then(it)
-                }*/
+        val periodicWorkRequest = PeriodicWorkRequest
+                .Builder(DailyWorker::class.java, 24, TimeUnit.HOURS)
+                .addTag(Const.DAILY_WORKER)
+                .setConstraints(getConstraints()).build()
+
+        workManager.enqueue(periodicWorkRequest)
 
     }
 

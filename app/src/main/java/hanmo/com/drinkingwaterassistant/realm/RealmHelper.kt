@@ -95,7 +95,7 @@ class RealmHelper {
     fun updateTodayWaterGoal(): Boolean {
         val todayWaterGoals = realm.where(Goals::class.java).findFirst()
         val todayDateOfCal = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
-        if (todayWaterGoals?.todayDate != todayDateOfCal) {
+        return if (todayWaterGoals?.todayDate != todayDateOfCal) {
             todayWaterGoals?.run {
                 realm.executeTransaction {
                     todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
@@ -105,10 +105,10 @@ class RealmHelper {
                 }
             }
 
-            return realm.where(Goals::class.java).findFirst()?.todayDate == todayDateOfCal
+            realm.where(Goals::class.java).findFirst()?.todayDate == todayDateOfCal
 
         } else {
-            return false
+            false
         }
 
     }

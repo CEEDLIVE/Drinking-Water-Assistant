@@ -4,6 +4,7 @@ import android.support.multidex.MultiDexApplication
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.util.DLog
+import hanmo.com.drinkingwaterassistant.workers.DailyWorkerUtil
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -19,6 +20,9 @@ class DWApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        DLog.e("apllication midnight worker start!!")
+        DLog.e("apllication ${DailyWorkerUtil.getWorksState()}")
+        DailyWorkerUtil.applyMidnightWorker()
         initDB()
     }
 

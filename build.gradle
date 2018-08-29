@@ -16,6 +16,8 @@ buildscript {
     ext.OKHTTP_VERSION = '3.9.1'
     ext.SUPPORT_VERSION = '27.1.1'
     ext.LOTTIE = '2.5.4'
+    ext.work_version = "1.0.0-alpha08"
+
 
     repositories {
         google()

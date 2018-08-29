@@ -20,6 +20,7 @@ class DWApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         initDB()
+        startDailyWorker()
     }
 
     private fun initDB() {
@@ -40,6 +41,9 @@ class DWApplication : MultiDexApplication() {
         } ?: kotlin.run {
             RealmHelper.instance.initDB()
         }
+    }
+
+    private fun startDailyWorker() {
 
     }
 

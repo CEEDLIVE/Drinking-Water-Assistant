@@ -79,6 +79,13 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
     implementation "com.google.firebase:firebase-messaging:$firebaseMessageVersion"
 
+    //WorkManager
+    implementation "android.arch.work:work-runtime:$work_version"
+    //Firebase JobDispatcher support
+    implementation "android.arch.work:work-firebase:$work_version"
+    //Test helpers
+    androidTestImplementation "android.arch.work:work-testing:$work_version"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

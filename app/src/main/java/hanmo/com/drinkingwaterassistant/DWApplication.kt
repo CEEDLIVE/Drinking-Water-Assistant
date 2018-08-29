@@ -21,7 +21,6 @@ class DWApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         DLog.e("apllication midnight worker start!!")
-        DLog.e("apllication ${DailyWorkerUtil.getWorksState()}")
         DailyWorkerUtil.applyMidnightWorker()
         initDB()
     }

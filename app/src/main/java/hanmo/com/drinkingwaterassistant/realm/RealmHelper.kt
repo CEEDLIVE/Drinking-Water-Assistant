@@ -114,7 +114,6 @@ class RealmHelper {
     }
 
     fun getTodayWaterGoal() : Goals? {
-
         return realm.where(Goals::class.java).findFirst()
     }
 

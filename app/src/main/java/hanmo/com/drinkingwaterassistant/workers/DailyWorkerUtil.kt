@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 /**
  * 매일 자정에 해야하는 Worker Utill
  * Created by hanmo on 2018. 8. 29..
@@ -35,29 +34,37 @@ object DailyWorkerUtil {
     @SuppressLint("SimpleDateFormat")
     private fun getDelayTime(): Long {
 
-        val cal = Calendar.getInstance()
-            cal.run {
+        /*val cal = Calendar.getInstance()
+            cal?.run {
                 timeInMillis = System.currentTimeMillis()
                 set(Calendar.HOUR_OF_DAY, 23)
                 set(Calendar.MINUTE, 59)
                 set(Calendar.SECOND, 59)
                 set(Calendar.MILLISECOND, 999)
-            }
+            }*/
 
-        val dataFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
-        val midnightTime = cal.timeInMillis / 1000
-        val currentTime = System.currentTimeMillis() / 1000
+        //val midnightTime = cal.timeInMillis / 1000
 
-        val delayTime = midnightTime - currentTime
+        val dataFormat = SimpleDateFormat("HH:mm:ss", Locale.KOREA)
+        val todayDate = Date(System.currentTimeMillis())
+        val currentTime = dataFormat.format(todayDate)
 
-        DLog.e("WorkManager midnight : $midnightTime")
+        val d1 = dataFormat.parse("24:00:20")
+        val d2 = dataFormat.parse(currentTime)
+        val diff = d1.time - d2.time
+        val delayTime = diff / 1000
+
+        val dfsdfd = diff / (1000*60)
+        DLog.e("WorkManager midnight : ${d1.time / (1000*60)}")
+        DLog.e("WorkManager current : ${d2.time / (1000*60)}")
+        DLog.e("WorkManager onRequest Delay time : $dfsdfd")
+
+
+        /*DLog.e("WorkManager midnight : 23:59:59")
         DLog.e("WorkManager current : $currentTime")
-        DLog.e("WorkManager delay : $delayTime")
-
-
-        DLog.e("WorkManager midnight Times for Delay : ${dataFormat.format(midnightTime)}")
-        DLog.e("WorkManager current Times for Delay : ${dataFormat.format(currentTime)}")
-        DLog.e("WorkManager onRequest Delay time : ${dataFormat.format(delayTime)}")
+        //DLog.e("WorkManager delay : $delayTime")
+        DLog.e("WorkManager onRequest Delay time : ${dataFormat.format(Date(diff))}")
+        //DLog.e("WorkManager current Times for Delay : ${dataFormat.format(currentTime)}")*/
 
         return delayTime
 

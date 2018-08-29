@@ -1,8 +1,8 @@
 package hanmo.com.drinkingwaterassistant.workers
 
 import androidx.work.Worker
-import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.util.DLog
 import io.realm.Realm
 import java.util.*
 
@@ -21,6 +21,7 @@ class DailyWorker : Worker() {
         val realm = Realm.getDefaultInstance()
         val todayWaterGoals = realm.where(Goals::class.java).findFirst()
         val todayDateOfCal = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+
         return if (todayWaterGoals?.todayDate != todayDateOfCal) {
             todayWaterGoals?.run {
                 realm.executeTransaction {
@@ -31,6 +32,7 @@ class DailyWorker : Worker() {
                 }
             }
 
+            //DLog.e("${realm.where(Goals::class.java).findFirst().toString()}")
             realm.where(Goals::class.java).findFirst()?.todayDate == todayDateOfCal
         } else {
             false

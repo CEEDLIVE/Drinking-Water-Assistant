@@ -19,4 +19,5 @@ object Const {
     const val type200 : Int = 200
     const val type250 : Int = 250
 
+    const val DAILY_WORKER_TAG = "DAILY_WORKER_STATE"
 }

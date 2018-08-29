@@ -12,7 +12,5 @@ class DailyWorker : Worker() {
         return if (RealmHelper.instance.updateTodayWaterGoal()) {
             Worker.Result.SUCCESS
         } else Worker.Result.FAILURE
-
     }
-
 }

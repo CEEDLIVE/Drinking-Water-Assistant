@@ -3,9 +3,12 @@ package hanmo.com.drinkingwaterassistant
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.constraint.ConstraintSet
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.transition.TransitionManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
@@ -41,6 +44,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
         setMyTarget()
         setConfirmButton()
         setMyTargetText()
+
     }
 
     private fun setMyTarget() {

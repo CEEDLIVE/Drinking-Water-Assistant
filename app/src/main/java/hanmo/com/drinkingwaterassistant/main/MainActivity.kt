@@ -2,9 +2,13 @@ package hanmo.com.drinkingwaterassistant.main
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
 import android.support.v7.widget.LinearLayoutManager
+import android.transition.TransitionManager
 import android.view.View
 import android.view.animation.AnimationUtils
 import com.jakewharton.rxbinding2.widget.checkedChanges
@@ -21,6 +25,9 @@ import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
+import hanmo.com.drinkingwaterassistant.R.layout.activity_main
+
+
 
 /**
  * 24시가 되면 ToayGoals 값 0으로 바꿔야 한다. 잡스케줄러 사용해서
@@ -72,9 +79,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(WaterHistoryActivity.newIntent(this@MainActivity))
         }
 
+        setGlassLottieKeyframe()
         setSwitch()
         setProgressBar()
         setAddWaterList()
+    }
+
+    private fun setGlassLottieKeyframe() {
+
+
     }
 
     private fun setAddWaterList() {

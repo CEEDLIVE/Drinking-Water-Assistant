@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainLayout"
     tools:context="hanmo.com.drinkingwaterassistant.main.MainActivity">
 
     <TextView
@@ -16,6 +17,7 @@
         android:text="물마신 기록"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Switch
         android:id="@+id/lockscreenSwitch"
@@ -53,12 +55,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="172dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/waterGlassIcon">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -133,7 +135,7 @@
         android:id="@+id/waterProgressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="10dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
@@ -150,8 +152,7 @@
         android:layout_marginEnd="16dp"
         android:src="@drawable/middle_flag"
         app:layout_constraintBottom_toBottomOf="@+id/waterProgressbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="flag" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/waterList"

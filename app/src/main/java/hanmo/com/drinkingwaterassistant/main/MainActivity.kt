@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     private fun setAddWaterList() {
         val addWaterData = RealmHelper.instance.todayWaterHistory()
         DLog.e(addWaterData.toString())
-        val slideDownAnim= AnimationUtils.loadLayoutAnimation(this@MainActivity, R.anim.layout_animation_fall_down)
+        val slideDownAnim= AnimationUtils.loadLayoutAnimation(this@MainActivity, R.anim.layout_list_animation_fall_down)
         with(waterList) {
             layoutAnimation = slideDownAnim
             setHasFixedSize(true)

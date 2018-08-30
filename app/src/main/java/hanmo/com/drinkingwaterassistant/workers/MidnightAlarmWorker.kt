@@ -16,5 +16,4 @@ class MidnightAlarmWorker : Worker() {
         return Worker.Result.SUCCESS
     }
 
-
 }

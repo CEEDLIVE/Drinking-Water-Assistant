@@ -31,6 +31,7 @@ object DailyWorkerUtil {
     fun getMidNightWorksState(): LiveData<List<WorkStatus>> = savedMidNightWorkState
     fun getDailyWorksState(): LiveData<List<WorkStatus>> = savedDailyWorkState
 
+
     @SuppressLint("SimpleDateFormat")
     private fun getDelayTime(): Long {
 
@@ -71,12 +72,10 @@ object DailyWorkerUtil {
     }
 
     private fun getConstraints(): Constraints {
-
         return Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
                 .build()
     }
-
 
     fun applyMidnightWorker() {
 
@@ -107,5 +106,4 @@ object DailyWorkerUtil {
         workManager.enqueue(periodicWorkRequest)
 
     }
-
 }

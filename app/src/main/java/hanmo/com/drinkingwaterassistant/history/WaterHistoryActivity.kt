@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.constans.Const
@@ -29,8 +30,9 @@ class WaterHistoryActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-
+        val slideDownAnim= AnimationUtils.loadLayoutAnimation(this@WaterHistoryActivity, R.anim.layout_list_animation_fall_down)
         historyList?.run {
+            layoutAnimation = slideDownAnim
             layoutManager = LinearLayoutManager(this@WaterHistoryActivity)
             val historyAdapter = WaterHistoryAdapter(this@WaterHistoryActivity, RealmHelper.instance.getSortWaterHistory("todayDate"), Const.allHistory)
             adapter = historyAdapter

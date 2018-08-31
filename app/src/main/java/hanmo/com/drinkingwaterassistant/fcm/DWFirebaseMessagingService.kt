@@ -11,7 +11,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
-import hanmo.com.drinkingwaterassistant.main.MainActivity
+import hanmo.com.drinkingwaterassistant.MainActivity
 import hanmo.com.drinkingwaterassistant.notification.MyNotificationManager
 import hanmo.com.drinkingwaterassistant.util.DLog
 

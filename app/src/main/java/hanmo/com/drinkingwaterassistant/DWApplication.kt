@@ -1,5 +1,6 @@
 package hanmo.com.drinkingwaterassistant
 
+import android.content.Context
 import android.support.multidex.MultiDexApplication
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
@@ -13,9 +14,19 @@ import io.realm.RealmConfiguration
  */
 class DWApplication : MultiDexApplication() {
 
+    init {
+        instance = this@DWApplication
+    }
+
     companion object {
         var lockScreenShow = false
         val notificationId: Int = 1
+
+        private var instance: DWApplication? = null
+
+        fun applicationContext() : Context? {
+            return instance?.applicationContext
+        }
     }
 
     override fun onCreate() {
@@ -45,8 +56,31 @@ class DWApplication : MultiDexApplication() {
         }
     }
 
+    private fun clearApplicationCache(dir: java.io.File?) {
+        var dir = dir
+        if (dir == null)
+            dir = cacheDir
+        if (dir == null)
+            return
+
+        val children = dir.listFiles()
+        try {
+            for (i in children.indices) {
+                if (children[i].isDirectory)
+                    clearApplicationCache(children[i])
+                else
+                    children[i].delete()
+            }
+        } catch (e: Exception) {
+            DLog.e(e.toString())
+        }
+
+    }
+
     override fun onTerminate() {
         super.onTerminate()
+        instance = null
+        clearApplicationCache(null)
         if (!Realm.getDefaultInstance().isClosed) {
             Realm.getDefaultInstance().close()
         }

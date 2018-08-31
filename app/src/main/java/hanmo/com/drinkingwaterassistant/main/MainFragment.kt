@@ -1,17 +1,16 @@
 package hanmo.com.drinkingwaterassistant.main
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.os.Build
-import android.support.v7.app.AppCompatActivity
+import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.transition.TransitionManager
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import com.jakewharton.rxbinding2.widget.checkedChanges
+import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
@@ -24,21 +23,23 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
-import hanmo.com.drinkingwaterassistant.R.layout.activity_main
 
-
-
+/**
+ * Created by hanmo on 2018. 8. 31..
+ */
 /**
  * 24시가 되면 ToayGoals 값 0으로 바꿔야 한다. 잡스케줄러 사용해서
  * 목표량 넘으면 문구 바꿔서 노출 -값이 아닌 초과하셨어요! 라든지
  */
 @SuppressLint("SetTextI18n")
-class MainActivity : AppCompatActivity() {
+class MainFragment : Fragment() {
 
     private lateinit var compositeDisposable: CompositeDisposable
     private var waterTable : Goals? = null
     private lateinit var historyAdapter : WaterHistoryAdapter
+    private lateinit var mContext : Context
 
     private val onItemClickListener = object : WaterHistoryAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
@@ -50,10 +51,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         compositeDisposable = CompositeDisposable()
+
+        activity?.run {
+            mContext = this
+        } ?: kotlin.run {
+            DWApplication.applicationContext()?.run {
+                mContext = this
+            } ?: kotlin.run {
+                throw IllegalStateException("this application does not Context!!")
+            }
+        }
 
         /*DailyWorkerUtil.getWorksState().observe(this, Observer {
             if (it == null || it.isEmpty()) return@Observer
@@ -64,19 +73,19 @@ class MainActivity : AppCompatActivity() {
 
             }
         })*/
+        return inflater?.inflate()
     }
-
     override fun onResume() {
         super.onResume()
         DLog.e("Call onResume!!")
 
         todayWaterText.setOnClickListener {
-            startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
+            startActivity(MyTargetWaterActivity.newIntent(activity))
 
         }
 
         waterHistoryButton.setOnClickListener {
-            startActivity(WaterHistoryActivity.newIntent(this@MainActivity))
+            startActivity(WaterHistoryActivity.newIntent(activity))
         }
 
         setGlassLottieKeyframe()

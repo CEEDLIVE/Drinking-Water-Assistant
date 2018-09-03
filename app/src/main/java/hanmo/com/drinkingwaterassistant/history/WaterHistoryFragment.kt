@@ -1,9 +1,8 @@
 package hanmo.com.drinkingwaterassistant.history
 
-import android.app.Fragment
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -19,18 +18,23 @@ import kotlinx.android.synthetic.main.fragment_history.view.*
 /**
  * Created by hanmo on 2018. 7. 19..
  */
-class WaterHistoryActivity : Fragment() {
+class WaterHistoryFragment : Fragment() {
 
     private lateinit var mContext : Context
 
     companion object {
-        fun newIntent(context: Context?) : Intent {
-            return Intent(context, WaterHistoryActivity::class.java)
+        fun newInstance(): Fragment {
+            val args = Bundle()
+            //args.putSerializable(dataModel, dataModel as Serializable)
+            val fragment = WaterHistoryFragment()
+            fragment.arguments = args
+            return fragment
         }
+
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_history, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
     override fun onResume() {
@@ -47,7 +51,7 @@ class WaterHistoryActivity : Fragment() {
         }
         
         val slideDownAnim= AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_list_animation_fall_down)
-        view.historyList?.run {
+        view?.historyList?.run {
             layoutAnimation = slideDownAnim
             layoutManager = LinearLayoutManager(mContext)
             val historyAdapter = WaterHistoryAdapter(mContext, RealmHelper.instance.getSortWaterHistory("todayDate"), Const.allHistory)

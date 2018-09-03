@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context="hanmo.com.drinkingwaterassistant.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/mainFrameLayout"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mainViewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+    </android.support.v4.view.ViewPager>
 
     <LinearLayout
         android:id="@+id/tabLayout"

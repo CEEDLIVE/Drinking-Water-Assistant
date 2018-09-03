@@ -32,12 +32,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".MyTargetWaterActivity"/>
-        <activity android:name=".history.WaterHistoryActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MyTargetWaterActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".lockscreen.LockscreenActivity"
             android:showOnLockScreen="true"
+            android:screenOrientation="portrait"
             android:launchMode="singleInstance"
             android:theme="@style/lockscreenView"/>
 

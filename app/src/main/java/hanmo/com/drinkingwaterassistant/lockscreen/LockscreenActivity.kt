@@ -90,6 +90,7 @@ class LockscreenActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         compositeDisposable = CompositeDisposable()
+
         val intentFilter = IntentFilter()
         intentFilter.addAction(Intent.ACTION_TIME_TICK)
 

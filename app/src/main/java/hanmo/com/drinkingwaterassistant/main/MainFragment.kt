@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +21,7 @@ import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 
 /**
@@ -51,8 +49,23 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         compositeDisposable = CompositeDisposable()
+
+        /*DailyWorkerUtil.getWorksState().observe(this, Observer {
+            if (it == null || it.isEmpty()) return@Observer
+            val listOfWorkState = it[0]
+
+            with(listOfWorkState) {
+                val isFinished = state.isFinished
+
+            }
+        })*/
+        return inflater?.inflate(R.layout.fragment_main, container, false)
+    }
+    override fun onResume() {
+        super.onResume()
+        DLog.e("Call onResume!!")
 
         activity?.run {
             mContext = this
@@ -64,27 +77,12 @@ class MainFragment : Fragment() {
             }
         }
 
-        /*DailyWorkerUtil.getWorksState().observe(this, Observer {
-            if (it == null || it.isEmpty()) return@Observer
-            val listOfWorkState = it[0]
-
-            with(listOfWorkState) {
-                val isFinished = state.isFinished
-
-            }
-        })*/
-        return inflater?.inflate()
-    }
-    override fun onResume() {
-        super.onResume()
-        DLog.e("Call onResume!!")
-
-        todayWaterText.setOnClickListener {
+        view.todayWaterText.setOnClickListener {
             startActivity(MyTargetWaterActivity.newIntent(activity))
 
         }
 
-        waterHistoryButton.setOnClickListener {
+        view.waterHistoryButton.setOnClickListener {
             startActivity(WaterHistoryActivity.newIntent(activity))
         }
 
@@ -102,12 +100,12 @@ class MainFragment : Fragment() {
     private fun setAddWaterList() {
         val addWaterData = RealmHelper.instance.todayWaterHistory()
         DLog.e(addWaterData.toString())
-        val slideDownAnim= AnimationUtils.loadLayoutAnimation(this@MainActivity, R.anim.layout_list_animation_fall_down)
-        with(waterList) {
+        val slideDownAnim= AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_list_animation_fall_down)
+        with(view.waterList) {
             layoutAnimation = slideDownAnim
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            historyAdapter = WaterHistoryAdapter(this@MainActivity, addWaterData, Const.todayHistory)
+            layoutManager = LinearLayoutManager(mContext)
+            historyAdapter = WaterHistoryAdapter(mContext, addWaterData, Const.todayHistory)
             historyAdapter.setOnItemClickListener(onItemClickListener)
             adapter = historyAdapter
         }
@@ -116,25 +114,25 @@ class MainFragment : Fragment() {
     fun setProgressBar() {
         waterTable = RealmHelper.instance.getTodayWaterGoal()
         waterTable?.let {
-            waterGoal.text = it.goalWater?.toString()
-            todayWater.text = it.todayWater?.toString()
+            view.waterGoal.text = it.goalWater?.toString()
+            view.todayWater.text = it.todayWater?.toString()
             val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
-            waterPercent.text = "$percent%"
-            waterProgressbar.max = it.goalWater!!
+            view.waterPercent.text = "$percent%"
+            view.waterProgressbar.max = it.goalWater!!
 
-            val anim = ProgressBarAnimation(waterProgressbar, 0f, it.todayWater!!.toFloat())
+            val anim = ProgressBarAnimation(view.waterProgressbar, 0f, it.todayWater!!.toFloat())
             anim.duration = 1000
-            waterProgressbar.startAnimation(anim)
+            view.waterProgressbar.startAnimation(anim)
             //waterProgressbar.progress = it.todayWater!!
-            todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
+            view.todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
         }
     }
 
     private fun setSwitch() {
-        Lockscreen.instance.init(this@MainActivity)
+        Lockscreen.instance.init(mContext)
         val goals = RealmHelper.instance.queryFirst(Goals::class.java)
         goals?.let {
-            lockscreenSwitch.isChecked = it.hasLockScreen!!
+            view.lockscreenSwitch.isChecked = it.hasLockScreen!!
             if (it.hasLockScreen!!) {
                 Lockscreen.instance.active()
             } else {
@@ -144,7 +142,7 @@ class MainFragment : Fragment() {
         //rxCompoundButton Switch
         //lockscreenSwitch.checkedChanges().skipInitialValue().subscribe {  }
 
-        lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
+        view.lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
             RealmHelper.instance.updateHasLockScreen(isChecked)
             if (isChecked) {
                 Lockscreen.instance.active()

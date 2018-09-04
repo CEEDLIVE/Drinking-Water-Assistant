@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
@@ -110,7 +111,18 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
 
         override fun onClick(v: View?) {
             if (itemView.itemChildLayout.visibility == View.VISIBLE) {
-                itemView.itemChildLayout.visibility = View.GONE
+                val slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up_animation)
+                slideUp?.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(animation: Animation?) {}
+
+                    override fun onAnimationEnd(animation: Animation?) {
+                        itemView.itemChildLayout.visibility = View.GONE
+                    }
+
+                    override fun onAnimationStart(animation: Animation?) {}
+
+                })
+                itemView.itemChildLayout.startAnimation(slideUp)
             } else {
                 val slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down_animation)
                 itemView.itemChildLayout.visibility = View.VISIBLE

@@ -7,11 +7,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.util.DLog
 import kotlinx.android.synthetic.main.fragment_history.view.*
 
 
@@ -33,12 +35,23 @@ class WaterHistoryFragment : Fragment() {
 
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DLog.e("onCreated!!")
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        DLog.e("onCreateView!!")
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
     override fun onResume() {
         super.onResume()
+        DLog.e("onResume!!")
+
+        if (isAdded) {
+            DLog.e("isAdded!!")
+        }
 
         activity?.run {
             mContext = this

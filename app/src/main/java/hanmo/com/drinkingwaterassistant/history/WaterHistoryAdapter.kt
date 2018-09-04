@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.item_water_histroy.view.*
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.item_history_today_water.view.*
+import hanmo.com.drinkingwaterassistant.anim.AlphaAnim
 
 
 /**
@@ -104,10 +105,14 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                         childView.itemTodayWater.text = "+ ${it.waterType}ml"
                         childView.itemTodayWaterDate.text = WaterCalculateUtil.formatDate(it.addWaterTime, false)
                         itemChildLayout.addView(childView)
+
+                        waterGoal.text = "${it.todayWaterGoal}ml"
+                        itemWaterGoal.text = "${it.todayWaterGoal}ml"
                     }
                 }
             }
         }
+
 
         override fun onClick(v: View?) {
             if (itemView.itemChildLayout.visibility == View.VISIBLE) {
@@ -117,14 +122,29 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
 
                     override fun onAnimationEnd(animation: Animation?) {
                         itemView.itemChildLayout.visibility = View.GONE
+                        itemView.itemWaterGoal.visibility = View.GONE
                     }
 
-                    override fun onAnimationStart(animation: Animation?) {}
+                    override fun onAnimationStart(animation: Animation?) {
+                        AlphaAnim.startAppearAlphaAnim(itemView.waterGoal)
+                        AlphaAnim.startFadeAlphaAnim(itemView.itemWaterGoal)
+                    }
 
                 })
                 itemView.itemChildLayout.startAnimation(slideUp)
             } else {
                 val slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down_animation)
+                slideDown?.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(animation: Animation?) {}
+
+                    override fun onAnimationEnd(animation: Animation?) { }
+
+                    override fun onAnimationStart(animation: Animation?) {
+                        AlphaAnim.startAppearAlphaAnim(itemView.itemWaterGoal)
+                        AlphaAnim.startFadeAlphaAnim(itemView.waterGoal)
+                    }
+
+                })
                 itemView.itemChildLayout.visibility = View.VISIBLE
                 itemView.itemChildLayout.startAnimation(slideDown)
             }

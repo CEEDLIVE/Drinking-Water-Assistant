@@ -131,19 +131,21 @@
 
     </LinearLayout>
 
-    <ProgressBar
+    <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+        xmlns:progress="http://schemas.android.com/apk/res-auto"
         android:id="@+id/waterProgressbar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:progress="40"
-        android:progressDrawable="@drawable/water_progressbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/todayWaterText" />
+        android:layout_width="262dp"
+        android:layout_height="311dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        progress:layout_constraintEnd_toEndOf="parent"
+        progress:layout_constraintStart_toStartOf="parent"
+        progress:progressBackgroundColor="#ffffff"
+        progress:progressColor="#7896CF"
+        progress:progressStrokeWidth="3dp"
+        progress:textColor="@android:color/transparent" />
+
 
     <ImageView
         android:layout_width="30dp"

@@ -8,6 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v4.view.ViewPager
 import hanmo.com.drinkingwaterassistant.anim.TabletTransformer
+import hanmo.com.drinkingwaterassistant.util.DLog
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,20 +35,22 @@ class MainActivity : AppCompatActivity() {
     private var viewPagerPageChangeListener: ViewPager.OnPageChangeListener = object : ViewPager.OnPageChangeListener {
 
         override fun onPageSelected(position: Int) {
-
         }
 
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-
+            historyFrame.alpha = arg1
+            when (arg0) {
+                1 -> historyFrame.alpha = 1.0f
+            }
         }
 
         override fun onPageScrollStateChanged(arg0: Int) {
-
+            DLog.e("state : $arg0")
+            //AlphaAnim.startFadeAlphaAnim(historyFrame)
         }
     }
 
     private fun initViewPagerControls() {
-
 
         val myViewPagerAdapter = MyViewPagerAdapter(supportFragmentManager)
 

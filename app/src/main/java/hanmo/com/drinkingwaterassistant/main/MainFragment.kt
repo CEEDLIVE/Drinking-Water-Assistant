@@ -3,6 +3,8 @@ package hanmo.com.drinkingwaterassistant.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -138,17 +140,30 @@ class MainFragment : Fragment() {
                 waterGoal.text = it.goalWater?.toString()
                 todayWater.text = it.todayWater?.toString()
                 val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
-                waterPercent.text = "$percent%"
-                waterProgressbar.max = it.goalWater!!
+                percentLoop(0.0, percent.toDouble())
+                //waterPercent.text = "$percent%"
+                waterProgressbar.setProgress(it.todayWater!!, it.goalWater!!)
 
-                val anim = ProgressBarAnimation(waterProgressbar, 0f, it.todayWater!!.toFloat())
-                anim.duration = 1000
-                waterProgressbar.startAnimation(anim)
-                //waterProgressbar.progress = it.todayWater!!
                 todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
             }
         }
 
+    }
+
+    private fun percentLoop(current : Double, percent: Double) {
+        val mHandler = Handler()
+        var k = current
+        Thread(Runnable {
+            while (k < percent) {
+                k += 1.0
+                SystemClock.sleep(10L)
+                mHandler.post {
+                    val percentTxt = Math.floor(k).toInt().toString() + "%"
+                    view?.waterPercent?.text = percentTxt
+                }
+            }
+            Const.waterPercent = Math.floor(k).toInt()
+        }).start()
     }
 
     private fun setSwitch() {

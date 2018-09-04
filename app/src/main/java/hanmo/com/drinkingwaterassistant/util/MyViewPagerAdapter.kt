@@ -1,5 +1,6 @@
 package hanmo.com.drinkingwaterassistant.util
 
+import android.database.DataSetObserver
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -30,5 +31,4 @@ class MyViewPagerAdapter(supportFragmentManager: FragmentManager) : FragmentPage
 
         return fragment
     }
-
 }

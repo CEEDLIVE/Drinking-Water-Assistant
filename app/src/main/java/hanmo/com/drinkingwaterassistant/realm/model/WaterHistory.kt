@@ -27,4 +27,7 @@ open class WaterHistory : RealmObject() {
     @Required
     open var addWaterTime : Long? = null
 
+    @Required
+    open var todayWaterGoal : Int? = null
+
 }

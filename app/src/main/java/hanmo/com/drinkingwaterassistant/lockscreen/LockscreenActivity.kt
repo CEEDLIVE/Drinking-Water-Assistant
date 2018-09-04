@@ -131,6 +131,7 @@ class LockscreenActivity : AppCompatActivity() {
             addWater.todayMonth = Calendar.getInstance().get(Calendar.MONTH)
             addWater.todayYear = Calendar.getInstance().get(Calendar.YEAR)
             addWater.addWaterTime = System.currentTimeMillis()
+            addWater.todayWaterGoal = goalWater
 
             realm.executeTransaction {
                 todayWater = todayWater?.plus(waterType!!)

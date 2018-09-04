@@ -100,20 +100,11 @@ class MainFragment : Fragment() {
 
             }
 
-            waterHistoryButton.setOnClickListener {
-                MainActivity().replaceFragment(WaterHistoryFragment.newInstance(), "WaterHistoryFragment")
-            }
         }
 
-        setGlassLottieKeyframe()
         setSwitch()
         setProgressBar()
         setAddWaterList()
-    }
-
-    private fun setGlassLottieKeyframe() {
-
-
     }
 
     private fun setAddWaterList() {
@@ -141,10 +132,8 @@ class MainFragment : Fragment() {
                 todayWater.text = it.todayWater?.toString()
                 val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
                 percentLoop(0.0, percent.toDouble())
-                //waterPercent.text = "$percent%"
                 waterProgressbar.setProgress(it.todayWater!!, it.goalWater!!)
-
-                todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
+                todayLeftWaterText.text = "${it.goalWater!! - it.todayWater!!}ml"
             }
         }
 

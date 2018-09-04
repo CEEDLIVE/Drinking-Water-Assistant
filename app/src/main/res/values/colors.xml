@@ -5,9 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="mainColor">#695CE6</color>
+    <color name="mainFrameTextColor">#4a3dc4</color>
     <color name="blackColor">#000000</color>
     <color name="logoFontColor">#9D97F4</color>
     <color name="splashFontColor1">#928AE5</color>
+    <color name="mainMenuColor">#a6a1df</color>
     <color name="splashFontColor2">#D1CFEC</color>
     <color name="scollbarColor">#68b0a9f4</color>
     <color name="splashColor">#5E94B8</color>

@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         mainViewPager.setPageTransformer(true, TabletTransformer())
         mainViewPager.addOnPageChangeListener(viewPagerPageChangeListener)
 
+        tabLayout.setupWithViewPager(mainViewPager, true)
+
     }
 
 

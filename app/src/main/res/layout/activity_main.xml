@@ -18,28 +18,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_gravity="center"
+        <FrameLayout
+            android:layout_gravity="top|center_horizontal"
             android:orientation="vertical"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/walesLogo"
                 android:layout_gravity="center|top"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/main_logo" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="20dp"
+                app:lottie_autoPlay="false"
+                app:lottie_fileName="wales.json"
+                app:lottie_loop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumbrush"
-                android:layout_marginBottom="10dp"
+                android:layout_gravity="bottom|center_horizontal"
+
                 android:text="Water History"
-                android:textSize="20sp"
+                android:textSize="23sp"
                 android:textColor="@color/whiteColor" />
 
-        </LinearLayout>
+        </FrameLayout>
     </FrameLayout>
 
     <FrameLayout

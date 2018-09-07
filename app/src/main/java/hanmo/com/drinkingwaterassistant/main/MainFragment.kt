@@ -7,25 +7,29 @@ import android.os.Handler
 import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.DWApplication
-import hanmo.com.drinkingwaterassistant.MainActivity
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
-import hanmo.com.drinkingwaterassistant.history.WaterHistoryFragment
 import hanmo.com.drinkingwaterassistant.history.WaterHistoryAdapter
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.settings.SettingsFragment
 import hanmo.com.drinkingwaterassistant.util.DLog
-import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
+import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
+import java.util.concurrent.TimeUnit
+
 
 /**
  * Created by hanmo on 2018. 8. 31..
@@ -36,6 +40,7 @@ import kotlinx.android.synthetic.main.item_water_histroy.view.*
  */
 @SuppressLint("SetTextI18n")
 class MainFragment : Fragment() {
+
 
     private lateinit var compositeDisposable: CompositeDisposable
     private var waterTable : Goals? = null
@@ -67,7 +72,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         compositeDisposable = CompositeDisposable()
 
-
+        val rootView = inflater.inflate(R.layout.fragment_main, container, false)
         /*DailyWorkerUtil.getWorksState().observe(this, Observer {
             if (it == null || it.isEmpty()) return@Observer
             val listOfWorkState = it[0]
@@ -77,7 +82,26 @@ class MainFragment : Fragment() {
 
             }
         })*/
-        return inflater.inflate(R.layout.fragment_main, container, false)
+
+        FragmentEventsBus.instance.fragmentEventObservable.subscribe {
+            if (it == FragmentEventsBus.ACTION_FRAGMENT_CREATED){
+
+            } else if (it == FragmentEventsBus.ACTION_FRAGMENT_DESTROYED) {
+
+            }
+
+        }
+
+        return rootView
+    }
+
+    private fun replaceFragment(fragment: Fragment, tag : String) {
+        activity?.run {
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.settingContainer, fragment, tag)
+                    .commit()
+        }
     }
 
     override fun onResume() {
@@ -97,7 +121,6 @@ class MainFragment : Fragment() {
         view?.run {
             todayWaterText.setOnClickListener {
                 startActivity(MyTargetWaterActivity.newIntent(activity))
-
             }
 
         }
@@ -105,6 +128,21 @@ class MainFragment : Fragment() {
         setSwitch()
         setProgressBar()
         setAddWaterList()
+        setSettingsButton()
+    }
+
+    private fun setSettingsButton() {
+        view?.run {
+            settingButton.clicks()
+                    .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .doOnNext {
+
+                    }
+                    .subscribe {
+                        replaceFragment(SettingsFragment.newInstance(), "settings")
+                    }
+                    .apply { compositeDisposable.add(this) }
+        }
     }
 
     private fun setAddWaterList() {

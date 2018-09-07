@@ -35,12 +35,19 @@ class MainActivity : AppCompatActivity() {
     private var viewPagerPageChangeListener: ViewPager.OnPageChangeListener = object : ViewPager.OnPageChangeListener {
 
         override fun onPageSelected(position: Int) {
+
         }
 
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
             historyFrame.alpha = arg1
             when (arg0) {
-                1 -> historyFrame.alpha = 1.0f
+                1 -> {
+                    historyFrame.alpha = 1.0f
+                    walesLogo.playAnimation()
+                }
+                else -> {
+                    walesLogo.pauseAnimation()
+                }
             }
         }
 

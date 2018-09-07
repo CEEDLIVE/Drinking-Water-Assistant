@@ -27,7 +27,7 @@ import hanmo.com.drinkingwaterassistant.anim.AlphaAnim
 @SuppressLint("SetTextI18n")
 class WaterHistoryAdapter(private val context : Context, private val waterHistory: RealmResults<WaterHistory>?, private val type : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var itemClickListener : OnItemClickListener
+    private var itemClickListener : OnItemClickListener? = null
 
 
     fun setOnItemClickListener(itemClickListener : OnItemClickListener) {
@@ -81,7 +81,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
             }
         }
         override fun onClick(v: View?) {
-            itemClickListener.onItemClick(itemView, adapterPosition)
+            itemClickListener?.onItemClick(itemView, adapterPosition)
         }
     }
 

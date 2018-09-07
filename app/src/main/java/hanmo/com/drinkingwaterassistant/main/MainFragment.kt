@@ -95,10 +95,12 @@ class MainFragment : Fragment() {
                         setAddWaterList()
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_DESTROYED -> {
+                        settingButton.visibility = View.VISIBLE
                         waterInfoLayout.visibility = View.VISIBLE
                         waterProgressbarFrame.visibility = View.VISIBLE
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED -> {
+                        settingButton.visibility = View.GONE
                         waterInfoLayout.visibility = View.GONE
                         waterProgressbarFrame.visibility = View.GONE
                     }

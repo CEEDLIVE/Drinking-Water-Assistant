@@ -15,6 +15,7 @@ import hanmo.com.drinkingwaterassistant.anim.RevealAnimationUtil
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 import hanmo.com.drinkingwaterassistant.anim.RevealAnimationUtil.AnimationFinishedListener
 import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
+import hanmo.com.drinkingwaterassistant.main.MainFragment
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.util.DLog
@@ -48,8 +49,10 @@ class SettingsFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             RevealAnimationUtil.registerStartRevealAnimation(rootView, resources.getColor(R.color.mainColor), resources.getColor(R.color.whiteColor), object : AnimationFinishedListener {
                 override fun onAnimationFinished() {
-                    FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED)
-                    setLockscreenSwitch()
+                    if (!MainFragment.possibleDeleteItem) {
+                        FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED)
+                        setLockscreenSwitch()
+                    }
                 }
             })
         }

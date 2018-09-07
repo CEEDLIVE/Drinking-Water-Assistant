@@ -16,6 +16,9 @@ import java.util.concurrent.TimeUnit
  */
 object DailyWorkerUtil {
 
+    private var onTimeDailyWorker : OneTimeWorkRequest? = null
+    private var periodicWorkRequest : PeriodicWorkRequest? = null
+
     private val workManager: WorkManager by lazy {
         WorkManager.getInstance()
     }
@@ -79,7 +82,9 @@ object DailyWorkerUtil {
 
     fun applyMidnightWorker() {
 
-        val onTimeDailyWorker = OneTimeWorkRequest
+        cancelMidnightAlarmWorker()
+
+        onTimeDailyWorker = OneTimeWorkRequest
                 .Builder(MidnightAlarmWorker::class.java)
                 .setInitialDelay(getDelayTime(), TimeUnit.SECONDS)
                 .setConstraints(getConstraints())
@@ -98,12 +103,25 @@ object DailyWorkerUtil {
 
     fun applyDailyWorker() {
 
-        val periodicWorkRequest = PeriodicWorkRequest
+        periodicWorkRequest = PeriodicWorkRequest
                 .Builder(DailyWorker::class.java, 24, TimeUnit.HOURS)
                 .addTag(Const.DAILY_WORKER)
                 .setConstraints(getConstraints()).build()
 
         workManager.enqueue(periodicWorkRequest)
+    }
 
+    fun cancelMidnightAlarmWorker() {
+        onTimeDailyWorker?.run {
+            DLog.e("hanmo cancel Midnight Worker !!")
+            workManager.cancelWorkById(this.id)
+        }
+    }
+
+    fun cancelDailyWorker() {
+        periodicWorkRequest?.run {
+            DLog.e("hanmo cancel Daily Worker !!")
+            workManager.cancelWorkById(this.id)
+        }
     }
 }

@@ -44,10 +44,9 @@ class MainFragment : Fragment() {
     private var waterTable : Goals? = null
     private lateinit var historyAdapter : WaterHistoryAdapter
     private lateinit var mContext : Context
-    private var possibleDeleteItem = true
 
     companion object {
-
+        var possibleDeleteItem = true
         fun newInstance(): MainFragment {
             val args = Bundle()
             //args.putSerializable(dataModel, dataModel as Serializable)
@@ -95,6 +94,7 @@ class MainFragment : Fragment() {
                         setAddWaterList()
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_DESTROYED -> {
+                        possibleDeleteItem = true
                         settingButton.visibility = View.VISIBLE
                         waterInfoLayout.visibility = View.VISIBLE
                         waterProgressbarFrame.visibility = View.VISIBLE

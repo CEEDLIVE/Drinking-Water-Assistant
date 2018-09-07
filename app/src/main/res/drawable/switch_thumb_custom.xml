@@ -9,7 +9,7 @@
                 android:left="@dimen/switch_thumb_padding"
                 android:bottom="@dimen/switch_thumb_padding"
                 android:top="@dimen/switch_thumb_padding"/>-->
-            <size android:width="24dp" android:height="25dp" />
+            <size android:width="26dp" android:height="27dp" />
             <stroke android:width="4dp" android:color="#0000ffff" />
         </shape>
     </item>

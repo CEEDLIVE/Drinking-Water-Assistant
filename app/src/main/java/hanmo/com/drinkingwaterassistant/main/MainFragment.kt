@@ -61,6 +61,14 @@ class MainFragment : Fragment() {
 
     private val onItemClickListener = object : WaterHistoryAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
+            FragmentEventsBus.instance.fragmentEventObservable.subscribe {
+                if (it == FragmentEventsBus.ACTION_FRAGMENT_CREATED){
+
+                } else if (it == FragmentEventsBus.ACTION_FRAGMENT_DESTROYED) {
+
+                }
+            }
+
             historyAdapter.notifyItemRemoved(position)
             historyAdapter.notifyDataSetChanged()
             RealmHelper.instance.deleteHistory(view.historyId.text.toString().toInt())
@@ -89,7 +97,6 @@ class MainFragment : Fragment() {
             } else if (it == FragmentEventsBus.ACTION_FRAGMENT_DESTROYED) {
 
             }
-
         }
 
         return rootView
@@ -114,7 +121,7 @@ class MainFragment : Fragment() {
             DWApplication.applicationContext()?.run {
                 mContext = this
             } ?: kotlin.run {
-                throw IllegalStateException("this application does not Context!!")
+                throw IllegalStateException("this application does not Context!!") as Throwable
             }
         }
 
@@ -125,7 +132,6 @@ class MainFragment : Fragment() {
 
         }
 
-        setSwitch()
         setProgressBar()
         setAddWaterList()
         setSettingsButton()
@@ -193,31 +199,6 @@ class MainFragment : Fragment() {
         }).start()
     }
 
-    private fun setSwitch() {
-        view?.run {
-            Lockscreen.instance.init(mContext)
-            val goals = RealmHelper.instance.queryFirst(Goals::class.java)
-            goals?.let {
-                lockscreenSwitch.isChecked = it.hasLockScreen!!
-                if (it.hasLockScreen!!) {
-                    Lockscreen.instance.active()
-                } else {
-                    Lockscreen.instance.deactivate()
-                }
-            }
-            //rxCompoundButton Switch
-            //lockscreenSwitch.checkedChanges().skipInitialValue().subscribe {  }
-
-            lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
-                RealmHelper.instance.updateHasLockScreen(isChecked)
-                if (isChecked) {
-                    Lockscreen.instance.active()
-                } else {
-                    Lockscreen.instance.deactivate()
-                }
-            })
-        }
-    }
 
     override fun onDestroy() {
         compositeDisposable.clear()

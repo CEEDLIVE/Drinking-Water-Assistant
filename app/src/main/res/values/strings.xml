@@ -13,4 +13,8 @@
     <string name="startConfirm">시작하기</string>
     <string name="todayWaterText">오늘 마신물</string>
     <string name="leftWater">남은양</string>
+    <string name="settingText">환경설정</string>
+    <string name="locksreenText">잠금화면</string>
+    <string name="lockscrenOff">잠금화면을 껐습니다.</string>
+    <string name="lockscrenOn">잠금화면을 켰습니다.</string>
 </resources>

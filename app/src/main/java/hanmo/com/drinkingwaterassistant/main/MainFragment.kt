@@ -18,7 +18,6 @@ import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.history.WaterHistoryAdapter
-import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.settings.SettingsFragment
@@ -41,11 +40,11 @@ import java.util.concurrent.TimeUnit
 @SuppressLint("SetTextI18n")
 class MainFragment : Fragment() {
 
-
     private lateinit var compositeDisposable: CompositeDisposable
     private var waterTable : Goals? = null
     private lateinit var historyAdapter : WaterHistoryAdapter
     private lateinit var mContext : Context
+    private var possibleDeleteItem = true
 
     companion object {
 
@@ -61,14 +60,6 @@ class MainFragment : Fragment() {
 
     private val onItemClickListener = object : WaterHistoryAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
-            FragmentEventsBus.instance.fragmentEventObservable.subscribe {
-                if (it == FragmentEventsBus.ACTION_FRAGMENT_CREATED){
-
-                } else if (it == FragmentEventsBus.ACTION_FRAGMENT_DESTROYED) {
-
-                }
-            }
-
             historyAdapter.notifyItemRemoved(position)
             historyAdapter.notifyDataSetChanged()
             RealmHelper.instance.deleteHistory(view.historyId.text.toString().toInt())
@@ -90,16 +81,34 @@ class MainFragment : Fragment() {
 
             }
         })*/
-
-        FragmentEventsBus.instance.fragmentEventObservable.subscribe {
-            if (it == FragmentEventsBus.ACTION_FRAGMENT_CREATED){
-
-            } else if (it == FragmentEventsBus.ACTION_FRAGMENT_DESTROYED) {
-
-            }
-        }
+        getSettingsFragmentObserve()
 
         return rootView
+    }
+
+    private fun getSettingsFragmentObserve() {
+        FragmentEventsBus.instance.fragmentEventObservable.subscribe {
+            view?.run {
+                when (it) {
+                    FragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
+                        possibleDeleteItem = false
+                        setAddWaterList()
+                    }
+                    FragmentEventsBus.ACTION_FRAGMENT_DESTROYED -> {
+                        waterInfoLayout.visibility = View.VISIBLE
+                        waterProgressbarFrame.visibility = View.VISIBLE
+                    }
+                    FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED -> {
+                        waterInfoLayout.visibility = View.GONE
+                        waterProgressbarFrame.visibility = View.GONE
+                    }
+                    FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED -> {
+                        possibleDeleteItem = true
+                        setAddWaterList()
+                    }
+                }
+            }
+        }
     }
 
     private fun replaceFragment(fragment: Fragment, tag : String) {
@@ -145,6 +154,7 @@ class MainFragment : Fragment() {
 
                     }
                     .subscribe {
+                        FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_CREATED)
                         replaceFragment(SettingsFragment.newInstance(), "settings")
                     }
                     .apply { compositeDisposable.add(this) }
@@ -155,13 +165,15 @@ class MainFragment : Fragment() {
         view?.run {
             val addWaterData = RealmHelper.instance.todayWaterHistory()
             DLog.e(addWaterData.toString())
-            val slideDownAnim= AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_list_animation_fall_down)
             with(waterList) {
-                layoutAnimation = slideDownAnim
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(mContext)
                 historyAdapter = WaterHistoryAdapter(mContext, addWaterData, Const.todayHistory)
-                historyAdapter.setOnItemClickListener(onItemClickListener)
+                if (possibleDeleteItem) {
+                    val slideDownAnim= AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_list_animation_fall_down)
+                    layoutAnimation = slideDownAnim
+                    historyAdapter.setOnItemClickListener(onItemClickListener)
+                }
                 adapter = historyAdapter
             }
         }

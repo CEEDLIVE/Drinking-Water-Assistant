@@ -9,7 +9,7 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.animation.ValueAnimator
-
+import android.graphics.Color
 
 
 /**
@@ -27,6 +27,12 @@ object RevealAnimationUtil {
         anim.setIntValues(startColor, endColor)
         anim.setEvaluator(ArgbEvaluator())
         anim.addUpdateListener { valueAnimator -> view?.setBackgroundColor(valueAnimator.animatedValue as Int) }
+        anim.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                view?.setBackgroundColor(Color.TRANSPARENT)
+            }
+        })
         anim.duration = duration.toLong()
         anim.start()
     }

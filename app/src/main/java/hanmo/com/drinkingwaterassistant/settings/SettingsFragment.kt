@@ -48,8 +48,7 @@ class SettingsFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             RevealAnimationUtil.registerStartRevealAnimation(rootView, resources.getColor(R.color.mainColor), resources.getColor(R.color.whiteColor), object : AnimationFinishedListener {
                 override fun onAnimationFinished() {
-                    FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_CREATED)
-                    rootView.settingFragmentLayout.background = ColorDrawable(Color.TRANSPARENT)
+                    FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED)
                     setLockscreenSwitch()
                 }
             })
@@ -106,6 +105,7 @@ class SettingsFragment : Fragment() {
                             RevealAnimationUtil.registerExitRevealAnimation(view, resources.getColor(R.color.mainColor), resources.getColor(R.color.whiteColor), object : AnimationFinishedListener {
                                 override fun onAnimationFinished() {
                                     DLog.e("animation Close")
+                                    FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED)
                                     activity?.run { supportFragmentManager.beginTransaction().remove(this@SettingsFragment).commitAllowingStateLoss() }
                                 }
                             })

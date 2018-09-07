@@ -23,6 +23,8 @@ class FragmentEventsBus private constructor() {
 
         val ACTION_FRAGMENT_CREATED = 1
         val ACTION_FRAGMENT_DESTROYED = 2
+        val ACTION_FRAGMENT_START_ANIMATION_FINISHED = 3
+        val ACTION_FRAGMENT_END_ANIMATION_FINISHED = 4
 
         private var mInstance: FragmentEventsBus? = null
 

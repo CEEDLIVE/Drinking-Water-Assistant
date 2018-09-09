@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +64,21 @@ class SettingsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setCloseButton()
+        setBackButtonPressed()
+    }
+
+    private fun setBackButtonPressed() {
+        view?.run {
+            isFocusableInTouchMode = true
+            requestFocus()
+            setOnKeyListener { v, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    settingsCloseButton.requestFocus()
+                    return@setOnKeyListener true
+                }
+                false
+            }
+        }
     }
 
     private fun setLockscreenSwitch() {

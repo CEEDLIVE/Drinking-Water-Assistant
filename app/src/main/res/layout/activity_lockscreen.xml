@@ -19,15 +19,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
+        <android.support.constraint.Guideline
+            android:id="@+id/timeGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintBottom_toTopOf="@id/timeGuideline" >
 
             <TextView
                 android:id="@+id/lockscreenTime"
@@ -46,6 +53,7 @@
                 android:textSize="18sp"/>
 
         </LinearLayout>
+
 
 
         <LinearLayout
@@ -185,5 +193,6 @@
             app:useCompatPadding="true" />-->
 
     </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>

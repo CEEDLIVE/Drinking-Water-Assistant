@@ -18,20 +18,22 @@
         android:padding="10dp"
         android:src="@drawable/water_settings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="setting button" />
 
-    <TextView
-        android:id="@+id/todayWaterText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="10dp"
-        android:text="물마신 기록"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/myTargetButton"
+        android:layout_gravity="center|top"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="wales.json"
+        app:lottie_loop="true"/>
 
     <LinearLayout
         android:id="@+id/waterInfoLayout"
@@ -69,7 +71,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="3dp"
-                    android:text="1200"
                     android:textColor="@color/whiteColor"
                     android:textSize="18sp" />
 
@@ -94,7 +95,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="3dp"
-                    android:text="2000ml"
                     android:textColor="@color/whiteColor"
                     android:textSize="18sp" />
 
@@ -118,7 +118,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="3dp"
-                    android:text="2000ml"
                     android:textColor="@color/whiteColor"
                     android:textSize="18sp" />
 
@@ -185,7 +184,6 @@
                 android:id="@+id/waterPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="60%"
                 android:textColor="@color/mainColor"
                 android:textSize="40sp"
                 android:textStyle="bold" />

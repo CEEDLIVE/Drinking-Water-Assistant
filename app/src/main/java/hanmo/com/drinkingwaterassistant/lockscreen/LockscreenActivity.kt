@@ -304,6 +304,7 @@ class LockscreenActivity : AppCompatActivity() {
             }
         })
 
+
     }
 
     override fun onPause() {

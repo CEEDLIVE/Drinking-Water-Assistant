@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewTreeObserver
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import hanmo.com.drinkingwaterassistant.R
@@ -19,7 +20,9 @@ import kotlinx.android.synthetic.main.view_unlock.view.*
 class UnLockSwipe : RelativeLayout {
     private var listenerRight: OnUnlockListener? = null
 
-    private var slideButton: ImageView? = null
+    private var slideButton: FrameLayout? = null
+    private var lockedImage: ImageView? = null
+
 
     private var thumbWidth = 0
     private var sliding = false
@@ -45,6 +48,7 @@ class UnLockSwipe : RelativeLayout {
     }
 
     fun reset() {
+        lockedImage?.setImageResource(R.drawable.locked)
         slideButton?.run {
             DLog.e("call reset!")
             val params = layoutParams as RelativeLayout.LayoutParams
@@ -64,7 +68,7 @@ class UnLockSwipe : RelativeLayout {
 
         // Retrieve layout elements
         slideButton = view.swipeButton
-
+        lockedImage = view.lockedImage
 
         // Get padding
         //thumbWidth = dpToPx(120); // 60dp + 2*10dp
@@ -100,7 +104,7 @@ class UnLockSwipe : RelativeLayout {
         if (event.action == MotionEvent.ACTION_DOWN) { //126
             DLog.e("event X : ${event.x}    sliderPosition : $sliderPosition    thumbWidth : $thumbWidth")
             if (event.x >= sliderPosition && event.x < sliderPosition + thumbWidth) {
-
+                lockedImage?.setImageResource(R.drawable.unlocked)
                 sliding = true
                 initialSlidingX = event.x
                 initialSliderPosition = sliderPosition

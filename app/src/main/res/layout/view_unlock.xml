@@ -7,15 +7,26 @@
     android:background="@color/transparent"
     android:padding="3dp">
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/swipeButton"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/ic_aaaa"
-        android:contentDescription="unlocked"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true" >
+        <ImageView
+            android:src="@drawable/lock_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/lockedImage"
+            android:layout_gravity="center"
+            android:src="@drawable/locked"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+    </FrameLayout>
 
 
 </RelativeLayout>

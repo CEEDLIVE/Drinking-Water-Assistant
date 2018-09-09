@@ -2,6 +2,7 @@ package hanmo.com.drinkingwaterassistant.main
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
@@ -9,7 +10,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,18 +29,15 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 import java.util.concurrent.TimeUnit
 
 
 /**
- * Created by hanmo on 2018. 8. 31..
- */
-/**
  * 24시가 되면 ToayGoals 값 0으로 바꿔야 한다. 잡스케줄러 사용해서
  * 목표량 넘으면 문구 바꿔서 노출 -값이 아닌 초과하셨어요! 라든지
+ * Created by hanmo on 2018. 8. 31..
  */
 @SuppressLint("SetTextI18n")
 class MainFragment : Fragment() {
@@ -154,15 +151,20 @@ class MainFragment : Fragment() {
         view?.run {
             val intent = MyTargetWaterActivity.newIntent(activity)
             val logoImage = findViewById<LottieAnimationView>(R.id.myTargetButton)
-            val todayTextHolder = view?.findViewById<TextView>(R.id.waterGoal)
-            val imagePair = android.support.v4.util.Pair.create(logoImage as View, "tImage")
-            val holderPair = android.support.v4.util.Pair.create(todayTextHolder as View, "tName")
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, imagePair, holderPair)
+            val todayTextHolder = findViewById<TextView>(R.id.waterGoal)
+            val logoImagePair = android.support.v4.util.Pair.create(logoImage as View, "tImage")
+            val targetTextPair = android.support.v4.util.Pair.create(todayTextHolder as View, "tName")
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, logoImagePair, targetTextPair)
 
             myTargetButton.clicks()
                     .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .subscribe {
-                        ActivityCompat.startActivity(activity!!, intent, options.toBundle())
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            ActivityCompat.startActivity(activity!!, intent, options.toBundle())
+                        } else {
+                            startActivity(intent)
+                        }
+
                     }
                     .apply { compositeDisposable.add(this) }
 

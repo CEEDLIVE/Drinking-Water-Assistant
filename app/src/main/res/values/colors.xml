@@ -6,6 +6,7 @@
 
     <color name="mainColor">#1E75FF</color>
     <color name="subColor">#0F9CE8</color>
+    <color name="subsubColor">#bebebe</color>
     <color name="blackColor">#000000</color>
     <color name="logoFontColor">#11EAFF</color>
     <color name="splashFontColor1">#11EAFF</color>

@@ -87,6 +87,7 @@ class SettingsFragment : Fragment() {
             setOnKeyListener { v, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     settingsCloseButton.performClick()
+                    settingsCloseButton.isEnabled = false
                     return@setOnKeyListener true
                 }
                 false
@@ -118,6 +119,7 @@ class SettingsFragment : Fragment() {
         view?.settingsCloseButton?.run {
             clicks()
                     .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .filter { isEnabled }
                     .doOnNext {
                         reverseAnimationSpeed()
                         settingsCloseButton.playAnimation()

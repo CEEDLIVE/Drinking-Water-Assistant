@@ -26,7 +26,13 @@ import org.jetbrains.anko.toast
 import java.util.*
 import io.realm.Realm
 import android.animation.ValueAnimator
+import android.os.Build
+import android.os.Handler
+import android.os.SystemClock
+import com.airbnb.lottie.LottieAnimationView
+import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.util.DLog
+import kotlinx.android.synthetic.main.fragment_main.view.*
 
 
 /**
@@ -76,6 +82,17 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (hasFocus) window.decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    )
+        }
+    }
     @Suppress("DEPRECATION")
     override fun onAttachedToWindow() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
@@ -105,12 +122,20 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     private fun setAddButton() {
-        /*addWaterButton.clicks()
-                //.filter { }
+        addWaterButton.clicks()
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext {
+                    val addEffect = LottieAnimationView(this@LockscreenActivity)
+                    addWaterEffectFrame.addView(addEffect)
+                    with(addEffect) {
+                        setAnimation("add_effect.json")
+                        loop(false)
+                        playAnimation()
+                    }
+                }
                 .subscribe {
                     updateProgressBar()
-                }.apply { compositeDisposable.add(this) }*/
+                }.apply { compositeDisposable.add(this) }
     }
 
     private fun updateProgressBar() {
@@ -144,26 +169,35 @@ class LockscreenActivity : AppCompatActivity() {
                 waterTable = realm.where(Goals::class.java).findFirst()
             }
         }
-        //setProgressBar()
+        setProgressBar()
     }
 
-    /*private fun setProgressBar() {
+    private fun setProgressBar() {
         waterTable?.let {
-            waterGoal.text = it.goalWater?.toString()
-            todayWater.text = it.todayWater?.toString()
-            val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
-            waterPercent.text = "$percent%"
-            waterProgressbar.max = it.goalWater!!
-
-            val anim = ProgressBarAnimation(waterProgressbar, 0f, it.todayWater!!.toFloat())
-            anim.duration = 1000
-            waterProgressbar.startAnimation(anim)
-
-            //waterProgressbar.progress = it.todayWater!!
-
-            todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
+            waterTable = RealmHelper.instance.getTodayWaterGoal()
+            waterTable?.let {
+                val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
+                percentLoop(0.0, percent.toDouble())
+                waterProgressbar.setProgress(it.todayWater!!, it.goalWater!!)
+            }
         }
-    }*/
+    }
+
+    private fun percentLoop(current : Double, percent: Double) {
+        val mHandler = Handler()
+        var k = current
+        Thread(Runnable {
+            while (k < percent) {
+                k += 1.0
+                SystemClock.sleep(10L)
+                mHandler.post {
+                    val percentTxt = Math.floor(k).toInt().toString() + "%"
+                    waterPercent.text = percentTxt
+                }
+            }
+            Const.waterPercent = Math.floor(k).toInt()
+        }).start()
+    }
 
     private fun setMenu() {
         lcMenuList.visibility = View.GONE

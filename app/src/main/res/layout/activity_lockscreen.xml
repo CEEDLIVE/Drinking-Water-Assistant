@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-smallcaps"
                 android:textColor="@color/whiteColor"
-                android:textSize="65sp" />
+                android:textSize="55sp" />
 
             <TextView
                 android:id="@+id/lockscreenDate"
@@ -66,7 +66,15 @@
 
         </LinearLayout>
 
-
+        <FrameLayout
+            android:id="@+id/addWaterEffectFrame"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toTopOf="@id/waterProgressbarFrame"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <FrameLayout
             android:id="@+id/waterProgressbarFrame"
@@ -82,7 +90,7 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/mainColor"
+                android:textColor="@color/whiteColor"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
@@ -98,6 +106,14 @@
                 progress:progressColor="#7896CF"
                 progress:progressStrokeWidth="5dp"
                 progress:textColor="@android:color/transparent" />
+
+            <ImageView
+                android:id="@+id/addWaterButton"
+                android:layout_gravity="bottom|center_horizontal"
+                android:src="@drawable/add_water"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
         </FrameLayout>
 
 
@@ -117,8 +133,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/menuButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"

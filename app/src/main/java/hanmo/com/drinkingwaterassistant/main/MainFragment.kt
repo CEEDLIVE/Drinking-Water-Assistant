@@ -132,15 +132,8 @@ class MainFragment : Fragment() {
             DWApplication.applicationContext()?.run {
                 mContext = this
             } ?: kotlin.run {
-                throw IllegalStateException("this application does not Context!!") as Throwable
+                throw IllegalStateException("this application does not Context!!")
             }
-        }
-
-        view?.run {
-            todayWaterText.setOnClickListener {
-                startActivity(MyTargetWaterActivity.newIntent(activity))
-            }
-
         }
 
         setProgressBar()

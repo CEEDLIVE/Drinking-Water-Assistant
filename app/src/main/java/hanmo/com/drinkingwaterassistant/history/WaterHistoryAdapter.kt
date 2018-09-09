@@ -126,6 +126,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                     }
 
                     override fun onAnimationStart(animation: Animation?) {
+                        itemView.drowIcon.setImageResource(R.drawable.ic_drop_down)
                         AlphaAnim.startAppearAlphaAnim(itemView.waterGoal)
                         AlphaAnim.startFadeAlphaAnim(itemView.itemWaterGoal)
                     }
@@ -140,6 +141,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                     override fun onAnimationEnd(animation: Animation?) { }
 
                     override fun onAnimationStart(animation: Animation?) {
+                        itemView.drowIcon.setImageResource(R.drawable.ic_drop_up)
                         AlphaAnim.startAppearAlphaAnim(itemView.itemWaterGoal)
                         AlphaAnim.startFadeAlphaAnim(itemView.waterGoal)
                     }

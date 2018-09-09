@@ -15,5 +15,7 @@
     <color name="splashColor">#5E94B8</color>
     <color name="whiteColor">#FFFFFF</color>
     <color name="settingTextColor">#A8A8A8</color>
+    <color name="waveMainColor">#640f9ce8</color>
+    <color name="wavesubColor">#3251b0e4</color>
     <color name="transparent">#00000000</color>
 </resources>

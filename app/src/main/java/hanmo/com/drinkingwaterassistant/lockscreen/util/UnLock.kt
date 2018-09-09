@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
+import hanmo.com.drinkingwaterassistant.util.DLog
 
 /**
  * Created by hanmo on 2018. 5. 22..
@@ -40,7 +41,9 @@ open class UnLock(val context: Context, val lockScreenView: ConstraintLayout) : 
                         if (lockScreenView.x < 0) {
                             lockScreenView.x = 0f
                         }
+
                         lastLayoutX = lockScreenView.x
+                        onMoved(touchMoveX / 10)
                     }
                 } else {
                     return false
@@ -103,6 +106,10 @@ open class UnLock(val context: Context, val lockScreenView: ConstraintLayout) : 
     }
 
     open fun onTouched() {
+
+    }
+
+    open fun onMoved(x: Int) {
 
     }
 

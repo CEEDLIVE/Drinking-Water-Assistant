@@ -7,6 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.john.waveview.WaveView
+        xmlns:wave="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/waveView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        wave:above_wave_color="@color/waveMainColor"
+        wave:blow_wave_color="@color/wavesubColor"
+        wave:wave_height="little"
+        wave:wave_hz="normal"
+        wave:wave_length="middle" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/lockScreenView"
         android:layout_width="match_parent"
@@ -56,100 +68,66 @@
 
 
 
-        <LinearLayout
-            android:id="@+id/todayWaterText"
+        <FrameLayout
+            android:id="@+id/waterProgressbarFrame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="152dp"
-            android:gravity="center"
-            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/todayWater"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1200"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:text="/"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/waterGoal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2000ml"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/waterPercent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_lockscreen_percent"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="12dp"
-                    android:paddingStart="12dp"
-                    android:paddingTop="2dp"
-                    android:text="60%"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/todayLeftWaterText"
+                android:id="@+id/waterPercent"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="목표량까지 800ml 남았어요!"
-                android:textColor="#BDBDBD"
-                android:textSize="13sp" />
+                android:textColor="@color/mainColor"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
-        </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/waterProgressbar"
-            style="?android:attr/progressBarStyleHorizontal"
+            <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+                xmlns:progress="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/waterProgressbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                progress:progressBackgroundColor="#ffffff"
+                progress:progressColor="#7896CF"
+                progress:progressStrokeWidth="5dp"
+                progress:textColor="@android:color/transparent" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/swipeUnLockFrame"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="50dp"
-            android:progress="40"
-            android:progressDrawable="@drawable/water_progressbar"
+            android:layout_height="48dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:background="@drawable/bg_lockscreen_swipe"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/todayWaterText" />
+            app:layout_constraintStart_toStartOf="parent">
 
 
-        <ImageView
+        </FrameLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/menuButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_menu" />
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="menu.json"
+            app:lottie_loop="false"/>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/lcMenuList"
@@ -160,37 +138,7 @@
             android:elevation="20dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/menuButton"
-            >
-
-        </android.support.v7.widget.RecyclerView>
-
-        <Button
-            android:id="@+id/addWaterButton"
-            android:layout_width="121dp"
-            android:layout_height="103dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="추가!"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/waterProgressbar" />
-
-        <!--<android.support.design.widget.FloatingActionButton
-            android:id="@+id/addWaterButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="16dp"
-            android:elevation="10dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:backgroundTint="#D4D3DC"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add"
-            app:useCompatPadding="true" />-->
+            app:layout_constraintTop_toBottomOf="@id/menuButton" />
 
     </android.support.constraint.ConstraintLayout>
 

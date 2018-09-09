@@ -21,12 +21,12 @@ import java.util.concurrent.TimeUnit
 import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreenMenuAdapter
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
-import hanmo.com.drinkingwaterassistant.util.DLog
 import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 import org.jetbrains.anko.toast
 import java.util.*
-import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
 import io.realm.Realm
+import android.animation.ValueAnimator
+import hanmo.com.drinkingwaterassistant.util.DLog
 
 
 /**
@@ -97,7 +97,7 @@ class LockscreenActivity : AppCompatActivity() {
         registerReceiver(mTimeReceiver, intentFilter)
         waterTable = RealmHelper.instance.getTodayWaterGoal()
         setAddButton()
-        setProgressBar()
+        //setProgressBar()
         setUnlock()
         setTime()
         setMenu()
@@ -105,12 +105,12 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     private fun setAddButton() {
-        addWaterButton.clicks()
+        /*addWaterButton.clicks()
                 //.filter { }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     updateProgressBar()
-                }.apply { compositeDisposable.add(this) }
+                }.apply { compositeDisposable.add(this) }*/
     }
 
     private fun updateProgressBar() {
@@ -144,10 +144,10 @@ class LockscreenActivity : AppCompatActivity() {
                 waterTable = realm.where(Goals::class.java).findFirst()
             }
         }
-        setProgressBar()
+        //setProgressBar()
     }
 
-    private fun setProgressBar() {
+    /*private fun setProgressBar() {
         waterTable?.let {
             waterGoal.text = it.goalWater?.toString()
             todayWater.text = it.todayWater?.toString()
@@ -163,7 +163,7 @@ class LockscreenActivity : AppCompatActivity() {
 
             todayLeftWaterText.text = "목표량까지${it.goalWater!! - it.todayWater!!}ml 남았어요!"
         }
-    }
+    }*/
 
     private fun setMenu() {
         lcMenuList.visibility = View.GONE
@@ -173,8 +173,24 @@ class LockscreenActivity : AppCompatActivity() {
                 .subscribe {
                     if (lcMenuList.visibility == View.GONE) {
                         lcMenuList.visibility = View.VISIBLE
+                        val animator = ValueAnimator.ofFloat(0f, 0.5f)
+                        animator.addUpdateListener { animation ->
+                            with(menuButton) {
+                                speed = 0.5f
+                                progress = animation.animatedValue as Float
+                            }
+                         }
+                        animator.start()
                         getMenuList()
                     } else {
+                        val animator = ValueAnimator.ofFloat(0.5f, 1f)
+                        animator.addUpdateListener { animation ->
+                            with(menuButton) {
+                                speed = 0.5f
+                                progress = animation.animatedValue as Float
+                            }
+                        }
+                        animator.start()
                         lcMenuList.visibility = View.GONE
                     }
                 }.apply { compositeDisposable.add(this) }
@@ -236,6 +252,7 @@ class LockscreenActivity : AppCompatActivity() {
         lockScreenView.x = 0f
         lockScreenView.setOnTouchListener(object : UnLock(this, lockScreenView) {
             override fun onFinish() {
+                //waveView.setProgress(100)
                 finish()
                 super.onFinish()
             }
@@ -243,6 +260,13 @@ class LockscreenActivity : AppCompatActivity() {
             override fun onTouched() {
                 lcMenuList.visibility = View.GONE
                 super.onTouched()
+            }
+
+            override fun onMoved(x: Int) {
+                if (x > 0) {
+                    waveView.setProgress(x)
+                }
+                super.onMoved(x)
             }
         })
 

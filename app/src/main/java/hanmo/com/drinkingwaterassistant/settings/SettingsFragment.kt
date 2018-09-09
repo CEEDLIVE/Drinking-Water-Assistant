@@ -63,8 +63,21 @@ class SettingsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        initLockScreenSwitch()
         setCloseButton()
         setBackButtonPressed()
+    }
+
+    private fun initLockScreenSwitch() {
+        view?.run {
+            Lockscreen.instance.init(activity)
+            val goals = RealmHelper.instance.queryFirst(Goals::class.java)
+            goals?.let {
+                lockscreenSwitch.isChecked = it.hasLockScreen!!
+                if (it.hasLockScreen!!) { Lockscreen.instance.active() }
+                else { Lockscreen.instance.deactivate() }
+            }
+        }
     }
 
     private fun setBackButtonPressed() {
@@ -73,7 +86,7 @@ class SettingsFragment : Fragment() {
             requestFocus()
             setOnKeyListener { v, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    settingsCloseButton.requestFocus()
+                    settingsCloseButton.performClick()
                     return@setOnKeyListener true
                 }
                 false
@@ -83,14 +96,6 @@ class SettingsFragment : Fragment() {
 
     private fun setLockscreenSwitch() {
         view?.run {
-            Lockscreen.instance.init(activity)
-            val goals = RealmHelper.instance.queryFirst(Goals::class.java)
-            goals?.let {
-                lockscreenSwitch.isChecked = it.hasLockScreen!!
-                if (it.hasLockScreen!!) { Lockscreen.instance.active() }
-                else { Lockscreen.instance.deactivate() }
-            }
-
             //rxCompoundButton Switch
             //lockscreenSwitch.checkedChanges().skipInitialValue().subscribe {  }
 

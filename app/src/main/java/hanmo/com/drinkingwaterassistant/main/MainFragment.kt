@@ -5,6 +5,8 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.TextView
+import com.airbnb.lottie.LottieAnimationView
 import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.MyTargetWaterActivity
@@ -25,6 +29,7 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.item_water_histroy.view.*
 import java.util.concurrent.TimeUnit
@@ -80,6 +85,7 @@ class MainFragment : Fragment() {
 
             }
         })*/
+
         getSettingsFragmentObserve()
 
         return rootView
@@ -95,11 +101,13 @@ class MainFragment : Fragment() {
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_DESTROYED -> {
                         possibleDeleteItem = true
+                        myTargetButton.visibility = View.VISIBLE
                         settingButton.visibility = View.VISIBLE
                         waterInfoLayout.visibility = View.VISIBLE
                         waterProgressbarFrame.visibility = View.VISIBLE
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED -> {
+                        myTargetButton.visibility = View.GONE
                         settingButton.visibility = View.GONE
                         waterInfoLayout.visibility = View.GONE
                         waterProgressbarFrame.visibility = View.GONE
@@ -136,18 +144,35 @@ class MainFragment : Fragment() {
             }
         }
 
+        setMyTargetButton()
         setProgressBar()
         setAddWaterList()
         setSettingsButton()
+    }
+
+    private fun setMyTargetButton() {
+        view?.run {
+            val intent = MyTargetWaterActivity.newIntent(activity)
+            val logoImage = findViewById<LottieAnimationView>(R.id.myTargetButton)
+            val todayTextHolder = view?.findViewById<TextView>(R.id.waterGoal)
+            val imagePair = android.support.v4.util.Pair.create(logoImage as View, "tImage")
+            val holderPair = android.support.v4.util.Pair.create(todayTextHolder as View, "tName")
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, imagePair, holderPair)
+
+            myTargetButton.clicks()
+                    .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .subscribe {
+                        ActivityCompat.startActivity(activity!!, intent, options.toBundle())
+                    }
+                    .apply { compositeDisposable.add(this) }
+
+        }
     }
 
     private fun setSettingsButton() {
         view?.run {
             settingButton.clicks()
                     .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .doOnNext {
-
-                    }
                     .subscribe {
                         FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_CREATED)
                         replaceFragment(SettingsFragment.newInstance(), "settings")
@@ -179,8 +204,8 @@ class MainFragment : Fragment() {
         view?.run {
             waterTable = RealmHelper.instance.getTodayWaterGoal()
             waterTable?.let {
-                waterGoal.text = it.goalWater?.toString()
-                todayWater.text = it.todayWater?.toString()
+                waterGoal.text = "${it.goalWater}ml"
+                todayWater.text = "${it.todayWater}ml"
                 val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
                 percentLoop(0.0, percent.toDouble())
                 waterProgressbar.setProgress(it.todayWater!!, it.goalWater!!)

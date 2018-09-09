@@ -75,14 +75,10 @@ class MyTargetWaterActivity : AppCompatActivity() {
     private fun setConfirmButton() {
         myTargetConfirmButton.clicks()
                 .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .doOnNext {
-                    Snackbar.make(myTargetConfirmButton, "입력 완료!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-                }
                 .subscribe {
                     if (status) {
                         RealmHelper.instance.updateGoal(myTargetText.text.toString().toInt())
-                        myTargetText.text.clear()
-                        finish()
+                        onBackPressed()
                     } else {
                         toast("섭취량을 입력해 주세요")
                     }

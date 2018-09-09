@@ -32,6 +32,7 @@
 
                 <TextView
                     android:id="@+id/itemTodayGoal"
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -45,6 +46,7 @@
                 <TextView
                     android:id="@+id/itemWaterGoal"
                     android:visibility="gone"
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
@@ -57,6 +59,7 @@
 
                 <TextView
                     android:id="@+id/itemTodayGoalDate"
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -86,6 +89,7 @@
                 <TextView
                     android:layout_weight="9"
                     android:id="@+id/waterGoal"
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_gravity="start|bottom"
                     android:gravity="start"
                     android:layout_marginStart="13dp"

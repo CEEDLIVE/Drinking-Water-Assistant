@@ -23,9 +23,10 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/myTargetButton"
+        android:transitionName="tImage"
         android:layout_gravity="center|top"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:scaleType="centerCrop"
@@ -33,7 +34,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_fileName="wales.json"
-        app:lottie_loop="true"/>
+        app:lottie_loop="true"
+        tools:targetApi="lollipop" />
+
 
     <LinearLayout
         android:id="@+id/waterInfoLayout"
@@ -68,6 +71,7 @@
 
                 <TextView
                     android:id="@+id/todayWater"
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="3dp"
@@ -75,6 +79,7 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/todayGoal"
@@ -92,13 +97,17 @@
 
                 <TextView
                     android:id="@+id/waterGoal"
+                    android:transitionName="tName"
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="3dp"
                     android:textColor="@color/whiteColor"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:targetApi="lollipop" />
 
                 <TextView
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/todayWaterText"
@@ -114,6 +123,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:fontFamily="@font/nanumbareunpen"
                     android:id="@+id/todayLeftWaterText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,6 +132,7 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/leftWater"
@@ -181,6 +192,7 @@
 
 
             <TextView
+                android:fontFamily="@font/nanumbareunpen"
                 android:id="@+id/waterPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

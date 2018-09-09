@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Drinking Water Assistant</string>
+    <string name="todayGoal">Goal</string>
+    <string name="monday">monday</string>
+    <string name="tuesday">tuesday</string>
+    <string name="wednesday">wednesday</string>
+    <string name="thursday">thursday</string>
+    <string name="friday">friday</string>
+    <string name="saturday">saturday</string>
+    <string name="sunday">sunday</string>
+    <string name="water_tracker">water tracker</string>
+    <string name="inputMyTargetText">Input my goal</string>
+    <string name="startConfirm">confirm</string>
+    <string name="todayWaterText">today water</string>
+    <string name="leftWater">Remain Water</string>
+    <string name="settingText">Setting</string>
+    <string name="locksreenText">LockScreen</string>
+    <string name="lockscrenOff">LockScreen Turn Off.</string>
+    <string name="lockscrenOn">LockScreen Turn On.</string>
+    <string name="unlock">UnLock</string>
+</resources>

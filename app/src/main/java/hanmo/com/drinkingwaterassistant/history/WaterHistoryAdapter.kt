@@ -113,7 +113,6 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
             }
         }
 
-
         override fun onClick(v: View?) {
             if (itemView.itemChildLayout.visibility == View.VISIBLE) {
                 val slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up_animation)
@@ -122,13 +121,13 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
 
                     override fun onAnimationEnd(animation: Animation?) {
                         itemView.itemChildLayout.visibility = View.GONE
-                        itemView.itemWaterGoal.visibility = View.GONE
+                        itemView.itemWaterGoal.visibility = View.INVISIBLE
                     }
 
                     override fun onAnimationStart(animation: Animation?) {
                         itemView.drowIcon.setImageResource(R.drawable.ic_drop_down)
                         AlphaAnim.startAppearAlphaAnim(itemView.waterGoal)
-                        AlphaAnim.startFadeAlphaAnim(itemView.itemWaterGoal)
+                        AlphaAnim.startFadeAlphaAnim(itemView.itemWaterGoal, View.GONE)
                     }
 
                 })
@@ -143,7 +142,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                     override fun onAnimationStart(animation: Animation?) {
                         itemView.drowIcon.setImageResource(R.drawable.ic_drop_up)
                         AlphaAnim.startAppearAlphaAnim(itemView.itemWaterGoal)
-                        AlphaAnim.startFadeAlphaAnim(itemView.waterGoal)
+                        AlphaAnim.startFadeAlphaAnim(itemView.waterGoal, View.INVISIBLE)
                     }
 
                 })

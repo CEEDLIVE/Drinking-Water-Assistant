@@ -52,7 +52,7 @@
                 android:id="@+id/lockscreenTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
+                android:fontFamily="@font/nanumbareunpen"
                 android:textColor="@color/whiteColor"
                 android:textSize="55sp" />
 
@@ -60,7 +60,7 @@
                 android:id="@+id/lockscreenDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
+                android:fontFamily="@font/nanumbareunpen"
                 android:textColor="@color/whiteColor"
                 android:textSize="18sp"/>
 
@@ -90,6 +90,7 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumbareunpen"
                 android:textColor="@color/whiteColor"
                 android:textSize="40sp"
                 android:textStyle="bold" />
@@ -129,13 +130,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" >
 
-
             <hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
+                android:id="@+id/swipeUnLockButton"
+                android:padding="1dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"/>
 
-
-            </hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe>
+            <TextView
+                android:text="@string/unlock"
+                android:textSize="18sp"
+                android:textColor="@color/whiteColor"
+                android:fontFamily="@font/nanumbareunpen"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </FrameLayout>
 
@@ -143,8 +151,9 @@
             android:id="@+id/menuButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:padding="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

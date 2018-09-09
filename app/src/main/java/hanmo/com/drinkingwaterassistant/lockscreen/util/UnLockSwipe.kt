@@ -113,8 +113,6 @@ class UnLockSwipe : RelativeLayout {
         } else if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_OUTSIDE) {
             if (sliderPosition >= measuredWidth - (thumbWidth + 20)) {
                 if (listenerRight != null) listenerRight?.onUnlock()
-            } else if (sliderPosition <= 0) {
-
             } else {
                 sliding = false
                 sliderPosition = 0

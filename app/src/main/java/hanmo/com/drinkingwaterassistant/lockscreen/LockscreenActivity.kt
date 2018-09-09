@@ -31,8 +31,10 @@ import android.os.Handler
 import android.os.SystemClock
 import com.airbnb.lottie.LottieAnimationView
 import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
 import hanmo.com.drinkingwaterassistant.util.DLog
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.android.synthetic.main.view_unlock.*
 
 
 /**
@@ -114,7 +116,7 @@ class LockscreenActivity : AppCompatActivity() {
         registerReceiver(mTimeReceiver, intentFilter)
         waterTable = RealmHelper.instance.getTodayWaterGoal()
         setAddButton()
-        //setProgressBar()
+        setProgressBar()
         setUnlock()
         setTime()
         setMenu()
@@ -284,6 +286,13 @@ class LockscreenActivity : AppCompatActivity() {
 
     private fun setUnlock() {
         lockScreenView.x = 0f
+
+        swipeUnLockButton.setOnUnlockListenerRight(object : UnLockSwipe.OnUnlockListener {
+            override fun onUnlock() {
+                finish()
+            }
+        })
+
         lockScreenView.setOnTouchListener(object : UnLock(this, lockScreenView) {
             override fun onFinish() {
                 //waveView.setProgress(100)
@@ -297,9 +306,7 @@ class LockscreenActivity : AppCompatActivity() {
             }
 
             override fun onMoved(x: Int) {
-                if (x > 0) {
-                    waveView.setProgress(x)
-                }
+                if (x > 0) { waveView.setProgress(x) }
                 super.onMoved(x)
             }
         })

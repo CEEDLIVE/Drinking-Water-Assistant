@@ -17,4 +17,5 @@
     <string name="locksreenText">잠금화면</string>
     <string name="lockscrenOff">잠금화면을 껐습니다.</string>
     <string name="lockscrenOn">잠금화면을 켰습니다.</string>
+    <string name="unlock">잠금해제</string>
 </resources>

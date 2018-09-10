@@ -5,7 +5,6 @@
 
     <!--잠금화면 퍼미션-->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
@@ -79,6 +78,6 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="@string/fabricKey" />
+            android:value="8a672da65b206f92c4873b276005c0a30d5a5cd6" />
     </application>
 </manifest>

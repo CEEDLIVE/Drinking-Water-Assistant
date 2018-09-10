@@ -6,6 +6,7 @@ import io.realm.annotations.Required
 import java.util.*
 
 /**
+ * Water goal info table
  * Created by hanmo on 2018. 5. 22..
  */
 open class Goals : RealmObject() {

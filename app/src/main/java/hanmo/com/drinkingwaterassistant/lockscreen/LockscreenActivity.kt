@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
@@ -26,9 +25,9 @@ import org.jetbrains.anko.toast
 import java.util.*
 import io.realm.Realm
 import android.animation.ValueAnimator
-import android.os.Build
-import android.os.Handler
-import android.os.SystemClock
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.os.*
 import com.airbnb.lottie.LottieAnimationView
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
@@ -133,6 +132,18 @@ class LockscreenActivity : AppCompatActivity() {
                         setAnimation("add_effect.json")
                         loop(false)
                         playAnimation()
+                    }
+
+                    val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                    if (audioManager.ringerMode == AudioManager.RINGER_MODE_VIBRATE || audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT) {
+                        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        vibrator.vibrate(100)
+                    } else if (audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+                        val mp = MediaPlayer.create(this@LockscreenActivity, R.raw.dropwater)
+                        mp.start()
+                        mp.setOnCompletionListener {
+                            it.release()
+                        }
                     }
                 }
                 .subscribe {

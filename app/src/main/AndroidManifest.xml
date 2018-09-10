@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.PHONE_STATE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".DWApplication"
@@ -78,6 +79,6 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="8a672da65b206f92c4873b276005c0a30d5a5cd6" />
+            android:value="@string/fabricKey" />
     </application>
 </manifest>

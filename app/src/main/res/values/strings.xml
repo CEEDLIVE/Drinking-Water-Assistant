@@ -1,5 +1,7 @@
 <resources>
+
     <string name="app_name">Drinking Water Assistant</string>
+    <string name="fabricKey">8a672da65b206f92c4873b276005c0a30d5a5cd6</string>
     <string name="todayGoal">오늘 목표</string>
     <string name="monday">월요일</string>
     <string name="tuesday">화요일</string>

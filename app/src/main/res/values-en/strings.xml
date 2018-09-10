@@ -19,4 +19,8 @@
     <string name="lockscrenOff">LockScreen Turn Off.</string>
     <string name="lockscrenOn">LockScreen Turn On.</string>
     <string name="unlock">UnLock</string>
+    <string name="hour">h</string>
+    <string name="min">m</string>
+    <string name="day">day</string>
+    <string name="month">month</string>
 </resources>

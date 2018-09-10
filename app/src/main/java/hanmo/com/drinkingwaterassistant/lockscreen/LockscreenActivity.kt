@@ -266,7 +266,7 @@ class LockscreenActivity : AppCompatActivity() {
             lockscreenTime.text = "$hour:$minute"
         }
 
-        lockscreenDate.text = "${month}월 ${day}일 ${getWeek(week)}"
+        lockscreenDate.text = "$month${getString(R.string.month)} $day${getString(R.string.day)} ${getWeek(week)}"
     }
 
     private fun getWeek(week: Int): String {

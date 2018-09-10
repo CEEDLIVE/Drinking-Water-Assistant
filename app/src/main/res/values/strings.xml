@@ -18,4 +18,8 @@
     <string name="lockscrenOff">잠금화면을 껐습니다.</string>
     <string name="lockscrenOn">잠금화면을 켰습니다.</string>
     <string name="unlock">잠금해제</string>
+    <string name="hour">시</string>
+    <string name="min">분</string>
+    <string name="day">일</string>
+    <string name="month">월</string>
 </resources>

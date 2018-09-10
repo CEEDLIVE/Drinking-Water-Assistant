@@ -1,5 +1,7 @@
 package hanmo.com.drinkingwaterassistant.util
 
+import hanmo.com.drinkingwaterassistant.DWApplication
+import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,7 +28,7 @@ class WaterCalculateUtil {
             } else {
                 val hourFormat = SimpleDateFormat("HH", Locale.KOREA)
                 val minFormat = SimpleDateFormat("mm", Locale.KOREA)
-                "${hourFormat.format(addWaterTime)}시 ${minFormat.format(addWaterTime)}분"
+                "${hourFormat.format(addWaterTime)}${DWApplication.applicationContext()?.getString(R.string.hour)} ${minFormat.format(addWaterTime)}${DWApplication.applicationContext()?.getString(R.string.min)}"
             }
 
         }

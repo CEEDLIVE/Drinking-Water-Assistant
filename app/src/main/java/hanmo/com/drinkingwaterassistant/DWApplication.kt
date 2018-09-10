@@ -8,6 +8,10 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.workers.DailyWorkerUtil
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+
+
 
 /**
  * Created by hanmo on 2018. 5. 22..
@@ -31,6 +35,7 @@ class DWApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        Fabric.with(this, Crashlytics())
         DLog.e("apllication midnight worker start!!")
         DailyWorkerUtil.applyMidnightWorker()
         initDB()

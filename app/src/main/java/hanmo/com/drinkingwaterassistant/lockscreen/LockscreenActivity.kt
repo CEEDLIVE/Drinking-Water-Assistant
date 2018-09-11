@@ -28,6 +28,7 @@ import android.animation.ValueAnimator
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.*
+import android.support.v7.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
@@ -56,19 +57,12 @@ class LockscreenActivity : AppCompatActivity() {
 
     private val onItemClickListener = object : LockScreenMenuAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
-            val menu = view.menuTitle.text.toString()
-            when (menu) {
-                "menu 1" -> {
-                    toast("메뉴 1")
+            when (position) {
+                0 -> {
+                    toast("background")
                 }
-                "menu 2" -> {
-                    toast("메뉴 2")
-                }
-                "menu 3" -> {
-                    toast("메뉴 3")
-                }
-                "menu 4" -> {
-                    toast("메뉴 4")
+                1 -> {
+                    toast("setting")
                 }
             }
             lcMenuList.visibility = View.GONE
@@ -220,24 +214,10 @@ class LockscreenActivity : AppCompatActivity() {
                 .subscribe {
                     if (lcMenuList.visibility == View.GONE) {
                         lcMenuList.visibility = View.VISIBLE
-                        val animator = ValueAnimator.ofFloat(0f, 0.5f)
-                        animator.addUpdateListener { animation ->
-                            with(menuButton) {
-                                speed = 0.5f
-                                progress = animation.animatedValue as Float
-                            }
-                         }
-                        animator.start()
+                        setLottieAnimator(true)
                         getMenuList()
                     } else {
-                        val animator = ValueAnimator.ofFloat(0.5f, 1f)
-                        animator.addUpdateListener { animation ->
-                            with(menuButton) {
-                                speed = 0.5f
-                                progress = animation.animatedValue as Float
-                            }
-                        }
-                        animator.start()
+                        setLottieAnimator(false)
                         lcMenuList.visibility = View.GONE
                     }
                 }.apply { compositeDisposable.add(this) }
@@ -246,16 +226,14 @@ class LockscreenActivity : AppCompatActivity() {
 
     private fun getMenuList() {
 
-        val menuList = arrayOf("menu 1", "menu 2", "menu 3", "menu 4")
-
         val resId = R.anim.layout_animation_fall_down
         val animation = AnimationUtils.loadLayoutAnimation(applicationContext, resId)
 
         with(lcMenuList) {
             layoutAnimation = animation
             setHasFixedSize(true)
-            layoutManager = android.support.v7.widget.LinearLayoutManager(applicationContext)
-            val menuAdapter = LockScreenMenuAdapter(menuList)
+            layoutManager = LinearLayoutManager(applicationContext)
+            val menuAdapter = LockScreenMenuAdapter()
             menuAdapter.setOnItemClickListener(onItemClickListener)
             adapter = menuAdapter
         }
@@ -295,6 +273,22 @@ class LockscreenActivity : AppCompatActivity() {
         return dayOfWeek
     }
 
+
+    private fun setLottieAnimator(bool : Boolean) {
+        val animator = when {
+            bool -> ValueAnimator.ofFloat(0.5f, 1f)
+            else -> ValueAnimator.ofFloat(0f, 0.5f)
+        }
+
+        animator.duration = 1000
+        animator.addUpdateListener { animation ->
+            with(menuButton) {
+                progress = animation.animatedValue as Float
+            }
+        }
+        animator.start()
+    }
+
     private fun setUnlock() {
         lockScreenView.x = 0f
 
@@ -312,7 +306,10 @@ class LockscreenActivity : AppCompatActivity() {
             }
 
             override fun onTouched() {
-                lcMenuList.visibility = View.GONE
+                if (lcMenuList.visibility == View.VISIBLE) {
+                    setLottieAnimator(false)
+                    lcMenuList.visibility = View.GONE
+                }
                 super.onTouched()
             }
 
@@ -333,7 +330,10 @@ class LockscreenActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        lcMenuList.visibility = View.GONE
+        if (lcMenuList.visibility == View.VISIBLE) {
+            setLottieAnimator(false)
+            lcMenuList.visibility = View.GONE
+        }
     }
 }
 

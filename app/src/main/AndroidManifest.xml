@@ -40,6 +40,16 @@
             android:name=".MyTargetWaterActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".lockscreen.background.ChangeBackgroundActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:showOnLockScreen="true" />
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+
         <activity android:name=".lockscreen.LockscreenActivity"
             android:showOnLockScreen="true"
             android:screenOrientation="portrait"

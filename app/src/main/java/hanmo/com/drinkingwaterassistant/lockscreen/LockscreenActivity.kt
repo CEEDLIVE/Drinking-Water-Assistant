@@ -25,16 +25,23 @@ import org.jetbrains.anko.toast
 import java.util.*
 import io.realm.Realm
 import android.animation.ValueAnimator
+import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.*
+import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.lockscreen.background.Background
+import hanmo.com.drinkingwaterassistant.lockscreen.background.BackgroundUtil
+import hanmo.com.drinkingwaterassistant.lockscreen.background.ChangeBackgroundActivity
+import hanmo.com.drinkingwaterassistant.lockscreen.util.PathFromURIUtil.getRealPathFromURI
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
+import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.util.DLog
-import kotlinx.android.synthetic.main.fragment_main.view.*
-import kotlinx.android.synthetic.main.view_unlock.*
+import java.io.File
 
 
 /**
@@ -60,6 +67,9 @@ class LockscreenActivity : AppCompatActivity() {
             when (position) {
                 0 -> {
                     toast("background")
+                    val backgroundIntent = ChangeBackgroundActivity.newIntent(applicationContext)
+                    backgroundIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(backgroundIntent)
                 }
                 1 -> {
                     toast("setting")
@@ -113,6 +123,7 @@ class LockscreenActivity : AppCompatActivity() {
         setUnlock()
         setTime()
         setMenu()
+        setBackground()
         DWApplication.lockScreenShow = true
     }
 
@@ -223,6 +234,26 @@ class LockscreenActivity : AppCompatActivity() {
                 }.apply { compositeDisposable.add(this) }
     }
 
+    private fun setBackground() {
+        RealmHelper.instance.queryFirst(LockScreenTable::class.java)?.run{
+            DLog.e(background.toString())
+            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.space)
+            else {
+                if (hasDrawable!!) {
+                    val backgroundImage =  Background(background!!).getImageResourceId(applicationContext)
+                    lockScreenView.setBackgroundResource(backgroundImage)
+                } else {
+                    val f = File(getRealPathFromURI(Uri.parse(background)))
+                    val d = Drawable.createFromPath(f.absolutePath)
+                    lockScreenView.background = d
+                }
+
+            }
+        } ?: kotlin.run {
+            lockScreenView.setBackgroundResource(R.drawable.space)
+        }
+
+    }
 
     private fun getMenuList() {
 
@@ -275,8 +306,8 @@ class LockscreenActivity : AppCompatActivity() {
 
 
     private fun setLottieAnimator(bool : Boolean) {
-        val animator = when {
-            bool -> ValueAnimator.ofFloat(0.5f, 1f)
+        val animator = when(bool) {
+            false -> ValueAnimator.ofFloat(0.5f, 1f)
             else -> ValueAnimator.ofFloat(0f, 0.5f)
         }
 

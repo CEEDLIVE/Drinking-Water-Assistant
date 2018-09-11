@@ -6,7 +6,7 @@
             android:shape="ring"
             android:thickness="3dp"
             android:useLevel="false">
-            <solid android:color="@color/mainColor"/>
+            <solid android:color="@color/logoFontColor"/>
         </shape>
     </item>
 </selector>

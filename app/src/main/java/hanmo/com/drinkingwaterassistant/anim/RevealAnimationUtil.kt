@@ -1,15 +1,13 @@
 package hanmo.com.drinkingwaterassistant.anim
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ArgbEvaluator
+import android.animation.*
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.animation.ValueAnimator
 import android.graphics.Color
+import hanmo.com.drinkingwaterassistant.DWApplication
 
 
 /**
@@ -42,10 +40,10 @@ object RevealAnimationUtil {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                 v.removeOnLayoutChangeListener(this)
-                val cx = view.right
-                val cy = view.top
+                val cx = view.right - dpToPx(20)
+                val cy = view.height - view.height * 0.4
                 val finalRadius = Math.max(view.width, view.height)
-                val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0F, finalRadius.toFloat()).setDuration(1000L)
+                val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy.toInt(), 0F, finalRadius.toFloat()).setDuration(1000L)
                 anim.interpolator = FastOutSlowInInterpolator()
                 anim.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
@@ -61,10 +59,10 @@ object RevealAnimationUtil {
 
     fun registerExitRevealAnimation(view: View?, startColor : Int, endColor : Int, listener: AnimationFinishedListener) {
         view?.run {
-            val cx = right
-            val cy = top
+            val cx = right - dpToPx(20)
+            val cy = height - height * 0.4
             val initialRadius = Math.max(width, height)
-            val anim = ViewAnimationUtils.createCircularReveal(this, cx, cy, initialRadius.toFloat(), 0f).setDuration(1000L)
+            val anim = ViewAnimationUtils.createCircularReveal(this, cx, cy.toInt(), initialRadius.toFloat(), 0f).setDuration(1000L)
             anim.interpolator = FastOutSlowInInterpolator()
             anim.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
@@ -76,6 +74,13 @@ object RevealAnimationUtil {
             anim.start()
             startColorAnimation(this, startColor, endColor, 1000)
         }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        val density = DWApplication.applicationContext()?.run {
+            resources.displayMetrics.density
+        }
+        return Math.round(dp.toFloat() * density!!)
     }
 
 }

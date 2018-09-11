@@ -32,7 +32,4 @@ open class Goals : RealmObject() {
     @Required
     open var waterType : Int? = null
 
-    @Required
-    open var hasLockScreen : Boolean? = null
-
 }

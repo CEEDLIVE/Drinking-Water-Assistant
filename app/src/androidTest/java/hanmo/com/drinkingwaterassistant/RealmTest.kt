@@ -42,7 +42,6 @@ class RealmTest {
         goals.id = 1
         goals.goalWater = 100
         goals.todayWater = 0
-        goals.hasLockScreen = true
 
         realm.executeTransaction {
             realm.copyToRealm(goals)
@@ -54,7 +53,6 @@ class RealmTest {
             assertEquals(1, it.id)
             assertEquals(0, it.todayWater)
             assertEquals(100, it.goalWater)
-            assertEquals(true, it.hasLockScreen)
         }
 
     }
@@ -66,7 +64,6 @@ class RealmTest {
         goals?.let {
             assertEquals(1, it.id)
             assertEquals(100, it.goalWater)
-            assertEquals(true, it.hasLockScreen)
         }
         realm.executeTransaction {
             goals?.goalWater = 1200
@@ -77,7 +74,6 @@ class RealmTest {
         testGoals?.let {
             assertEquals(1, it.id)
             assertEquals(1200, it.goalWater)
-            assertEquals(true, it.hasLockScreen)
         }
     }
 
@@ -88,10 +84,6 @@ class RealmTest {
         goals?.let {
             assertEquals(1, it.id)
             assertEquals(1200, it.goalWater)
-            assertEquals(true, it.hasLockScreen)
-        }
-        realm.executeTransaction {
-            goals?.hasLockScreen = false
         }
 
         val testGoals = realm.where(Goals::class.java).findFirst()
@@ -99,7 +91,6 @@ class RealmTest {
         testGoals?.let {
             assertEquals(1, it.id)
             assertEquals(1200, it.goalWater)
-            assertEquals(false, it.hasLockScreen)
         }
     }
 

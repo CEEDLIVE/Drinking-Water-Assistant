@@ -3,6 +3,7 @@ package hanmo.com.drinkingwaterassistant.realm
 import android.util.Log
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import hanmo.com.drinkingwaterassistant.util.DLog
 import io.realm.*
@@ -34,16 +35,38 @@ class RealmHelper {
     }
 
     fun initDB() {
-        val goals = Goals()
-        goals.id = 1
-        goals.goalWater = 0
-        goals.todayWater = 0
-        goals.waterType = Const.type200
-        goals.todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
-        goals.todayMonth = Calendar.getInstance().get(Calendar.MONTH)
-        goals.todayYear = Calendar.getInstance().get(Calendar.YEAR)
-        goals.hasLockScreen = true
-        addData(goals)
+
+        queryFirst(Goals::class.java)?.run {
+            DLog.e("already has Goals table")
+        } ?: kotlin.run {
+            val goals = Goals()
+            with(goals) {
+                id = 1
+                goalWater = 0
+                todayWater = 0
+                waterType = Const.type200
+                todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+                todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+                todayYear = Calendar.getInstance().get(Calendar.YEAR)
+            }
+            addData(goals)
+        }
+
+        queryFirst(LockScreenTable::class.java)?.run {
+            DLog.e("already has LockScreenTable table")
+        } ?: kotlin.run {
+            val lockScreenTable = LockScreenTable()
+            with(lockScreenTable) {
+                id = 1
+                hasLockScreen = true
+                hasVibrate = true
+                hasSound = true
+                hasDrawable = true
+                background = ""
+            }
+            addData(lockScreenTable)
+        }
+
     }
 
     fun updateGoal(goal : Int?) {
@@ -59,7 +82,7 @@ class RealmHelper {
     }
 
     fun updateHasLockScreen(hasLockScreen: Boolean?) {
-        val goals = queryFirst(Goals::class.java)
+        val goals = queryFirst(LockScreenTable::class.java)
         goals?.apply {
             realm.executeTransaction {
                 this.hasLockScreen = hasLockScreen
@@ -81,7 +104,7 @@ class RealmHelper {
     }
 
     fun getHasLockScreenBool() : Boolean {
-        return realm.where(Goals::class.java).findFirst()?.hasLockScreen!!
+        return realm.where(LockScreenTable::class.java).findFirst()?.hasLockScreen!!
     }
 
     fun getSortWaterHistory(sortValue : String) : RealmResults<WaterHistory>? {
@@ -142,6 +165,45 @@ class RealmHelper {
 
     }
 
+    fun todayWaterHistory(): RealmResults<WaterHistory>? {
+
+        return realm.where(WaterHistory::class.java)
+                .equalTo("todayYear", Calendar.getInstance().get(Calendar.YEAR))
+                .and()
+                .equalTo("todayMonth", Calendar.getInstance().get(Calendar.MONTH))
+                .and()
+                .equalTo("todayDate", Calendar.getInstance().get(Calendar.DAY_OF_YEAR))
+                .sort("addWaterTime", Sort.DESCENDING)
+                .findAll()
+
+    }
+
+    fun updateBackgroundImage(backgroundImage: String, bool : Boolean) {
+        realm.where(LockScreenTable::class.java).findFirst()?.run {
+            realm.executeTransaction {
+                hasDrawable = bool
+                background = backgroundImage
+            }
+
+        }
+    }
+
+    fun deleteHistory(id: Int) {
+        realm.executeTransaction {
+            val results = realm.where(WaterHistory::class.java).equalTo("id", id).findFirst()
+            results?.deleteFromRealm()
+
+        }
+        /*realm.executeTransactionAsync({ bgRealm ->
+            val results = bgRealm.where(WaterHistory::class.java).equalTo("id", id).findFirst()
+            results?.deleteFromRealm()
+        }, {
+            // 트랜잭션이 성공하였습니다.
+        }, {
+            // 트랜잭션이 실패했고 자동으로 취소되었습니다.
+        })*/
+    }
+
     //Insert To Realm
     fun <T : RealmObject> addData(data: T) {
         realm.executeTransaction {
@@ -177,32 +239,4 @@ class RealmHelper {
             }
     }
 
-    fun todayWaterHistory(): RealmResults<WaterHistory>? {
-
-        return realm.where(WaterHistory::class.java)
-                .equalTo("todayYear", Calendar.getInstance().get(Calendar.YEAR))
-                .and()
-                .equalTo("todayMonth", Calendar.getInstance().get(Calendar.MONTH))
-                .and()
-                .equalTo("todayDate", Calendar.getInstance().get(Calendar.DAY_OF_YEAR))
-                .sort("addWaterTime", Sort.DESCENDING)
-                .findAll()
-
-    }
-
-    fun deleteHistory(id: Int) {
-        realm.executeTransaction {
-            val results = realm.where(WaterHistory::class.java).equalTo("id", id).findFirst()
-            results?.deleteFromRealm()
-
-        }
-        /*realm.executeTransactionAsync({ bgRealm ->
-            val results = bgRealm.where(WaterHistory::class.java).equalTo("id", id).findFirst()
-            results?.deleteFromRealm()
-        }, {
-            // 트랜잭션이 성공하였습니다.
-        }, {
-            // 트랜잭션이 실패했고 자동으로 취소되었습니다.
-        })*/
-    }
 }

@@ -21,4 +21,10 @@ open class LockScreenTable : RealmObject() {
     @Required
     open var hasSound : Boolean? = null
 
+    @Required
+    open var hasDrawable : Boolean? = null
+
+    @Required
+    open var background : String? = null
+
 }

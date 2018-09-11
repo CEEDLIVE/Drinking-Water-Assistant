@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import hanmo.com.drinkingwaterassistant.R
-import hanmo.com.drinkingwaterassistant.lockscreen.Background
+import hanmo.com.drinkingwaterassistant.lockscreen.background.Background
 import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 
 /**
@@ -48,7 +48,7 @@ class LockScreenMenuAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun bindView(item: String) {
             with(itemView){
-                val iconDrawable = Background(item, item).getImageResourceId(context)
+                val iconDrawable = Background(item).getImageResourceId(context)
                 this.menuIcon.setImageResource(iconDrawable)
             }
         }

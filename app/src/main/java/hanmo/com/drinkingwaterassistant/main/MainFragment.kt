@@ -93,23 +93,27 @@ class MainFragment : Fragment() {
             view?.run {
                 when (it) {
                     FragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
+                        settingButton.isEnabled = false
                         possibleDeleteItem = false
                         setAddWaterList()
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_DESTROYED -> {
                         possibleDeleteItem = true
+                        settingButton.isEnabled = true
                         myTargetButton.visibility = View.VISIBLE
                         settingButton.visibility = View.VISIBLE
                         waterInfoLayout.visibility = View.VISIBLE
                         waterProgressbarFrame.visibility = View.VISIBLE
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED -> {
+                        settingButton.isEnabled = false
                         myTargetButton.visibility = View.GONE
                         settingButton.visibility = View.GONE
                         waterInfoLayout.visibility = View.GONE
                         waterProgressbarFrame.visibility = View.GONE
                     }
                     FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED -> {
+                        settingButton.isEnabled = true
                         possibleDeleteItem = true
                         setAddWaterList()
                     }
@@ -175,6 +179,7 @@ class MainFragment : Fragment() {
         view?.run {
             settingButton.clicks()
                     .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .filter { possibleDeleteItem }
                     .subscribe {
                         FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_CREATED)
                         replaceFragment(SettingsFragment.newInstance(), "settings")

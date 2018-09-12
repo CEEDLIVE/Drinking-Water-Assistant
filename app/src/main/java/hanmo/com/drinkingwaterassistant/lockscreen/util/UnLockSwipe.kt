@@ -6,6 +6,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -70,6 +71,9 @@ class UnLockSwipe : RelativeLayout {
         slideButton = view.swipeButton
         lockedImage = view.lockedImage
 
+        view.swipeButton.visibility = View.VISIBLE
+        view.lockedImage.visibility = View.VISIBLE
+
         // Get padding
         //thumbWidth = dpToPx(120); // 60dp + 2*10dp
 
@@ -80,8 +84,11 @@ class UnLockSwipe : RelativeLayout {
                     this@UnLockSwipe.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     slideButton?.run {
                         thumbWidth = slideButton?.width!!
-                        DLog.e("버튼 넓이! $thumbWidth")
-                        DLog.e("전체 뷰 넓이! ${view.width}")
+                        if (view.width == 0) {
+                            view.swipeButton.visibility = View.INVISIBLE
+                            view.lockedImage.visibility = View.INVISIBLE
+                            init(context, null)
+                        }
 
                         sliderPosition = 0
                         val params = layoutParams as RelativeLayout.LayoutParams

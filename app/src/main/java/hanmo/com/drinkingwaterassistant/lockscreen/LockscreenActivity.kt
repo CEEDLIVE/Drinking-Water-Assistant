@@ -75,6 +75,7 @@ class LockscreenActivity : AppCompatActivity() {
                     toast("setting")
                 }
             }
+            setLottieAnimator(false)
             lcMenuList.visibility = View.GONE
         }
 
@@ -311,7 +312,7 @@ class LockscreenActivity : AppCompatActivity() {
             else -> ValueAnimator.ofFloat(0f, 0.5f)
         }
 
-        animator.duration = 1000
+        animator.duration = 500
         animator.addUpdateListener { animation ->
             with(menuButton) {
                 progress = animation.animatedValue as Float

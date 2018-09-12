@@ -1,6 +1,7 @@
 package hanmo.com.drinkingwaterassistant.lockscreen.background
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -43,7 +44,6 @@ class ChangeBackgroundActivity : AppCompatActivity() {
     }
 
     private val onItemClickListener = object : ChangeBackgroundAdapter.OnItemClickListener {
-        @RequiresApi(Build.VERSION_CODES.KITKAT)
         override fun onItemClick(view: Array<String>, position: Int) {
             if (position == 0) {
                 useImageCropWithPermissionCheck()
@@ -54,7 +54,6 @@ class ChangeBackgroundActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
     @NeedsPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
     fun useImageCrop() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -63,22 +62,22 @@ class ChangeBackgroundActivity : AppCompatActivity() {
         startActivityForResult(intent, READ_REQUEST_CODE)
     }
 
-    /*@OnShowRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    @OnShowRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
     fun showRationaleForCamera(request: PermissionRequest) {
         AlertDialog.Builder(this@ChangeBackgroundActivity)
-                .setMessage(R.string.permission_camera_rationale)
+                .setMessage(R.string.permission_crop_rationale)
                 .setPositiveButton(R.string.button_allow, { dialog, button -> request.proceed() })
                 .setNegativeButton(R.string.button_deny, { dialog, button -> request.cancel() })
                 .show()
-    }*/
+    }
 
     @OnPermissionDenied(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    fun showDeniedForCamera() {
+    fun showDeniedForCrop() {
         Snackbar.make(contentView!!, getString(R.string.storagePermissionDenied), Snackbar.LENGTH_LONG).show()
     }
 
     @OnNeverAskAgain(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    fun showNeverAskForCamera() {
+    fun showNeverAskForCrop() {
         Snackbar.make(contentView!!, getString(R.string.storagePermissionNeverask), Snackbar.LENGTH_LONG).show()
     }
 

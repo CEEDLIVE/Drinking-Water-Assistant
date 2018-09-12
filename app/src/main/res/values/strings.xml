@@ -33,4 +33,7 @@
     <string name="addWaterButton">addWaterButton</string>
     <string name="waterAlarm">Alarm</string>
     <string name="prepareAlarmService">알람 서비스를 준비중입니다.</string>
+    <string name="permission_crop_rationale">CROP!!</string>
+    <string name="button_allow">allow</string>
+    <string name="button_deny">denyed</string>
 </resources>

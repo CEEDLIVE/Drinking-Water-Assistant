@@ -2,6 +2,7 @@ package hanmo.com.drinkingwaterassistant
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import hanmo.com.drinkingwaterassistant.util.MyViewPagerAdapter
 import io.reactivex.disposables.CompositeDisposable
@@ -17,6 +18,7 @@ import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import org.jetbrains.anko.contentView
 import java.util.concurrent.TimeUnit
 
 
@@ -44,14 +46,15 @@ class MainActivity : AppCompatActivity() {
             when (it) {
                 FragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
                     waterHistoryIcon.visibility = View.GONE
+                    waterAlarmIcon.visibility = View.GONE
                 }
                 FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED -> {
                     waterHistoryIcon.visibility = View.VISIBLE
+                    waterAlarmIcon.visibility = View.VISIBLE
                 }
             }
         }
     }
-
 
     private fun setHistroyButton() {
         waterHistoryIcon.clicks()
@@ -59,6 +62,13 @@ class MainActivity : AppCompatActivity() {
                 .filter { waterHistoryIcon.alpha > 0.5f }
                 .subscribe {
                     mainViewPager.setCurrentItem(1, true)
+                }.apply { compositeDisposable.add(this) }
+
+        waterAlarmIcon.clicks()
+                .throttleFirst(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .filter { waterAlarmIcon.alpha > 0.5f }
+                .subscribe {
+                    Snackbar.make(waterAlarmIcon, getString(R.string.prepareAlarmService), Snackbar.LENGTH_LONG).show()
                 }.apply { compositeDisposable.add(this) }
     }
 
@@ -72,10 +82,12 @@ class MainActivity : AppCompatActivity() {
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
             historyFrame.alpha = arg1
             waterHistoryIcon.alpha = (1 - arg1)
+            waterAlarmIcon.alpha = (1 - arg1)
             when (arg0) {
                 1 -> {
                     historyFrame.alpha = 1.0f
                     waterHistoryIcon.alpha = 0f
+                    waterAlarmIcon.alpha = 0f
                     walesLogo.playAnimation()
                 }
                 else -> {

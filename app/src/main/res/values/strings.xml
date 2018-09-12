@@ -31,4 +31,6 @@
     <string name="storagePermissionNeverask">사진 접근 권한 거절</string>
     <string name="backgroundImage">backgroundImage</string>
     <string name="addWaterButton">addWaterButton</string>
+    <string name="waterAlarm">Alarm</string>
+    <string name="prepareAlarmService">알람 서비스를 준비중입니다.</string>
 </resources>

@@ -126,6 +126,30 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/waterAlarmIcon"
+            android:background="@color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="start"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="35dp"
+                android:src="@drawable/click_water_alarm" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/waterAlarm"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

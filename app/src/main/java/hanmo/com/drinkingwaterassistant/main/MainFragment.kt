@@ -226,13 +226,17 @@ class MainFragment : Fragment() {
         val mHandler = Handler()
         var k = current
         Thread(Runnable {
-            while (k < percent) {
-                k += 1.0
-                SystemClock.sleep(10L)
-                mHandler.post {
-                    val percentTxt = Math.floor(k).toInt().toString() + "%"
-                    view?.waterPercent?.text = percentTxt
+            if (percent != 0.toDouble()) {
+                while (k < percent) {
+                    k += 1.0
+                    SystemClock.sleep(10L)
+                    mHandler.post {
+                        val percentTxt = Math.floor(k).toInt().toString() + "%"
+                        view?.waterPercent?.text = percentTxt
+                    }
                 }
+            } else {
+                view?.waterPercent?.text = "0%"
             }
             Const.waterPercent = Math.floor(k).toInt()
         }).start()

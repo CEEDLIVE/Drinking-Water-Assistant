@@ -109,7 +109,6 @@ class UnLockSwipe : RelativeLayout {
 
 
         if (event.action == MotionEvent.ACTION_DOWN) { //126
-            DLog.e("event X : ${event.x}    sliderPosition : $sliderPosition    thumbWidth : $thumbWidth")
             if (event.x >= sliderPosition && event.x < sliderPosition + thumbWidth) {
                 lockedImage?.setImageResource(R.drawable.unlocked)
                 sliding = true
@@ -129,16 +128,13 @@ class UnLockSwipe : RelativeLayout {
             sliderPosition = (initialSliderPosition + (event.x - initialSlidingX)).toInt()
             if (sliderPosition <= 0) {
                 sliderPosition = 0
-                DLog.e("MOVE 1 sliderPosition " + sliderPosition.toString())
             }
 
             if (sliderPosition >= measuredWidth - (thumbWidth + 20)) {
                 sliderPosition =  measuredWidth - (thumbWidth + 20)
-                DLog.e("MOVE 2 sliderPosition " + sliderPosition.toString())
             } else {
                 val max = measuredWidth - thumbWidth
                 val progress = (sliderPosition * 100 / (max * 1.0f)).toInt()
-                DLog.e("MOVE 3 sliderPosition " + sliderPosition.toString())
             }
             setMarginLeft(sliderPosition)
         }

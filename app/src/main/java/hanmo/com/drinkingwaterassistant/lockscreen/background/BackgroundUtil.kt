@@ -5,7 +5,7 @@ package hanmo.com.drinkingwaterassistant.lockscreen.background
  */
 object BackgroundUtil {
 
-    var imageNameArray = arrayOf("gallery", "image01", "image02")
+    var imageNameArray = arrayOf("gallery", "image01", "image02", "sample")
 
     fun imageList(): ArrayList<Background> {
         val list = ArrayList<Background>()

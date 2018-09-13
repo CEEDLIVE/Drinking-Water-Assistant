@@ -236,7 +236,10 @@ class MainFragment : Fragment() {
                     }
                 }
             } else {
-                view?.waterPercent?.text = "0%"
+                mHandler.post {
+                    view?.waterPercent?.text = "0%"
+                }
+
             }
             Const.waterPercent = Math.floor(k).toInt()
         }).start()

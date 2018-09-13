@@ -41,6 +41,7 @@ import hanmo.com.drinkingwaterassistant.lockscreen.util.PathFromURIUtil.getRealP
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
 import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.util.DLog
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.io.File
 
 
@@ -206,13 +207,20 @@ class LockscreenActivity : AppCompatActivity() {
         val mHandler = Handler()
         var k = current
         Thread(Runnable {
-            while (k < percent) {
-                k += 1.0
-                SystemClock.sleep(10L)
-                mHandler.post {
-                    val percentTxt = Math.floor(k).toInt().toString() + "%"
-                    waterPercent.text = percentTxt
+            if (percent != 0.toDouble()) {
+                while (k < percent) {
+                    k += 1.0
+                    SystemClock.sleep(10L)
+                    mHandler.post {
+                        val percentTxt = Math.floor(k).toInt().toString() + "%"
+                        waterPercent.text = percentTxt
+                    }
                 }
+            } else {
+                mHandler.post {
+                    waterPercent.text = "0%"
+                }
+
             }
             Const.waterPercent = Math.floor(k).toInt()
         }).start()
@@ -238,7 +246,7 @@ class LockscreenActivity : AppCompatActivity() {
     private fun setBackground() {
         RealmHelper.instance.queryFirst(LockScreenTable::class.java)?.run{
             DLog.e(background.toString())
-            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.space)
+            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.sample)
             else {
                 if (hasDrawable!!) {
                     val backgroundImage =  Background(background!!).getImageResourceId(applicationContext)
@@ -251,7 +259,7 @@ class LockscreenActivity : AppCompatActivity() {
 
             }
         } ?: kotlin.run {
-            lockScreenView.setBackgroundResource(R.drawable.space)
+            lockScreenView.setBackgroundResource(R.drawable.sample)
         }
 
     }

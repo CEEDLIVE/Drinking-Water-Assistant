@@ -86,7 +86,7 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:$firebaseMessageVersion"
 
     //admob
-    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
 
     //WorkManager
     implementation "android.arch.work:work-runtime:$work_version"

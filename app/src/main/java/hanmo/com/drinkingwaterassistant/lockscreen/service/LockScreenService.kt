@@ -8,6 +8,8 @@ import android.os.IBinder
 import android.app.*
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import android.telephony.PhoneStateListener
+import android.telephony.TelephonyManager
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.lockscreen.LockscreenActivity
 import hanmo.com.drinkingwaterassistant.notification.MyNotificationManager
@@ -20,6 +22,8 @@ class LockScreenService : Service() {
 
     private var mServiceStartId : Int? = null
     private lateinit var context: Context
+    private var telephonyManager: TelephonyManager? = null
+    private var isPhoneIdleNum = 4
 
     private val mLockscreenReceiver = object : BroadcastReceiver() {
 
@@ -27,9 +31,25 @@ class LockScreenService : Service() {
             context?.let {
                 val actionName = intent.action
                 when(actionName) {
-                    Intent.ACTION_SCREEN_OFF -> { startLockScreenActivity() }
+                    Intent.ACTION_SCREEN_OFF -> {
+                        if (telephonyManager == null) {
+                            telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                            telephonyManager?.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE)
+                        }
+                        isPhoneIdleNum = telephonyManager?.callState!!
+                        if (isPhoneIdleNum == 0) {
+                            startLockScreenActivity()
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    private val phoneListener = object : PhoneStateListener() {
+        override fun onCallStateChanged(state: Int, incomingNumber: String?) {
+            super.onCallStateChanged(state, incomingNumber)
+            isPhoneIdleNum = state
         }
     }
 

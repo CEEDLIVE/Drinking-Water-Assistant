@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumbrush"
                 android:layout_gravity="bottom|center_horizontal"
-
                 android:text="Water History"
                 android:textSize="23sp"
                 android:textColor="@color/whiteColor" />

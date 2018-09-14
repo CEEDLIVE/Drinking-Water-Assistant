@@ -81,6 +81,18 @@ class RealmHelper {
         }
     }
 
+    fun updateWaterType(type : Int?) {
+        val goals = queryFirst(Goals::class.java)
+        goals?.apply {
+            realm.executeTransaction {
+                todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+                todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+                todayYear = Calendar.getInstance().get(Calendar.YEAR)
+                waterType = type
+            }
+        }
+    }
+
     fun updateHasLockScreen(hasLockScreen: Boolean?) {
         val goals = queryFirst(LockScreenTable::class.java)
         goals?.apply {

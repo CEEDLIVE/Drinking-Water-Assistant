@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 import com.jakewharton.rxbinding2.view.clicks
@@ -27,6 +28,7 @@ import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.settings.SettingsFragment
 import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
+import hanmo.com.drinkingwaterassistant.util.RxEventBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.view.*
@@ -82,7 +84,6 @@ class MainFragment : Fragment() {
 
             }
         })*/
-
         getSettingsFragmentObserve()
 
         return rootView
@@ -149,16 +150,34 @@ class MainFragment : Fragment() {
         setProgressBar()
         setAddWaterList()
         setSettingsButton()
+        initTypeImage()
+    }
+
+    private fun initTypeImage() {
+        val waterType = RealmHelper.instance.queryFirst(Goals::class.java)?.waterType
+        when(waterType) {
+            Const.type200 -> {
+                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_01)
+            }
+            Const.type300 -> {
+                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_03)
+            }
+            Const.type500 -> {
+                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_02)
+            }
+        }
     }
 
     private fun setMyTargetButton() {
         view?.run {
             val intent = MyTargetWaterActivity.newIntent(activity)
             val logoImage = findViewById<LottieAnimationView>(R.id.myTargetButton)
+            val typeImage = findViewById<ImageView>(R.id.waterTypeIcon)
             val todayTextHolder = findViewById<TextView>(R.id.waterGoal)
             val logoImagePair = android.support.v4.util.Pair.create(logoImage as View, "tImage")
+            val typeImagePair = android.support.v4.util.Pair.create(typeImage as View, "typeImage")
             val targetTextPair = android.support.v4.util.Pair.create(todayTextHolder as View, "tName")
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, logoImagePair, targetTextPair)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, logoImagePair, targetTextPair, typeImagePair)
 
             myTargetButton.clicks()
                     .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())

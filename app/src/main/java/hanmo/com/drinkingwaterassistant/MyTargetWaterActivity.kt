@@ -2,10 +2,15 @@ package hanmo.com.drinkingwaterassistant
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
+import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.main.MainFragment
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,6 +27,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
 
     private lateinit var compositeDisposable: CompositeDisposable
     private var status = false
+    private var waterType : Int? = null
 
     companion object {
         fun newIntent(context: Context?) : Intent {
@@ -38,6 +44,74 @@ class MyTargetWaterActivity : AppCompatActivity() {
         setMyTarget()
         setConfirmButton()
         setMyTargetText()
+        initWaterTypeCheck()
+        setMyWaterType()
+
+    }
+
+    private fun initWaterTypeCheck() {
+        val selectWaterType = waterType?.run {
+            this
+        } ?: kotlin.run {
+            RealmHelper.instance.queryFirst(Goals::class.java)?.waterType
+        }
+
+        when(selectWaterType) {
+            Const.type200 -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    waterType200.transitionName = "typeImage"
+                }
+                waterType200checkmark.visibility = View.VISIBLE
+                waterType300checkmark.visibility = View.INVISIBLE
+                waterType500checkmark.visibility = View.INVISIBLE
+            }
+            Const.type300 -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    waterType300.transitionName = "typeImage"
+                }
+                waterType200checkmark.visibility = View.INVISIBLE
+                waterType300checkmark.visibility = View.VISIBLE
+                waterType500checkmark.visibility = View.INVISIBLE
+            }
+            Const.type500 -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    waterType500.transitionName = "typeImage"
+                }
+                waterType200checkmark.visibility = View.INVISIBLE
+                waterType300checkmark.visibility = View.INVISIBLE
+                waterType500checkmark.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun setMyWaterType() {
+
+        waterType200Button.clicks()
+                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe {
+                    waterType = Const.type200
+                    initWaterTypeCheck()
+                }.apply { compositeDisposable.add(this) }
+
+        waterType300Button.clicks()
+                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe {
+                    waterType = Const.type300
+                    initWaterTypeCheck()
+                }.apply { compositeDisposable.add(this) }
+
+        waterType500Button.clicks()
+                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe {
+                    waterType = Const.type500
+                    initWaterTypeCheck()
+                }.apply { compositeDisposable.add(this) }
+
+        waterTypeCustomButton.clicks()
+                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe {
+                    Snackbar.make(waterTypeCustomButton, getString(R.string.prepareCustomWaterService), Snackbar.LENGTH_LONG).show()
+                }.apply { compositeDisposable.add(this) }
 
     }
 
@@ -61,7 +135,12 @@ class MyTargetWaterActivity : AppCompatActivity() {
                 .observeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    status = true
+                    status = if (it.isEmpty()) {
+                        false
+                    } else {
+                        val number : Int = it.toString().toInt()
+                        200 < number
+                    }
                 }
                 .apply { compositeDisposable.add(this) }
     }
@@ -72,20 +151,13 @@ class MyTargetWaterActivity : AppCompatActivity() {
                 .subscribe {
                     if (status) {
                         RealmHelper.instance.updateGoal(myTargetText.text.toString().toInt())
+                        RealmHelper.instance.updateWaterType(waterType)
                         onBackPressed()
                     } else {
-                        toast("섭취량을 입력해 주세요")
+                        toast(getString(R.string.inputGoals))
                     }
                 }
                 .apply { compositeDisposable.add(this) }
-    }
-
-    override fun onBackPressed() {
-        if (status) {
-            super.onBackPressed()
-        } else {
-            toast("섭취량을 입력해 주세요")
-        }
     }
 
     override fun onDestroy() {

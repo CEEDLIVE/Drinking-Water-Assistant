@@ -32,4 +32,8 @@
     <string name="addWaterButton">addWaterButton</string>
     <string name="waterAlarm">Alarm</string>
     <string name="prepareAlarmService">We are preparing alarm service.</string>
+    <string name="selectMyWaterType">Amount of water to drink</string>
+    <string name="prepareCustomWaterService">We are preparing a custom unit service.</string>
+    <string name="inputGoals">Please enter your intake of 200ml or more.</string>
+    <string name="inputMyTargetTextHint">Please provide a target intake of 200ml or more.</string>
 </resources>

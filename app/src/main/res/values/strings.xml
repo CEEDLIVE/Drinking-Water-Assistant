@@ -36,4 +36,8 @@
     <string name="permission_crop_rationale">CROP!!</string>
     <string name="button_allow">allow</string>
     <string name="button_deny">denyed</string>
+    <string name="selectMyWaterType">한번 마실 물의 양</string>
+    <string name="prepareCustomWaterService">커스텀 단위 서비스를 준비중입니다.</string>
+    <string name="inputGoals">200ml 이상 섭취량을 입력해주십시오.</string>
+    <string name="inputMyTargetTextHint">200ml 이상의 목표 섭취량을 입력해 주세요.</string>
 </resources>

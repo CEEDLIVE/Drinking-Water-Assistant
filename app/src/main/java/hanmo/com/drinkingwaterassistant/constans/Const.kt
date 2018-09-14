@@ -18,6 +18,8 @@ object Const {
     const val type150 : Int = 150
     const val type200 : Int = 200
     const val type250 : Int = 250
+    const val type300 : Int = 300
+    const val type500 : Int = 500
 
     const val DAILY_WORKER_TAG = "DAILY_WORKER_STATE"
     const val DAILY_WORKER = "DAILY_WORKER"

@@ -8,6 +8,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -53,85 +54,244 @@
                 android:text="WaterPin"
                 android:textColor="@color/logoFontColor"
                 android:textSize="30sp" />
-
         </FrameLayout>
-
     </LinearLayout>
 
-
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginStart="60dp"
-        android:gravity="center"
-        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/myTargetConfirmButton"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/inputMyTargetText"
-            android:textColor="#6A5FF0"
-            android:textSize="17sp"
-            android:textStyle="bold" />
 
-        <FrameLayout
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
+        <LinearLayout
+            android:id="@+id/myTarget"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/myTargetText"
-                android:textSize="14sp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:inputType="number"
-                android:transitionName="tName"
-                android:hint="목표 섭취량을 입력해 주세요"
-                android:textColorHint="#BDBDBD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                tools:targetApi="lollipop" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="60dp"
+            android:layout_marginStart="60dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:fontFamily="monospace"
-                android:text="ml"
-                android:textStyle="bold"
-                android:textColor="#9A96CA" />
+                android:padding="10dp"
+                android:text="@string/inputMyTargetText"
+                android:textColor="@color/mainColor"
+                android:fontFamily="@font/nanumbareunpen"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-            <View
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0.2dp"
-                android:layout_gravity="bottom"
-                android:background="#E2E2E2" />
+                android:layout_height="wrap_content"
+                android:padding="10dp">
 
-        </FrameLayout>
+                <EditText
+                    android:id="@+id/myTargetText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/inputMyTargetTextHint"
+                    android:fontFamily="@font/nanumbareunpen"
+                    android:inputType="number"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:textColorHint="#BDBDBD"
+                    android:textSize="14sp"
+                    android:transitionName="tName"
+                    tools:targetApi="lollipop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:fontFamily="monospace"
+                    android:text="ml"
+                    android:textColor="#9A96CA"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.2dp"
+                    android:layout_gravity="bottom"
+                    android:background="#E2E2E2" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/myWaterType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/selectMyWaterType"
+                android:textColor="@color/mainColor"
+                android:fontFamily="@font/nanumbareunpen"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/waterType200Button"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/waterType200"
+                        android:src="@drawable/water_type_01"
+                        android:scaleType="centerCrop"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="200ml"
+                        android:textSize="14sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/mainColor"
+                        android:fontFamily="@font/nanumbareunpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/waterType200checkmark"
+                        android:src="@drawable/checkmark"
+                        android:scaleType="centerCrop"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/waterType300Button"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/waterType300"
+                        android:src="@drawable/water_type_03"
+                        android:scaleType="centerCrop"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="300ml"
+                        android:layout_marginTop="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/mainColor"
+                        android:fontFamily="@font/nanumbareunpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/waterType300checkmark"
+                        android:src="@drawable/checkmark"
+                        android:scaleType="centerCrop"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/waterType500Button"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/waterType500"
+                        android:src="@drawable/water_type_02"
+                        android:scaleType="centerCrop"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="500ml"
+                        android:textSize="14sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/mainColor"
+                        android:fontFamily="@font/nanumbareunpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/waterType500checkmark"
+                        android:src="@drawable/checkmark"
+                        android:scaleType="centerCrop"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/waterTypeCustomButton"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/customWater"
+                        android:background="@drawable/click_water_custom"
+                        android:scaleType="centerCrop"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="custom"
+                        android:textSize="14sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/mainColor"
+                        android:fontFamily="@font/nanumbareunpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+
 
     <Button
         android:id="@+id/myTargetConfirmButton"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
         android:background="@drawable/bg_target_confirm_button"
         android:elevation="8dp"
         android:text="@string/startConfirm"
         android:textColor="@color/whiteColor"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="@font/nanumbareunpen"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

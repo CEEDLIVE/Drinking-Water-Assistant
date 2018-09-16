@@ -125,11 +125,26 @@ class LockScreenActivity : AppCompatActivity() {
         waterTable = RealmHelper.instance.getTodayWaterGoal()
         setAddButton()
         setProgressBar()
+        setWaterType()
         setUnlock()
         setTime()
         setMenu()
         setBackground()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setWaterType() {
+        when(waterTable?.waterType) {
+            Const.type200 -> {
+                waterTypeImage.setImageResource(R.drawable.water_type_01)
+            }
+            Const.type300 -> {
+                waterTypeImage.setImageResource(R.drawable.water_type_03)
+            }
+            Const.type500 -> {
+                waterTypeImage.setImageResource(R.drawable.water_type_02)
+            }
+        }
     }
 
     private fun setAdmob() {

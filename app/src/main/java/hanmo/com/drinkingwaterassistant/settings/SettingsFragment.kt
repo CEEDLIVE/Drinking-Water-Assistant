@@ -66,10 +66,12 @@ class SettingsFragment : Fragment() {
 
     private fun initLockScreenSwitch() {
         view?.run {
-            LockScreen.instance.init(activity)
             val hasLockScreen = RealmHelper.instance.getHasLockScreenBool()
             lockscreenSwitch.isChecked = hasLockScreen
-            if (hasLockScreen) { LockScreen.instance.active() }
+            if (hasLockScreen) {
+                LockScreen.instance.init(activity)
+                LockScreen.instance.active()
+            }
             else { LockScreen.instance.deactivate() }
         }
     }

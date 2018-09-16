@@ -33,6 +33,8 @@ import android.os.*
 import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.background.Background
 import hanmo.com.drinkingwaterassistant.lockscreen.background.BackgroundUtil
@@ -113,6 +115,9 @@ class LockscreenActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        setAdmob()
+
         compositeDisposable = CompositeDisposable()
 
         val intentFilter = IntentFilter()
@@ -127,6 +132,27 @@ class LockscreenActivity : AppCompatActivity() {
         setMenu()
         setBackground()
         DWApplication.lockScreenShow = true
+    }
+
+    private fun setAdmob() {
+
+        adView.visibility = View.INVISIBLE
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+        //adStatus = "Request - noCallback"
+        adView.adListener = object: AdListener(){
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                DLog.e("not loaded  : $p0")
+                //adStatus = "Request - failedToLoad"
+            }
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                DLog.e("loaded loaded loaded loaded")
+                //adStatus = "Request - load"
+                adView.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setAddButton() {

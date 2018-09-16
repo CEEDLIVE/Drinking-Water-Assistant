@@ -1,6 +1,8 @@
 <resources>
 
-    <string name="app_name">Drinking Water Assistant</string>
+    <string name="app_name">WaterPin</string>
+    <string name="admobId">ca-app-pub-2452228545701512~5634059465</string>
+    <string name="admobBanner">ca-app-pub-2452228545701512/8423874337</string>
     <string name="fabricKey">8a672da65b206f92c4873b276005c0a30d5a5cd6</string>
     <string name="todayGoal">오늘 목표</string>
     <string name="monday">월요일</string>
@@ -40,4 +42,5 @@
     <string name="prepareCustomWaterService">커스텀 단위 서비스를 준비중입니다.</string>
     <string name="inputGoals">200ml 이상 섭취량을 입력해주십시오.</string>
     <string name="inputMyTargetTextHint">200ml 이상의 목표 섭취량을 입력해 주세요.</string>
+    <string name="myWaterText">MyWater</string>
 </resources>

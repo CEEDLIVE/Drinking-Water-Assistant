@@ -188,33 +188,64 @@
             progress:textColor="@android:color/transparent" />
     </FrameLayout>
 
-    <ImageView
+
+
+    <LinearLayout
         android:id="@+id/settingButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:padding="10dp"
-        android:src="@drawable/water_settings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline2"
-        android:contentDescription="setting button" />
+        app:layout_constraintBottom_toTopOf="@id/guideline2">
 
-    <com.airbnb.lottie.LottieAnimationView
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:src="@drawable/water_settings"
+            android:contentDescription="setting button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settingText"
+            android:textColor="@color/subsubColor"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/myTargetButton"
-        android:transitionName="tImage"
-        android:layout_gravity="center|top"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="10dp"
-        android:scaleType="centerCrop"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline2"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="wales.json"
-        app:lottie_loop="true"
-        tools:targetApi="lollipop" />
+        app:layout_constraintBottom_toTopOf="@id/guideline2">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/myTargetImage"
+            android:transitionName="tImage"
+            android:layout_gravity="center|top"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="wales.json"
+            app:lottie_loop="true"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/myWaterText"
+            android:textColor="@color/subsubColor"
+            android:textSize="10sp" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/settingContainer"

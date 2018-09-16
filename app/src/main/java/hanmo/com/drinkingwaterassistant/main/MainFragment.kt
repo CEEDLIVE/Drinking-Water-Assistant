@@ -171,7 +171,7 @@ class MainFragment : Fragment() {
     private fun setMyTargetButton() {
         view?.run {
             val intent = MyTargetWaterActivity.newIntent(activity)
-            val logoImage = findViewById<LottieAnimationView>(R.id.myTargetButton)
+            val logoImage = findViewById<LottieAnimationView>(R.id.myTargetImage)
             val typeImage = findViewById<ImageView>(R.id.waterTypeIcon)
             val todayTextHolder = findViewById<TextView>(R.id.waterGoal)
             val logoImagePair = android.support.v4.util.Pair.create(logoImage as View, "tImage")

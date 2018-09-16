@@ -9,6 +9,8 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v4.view.ViewPager
 import android.view.View
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
 import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.anim.TabletTransformer
 import hanmo.com.drinkingwaterassistant.main.MainFragment
@@ -39,6 +41,32 @@ class MainActivity : AppCompatActivity() {
         setHistroyButton()
         getSettingsFragmentObserve()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        setAdmobBanner()
+    }
+
+    private fun setAdmobBanner() {
+        mainAdView.visibility = View.INVISIBLE
+        val adRequest = AdRequest.Builder().build()
+        mainAdView.loadAd(adRequest)
+        //adStatus = "Request - noCallback"
+        mainAdView.adListener = object: AdListener(){
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                DLog.e("not loaded  : $p0")
+                //adStatus = "Request - failedToLoad"
+            }
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                DLog.e("loaded loaded loaded loaded")
+                //adStatus = "Request - load"
+                mainAdView.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun getSettingsFragmentObserve() {

@@ -9,6 +9,7 @@ import hanmo.com.drinkingwaterassistant.workers.DailyWorkerUtil
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import com.crashlytics.android.Crashlytics
+import com.google.android.gms.ads.MobileAds
 import io.fabric.sdk.android.Fabric
 
 
@@ -39,6 +40,7 @@ class DWApplication : MultiDexApplication() {
         DLog.e("apllication midnight worker start!!")
         DailyWorkerUtil.applyMidnightWorker()
         initDB()
+        MobileAds.initialize(this@DWApplication, "ca-app-pub-2452228545701512~5634059465")
     }
 
     private fun initDB() {

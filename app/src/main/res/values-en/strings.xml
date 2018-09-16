@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Drinking Water Assistant</string>
+    <string name="app_name">WaterPin</string>
     <string name="todayGoal">Goal</string>
     <string name="monday">monday</string>
     <string name="tuesday">tuesday</string>
@@ -36,4 +36,5 @@
     <string name="prepareCustomWaterService">We are preparing a custom unit service.</string>
     <string name="inputGoals">Please enter your intake of 200ml or more.</string>
     <string name="inputMyTargetTextHint">Please provide a target intake of 200ml or more.</string>
+    <string name="myWaterText">MyWater</string>
 </resources>

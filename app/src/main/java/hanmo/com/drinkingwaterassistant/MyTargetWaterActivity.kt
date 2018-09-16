@@ -151,7 +151,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
                 .subscribe {
                     if (status) {
                         RealmHelper.instance.updateGoal(myTargetText.text.toString().toInt())
-                        RealmHelper.instance.updateWaterType(waterType)
+                        waterType?.run { RealmHelper.instance.updateWaterType(this) }
                         onBackPressed()
                     } else {
                         toast(getString(R.string.inputGoals))

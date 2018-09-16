@@ -42,7 +42,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center"
                 android:text="@string/gallery"
-                android:textColor="@color/whiteColor"
+                android:textColor="@color/subsubColor"
                 android:textSize="12sp" />
 
         </LinearLayout>

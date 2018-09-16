@@ -13,10 +13,9 @@ import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.anim.RevealAnimationUtil
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 import hanmo.com.drinkingwaterassistant.anim.RevealAnimationUtil.AnimationFinishedListener
-import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
+import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreen
 import hanmo.com.drinkingwaterassistant.main.MainFragment
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
-import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -67,11 +66,11 @@ class SettingsFragment : Fragment() {
 
     private fun initLockScreenSwitch() {
         view?.run {
-            Lockscreen.instance.init(activity)
+            LockScreen.instance.init(activity)
             val hasLockScreen = RealmHelper.instance.getHasLockScreenBool()
             lockscreenSwitch.isChecked = hasLockScreen
-            if (hasLockScreen) { Lockscreen.instance.active() }
-            else { Lockscreen.instance.deactivate() }
+            if (hasLockScreen) { LockScreen.instance.active() }
+            else { LockScreen.instance.deactivate() }
         }
     }
 
@@ -100,11 +99,11 @@ class SettingsFragment : Fragment() {
             lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
                 RealmHelper.instance.updateHasLockScreen(isChecked)
                 if (isChecked) {
-                    Lockscreen.instance.active()
+                    LockScreen.instance.active()
                     Snackbar.make(this, getString(R.string.lockscrenOn), Snackbar.LENGTH_LONG).show()
                 }
                 else {
-                    Lockscreen.instance.deactivate()
+                    LockScreen.instance.deactivate()
                     Snackbar.make(this, getString(R.string.lockscrenOff), Snackbar.LENGTH_LONG).show()
                 }
             })

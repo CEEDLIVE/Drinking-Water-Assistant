@@ -5,9 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.StaggeredGridLayoutManager
@@ -121,6 +119,7 @@ class ChangeBackgroundActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.slide_in_right, 0)
         setContentView(R.layout.activity_changebackground)
 
         compositeDisposable = CompositeDisposable()
@@ -148,6 +147,11 @@ class ChangeBackgroundActivity : AppCompatActivity() {
             changeBackgroundAdapter.setOnItemClickListener(onItemClickListener)
             adapter = changeBackgroundAdapter
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, R.anim.slide_out_right)
     }
 
     override fun onDestroy() {

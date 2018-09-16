@@ -11,7 +11,7 @@ import android.support.v4.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import hanmo.com.drinkingwaterassistant.DWApplication
-import hanmo.com.drinkingwaterassistant.lockscreen.LockscreenActivity
+import hanmo.com.drinkingwaterassistant.lockscreen.LockScreenActivity
 import hanmo.com.drinkingwaterassistant.notification.MyNotificationManager
 import hanmo.com.drinkingwaterassistant.util.DLog
 
@@ -72,9 +72,9 @@ class LockScreenService : Service() {
 
             val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
             if (mNotificationManager.getNotificationChannel(MyNotificationManager(context).getMainNotificationId()) == null) {
-                DLog.e("Lockscreen Service notification is NULL!!")
+                DLog.e("LockScreen Service notification is NULL!!")
             } else {
-                DLog.e("Lockscreen Service notification is NOT NULL!!")
+                DLog.e("LockScreen Service notification is NOT NULL!!")
             }
 
             startForeground(DWApplication.notificationId, createNotificationCompatBuilder(context).build())
@@ -121,7 +121,7 @@ class LockScreenService : Service() {
     }
 
     private fun startLockScreenActivity() {
-        val startLockScreenActIntent = Intent(this@LockScreenService, LockscreenActivity::class.java)
+        val startLockScreenActIntent = Intent(this@LockScreenService, LockScreenActivity::class.java)
         startLockScreenActIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startLockScreenActIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         startActivity(startLockScreenActIntent)

@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit
 import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreenMenuAdapter
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
-import kotlinx.android.synthetic.main.item_lockscreen_menu.view.*
 import org.jetbrains.anko.toast
 import java.util.*
 import io.realm.Realm
@@ -30,27 +29,25 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
-import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.lockscreen.background.Background
-import hanmo.com.drinkingwaterassistant.lockscreen.background.BackgroundUtil
 import hanmo.com.drinkingwaterassistant.lockscreen.background.ChangeBackgroundActivity
+import hanmo.com.drinkingwaterassistant.lockscreen.settings.LockScreenSettingsActivity
 import hanmo.com.drinkingwaterassistant.lockscreen.util.PathFromURIUtil.getRealPathFromURI
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
 import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.util.DLog
-import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.io.File
 
 
 /**
  * Created by hanmo on 2018. 5. 22..
  */
-class LockscreenActivity : AppCompatActivity() {
+class LockScreenActivity : AppCompatActivity() {
 
     private var waterTable : Goals? = null
     private lateinit var compositeDisposable: CompositeDisposable
@@ -69,13 +66,14 @@ class LockscreenActivity : AppCompatActivity() {
         override fun onItemClick(view: View, position: Int) {
             when (position) {
                 0 -> {
-                    toast("background")
                     val backgroundIntent = ChangeBackgroundActivity.newIntent(applicationContext)
                     backgroundIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(backgroundIntent)
                 }
                 1 -> {
-                    toast("setting")
+                    val settingsIntent = LockScreenSettingsActivity.newIntent(applicationContext)
+                    settingsIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(settingsIntent)
                 }
             }
             setLottieAnimator(false)
@@ -159,7 +157,7 @@ class LockscreenActivity : AppCompatActivity() {
         addWaterButton.clicks()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
-                    val addEffect = LottieAnimationView(this@LockscreenActivity)
+                    val addEffect = LottieAnimationView(this@LockScreenActivity)
                     addWaterEffectFrame.addView(addEffect)
                     with(addEffect) {
                         setAnimation("add_effect.json")
@@ -172,7 +170,7 @@ class LockscreenActivity : AppCompatActivity() {
                         val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                         vibrator.vibrate(100)
                     } else if (audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
-                        val mp = MediaPlayer.create(this@LockscreenActivity, R.raw.dropwater)
+                        val mp = MediaPlayer.create(this@LockScreenActivity, R.raw.dropwater)
                         mp.start()
                         mp.setOnCompletionListener {
                             it.release()

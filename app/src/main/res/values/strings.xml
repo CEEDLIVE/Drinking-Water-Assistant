@@ -43,4 +43,11 @@
     <string name="inputGoals">200ml 이상 섭취량을 입력해주십시오.</string>
     <string name="inputMyTargetTextHint">200ml 이상의 목표 섭취량을 입력해 주세요.</string>
     <string name="myWaterText">MyWater</string>
+    <string name="soundsText">버튼 소리</string>
+    <string name="vibrateText">버튼 진동</string>
+    <string name="lockscreenSettingTitle">잠금화면 환경설정</string>
+    <string name="lockscrenSoundsOn">버튼 클릭 소리 ON!</string>
+    <string name="lockscrenSoundsOff">버튼 클릭 소리 OFF!</string>
+    <string name="lockscrenVibrateOn">버튼 클릭 진동 ON!</string>
+    <string name="lockscrenVibrateOff">버튼 클릭 진동 OFF!</string>
 </resources>

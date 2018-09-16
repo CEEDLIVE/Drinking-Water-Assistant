@@ -56,10 +56,6 @@ class ChangeBackgroundAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         fun bindView(item: String) {
             with(itemView){
                 if (adapterPosition == 0) {
-                    imageFrame.setBackgroundResource(R.drawable.gallery)
-                    imageUrl.text = "내 갤러리"
-                    mygallery.visibility = View.VISIBLE
-                    backgroundImage.visibility = View.INVISIBLE
 
                 }
                 else {

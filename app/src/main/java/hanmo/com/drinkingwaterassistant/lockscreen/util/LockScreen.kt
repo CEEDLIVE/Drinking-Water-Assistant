@@ -9,7 +9,7 @@ import hanmo.com.drinkingwaterassistant.lockscreen.service.LockScreenService
 /**
  * Created by hanmo on 2018. 5. 22..
  */
-class Lockscreen {
+class LockScreen {
     private var context: Context? = null
 
     val isActive: Boolean
@@ -49,14 +49,14 @@ class Lockscreen {
     }
 
     companion object {
-        var singleton: Lockscreen? = null
-        val instance: Lockscreen
+        var singleton: LockScreen? = null
+        val instance: LockScreen
             get() {
                 if (singleton == null) {
-                    singleton = Lockscreen()
+                    singleton = LockScreen()
 
                 }
-                return singleton as Lockscreen
+                return singleton as LockScreen
             }
     }
 

@@ -37,4 +37,11 @@
     <string name="inputGoals">Please enter your intake of 200ml or more.</string>
     <string name="inputMyTargetTextHint">Please provide a target intake of 200ml or more.</string>
     <string name="myWaterText">MyWater</string>
+    <string name="soundsText">Button Sounds</string>
+    <string name="vibrateText">Button Vibrate</string>
+    <string name="lockscreenSettingTitle">LockScreen Setting</string>
+    <string name="lockscrenSoundsOn">Turn On Button Sounds!</string>
+    <string name="lockscrenSoundsOff">Turn Off Button Sounds!</string>
+    <string name="lockscrenVibrateOn">Turn On Button Vibrate!</string>
+    <string name="lockscrenVibrateOff">Turn Off Button Vibrate!</string>
 </resources>

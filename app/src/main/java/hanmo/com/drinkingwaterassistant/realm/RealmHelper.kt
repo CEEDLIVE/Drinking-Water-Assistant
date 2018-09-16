@@ -200,6 +200,23 @@ class RealmHelper {
         }
     }
 
+    fun updateHasSounds(sounds: Boolean) {
+        realm.where(LockScreenTable::class.java).findFirst()?.run {
+            realm.executeTransaction {
+                hasSound = sounds
+            }
+        }
+    }
+
+    fun updateHasVibrate(vibrate: Boolean) {
+        realm.where(LockScreenTable::class.java).findFirst()?.run {
+            realm.executeTransaction {
+                hasVibrate = vibrate
+            }
+        }
+    }
+
+
     fun deleteHistory(id: Int) {
         realm.executeTransaction {
             val results = realm.where(WaterHistory::class.java).equalTo("id", id).findFirst()
@@ -250,5 +267,6 @@ class RealmHelper {
                 return INSTANCE as RealmHelper
             }
     }
+
 
 }

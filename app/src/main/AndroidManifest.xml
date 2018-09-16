@@ -49,10 +49,16 @@
             android:showOnLockScreen="true" />
 
         <activity
+            android:name=".lockscreen.settings.LockScreenSettingsActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:showOnLockScreen="true" />
+
+        <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
 
-        <activity android:name=".lockscreen.LockscreenActivity"
+        <activity android:name=".lockscreen.LockScreenActivity"
             android:showOnLockScreen="true"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"

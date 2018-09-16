@@ -3,7 +3,7 @@ package hanmo.com.drinkingwaterassistant.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import hanmo.com.drinkingwaterassistant.lockscreen.util.Lockscreen
+import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 
 /**
@@ -16,8 +16,8 @@ class BootReceiver : BroadcastReceiver() {
         intent?.run {
             if (action == Intent.ACTION_BOOT_COMPLETED) {
                 if (RealmHelper.instance.getHasLockScreenBool()) {
-                    Lockscreen.instance.init(context)
-                    Lockscreen.instance.active()
+                    LockScreen.instance.init(context)
+                    LockScreen.instance.active()
                 }
             }
         }

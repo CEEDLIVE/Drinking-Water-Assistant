@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit
 import android.view.animation.AnimationUtils
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreenMenuAdapter
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
-import org.jetbrains.anko.toast
 import java.util.*
 import io.realm.Realm
 import android.animation.ValueAnimator
@@ -30,7 +29,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest

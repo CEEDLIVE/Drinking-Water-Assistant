@@ -5,6 +5,7 @@ import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
+import hanmo.com.drinkingwaterassistant.tracking.LockScreenTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import io.realm.*
 import java.util.*
@@ -96,6 +97,7 @@ class RealmHelper {
     fun updateHasLockScreen(hasLockScreen: Boolean?) {
         val goals = queryFirst(LockScreenTable::class.java)
         goals?.apply {
+            LockScreenTrackingUtil.turnLockScreenView(hasLockScreen)
             realm.executeTransaction {
                 this.hasLockScreen = hasLockScreen
             }

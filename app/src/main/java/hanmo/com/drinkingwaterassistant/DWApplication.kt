@@ -9,7 +9,10 @@ import hanmo.com.drinkingwaterassistant.workers.DailyWorkerUtil
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
+import com.crashlytics.android.answers.AnswersEvent
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
 
 
@@ -21,12 +24,13 @@ class DWApplication : MultiDexApplication() {
 
     init {
         instance = this@DWApplication
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this@DWApplication)
     }
 
     companion object {
         var lockScreenShow = false
         val notificationId: Int = 1
-
+        var firebaseAnalytics : FirebaseAnalytics? = null
         private var instance: DWApplication? = null
 
         fun applicationContext() : Context? {

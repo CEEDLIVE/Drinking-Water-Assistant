@@ -94,6 +94,9 @@ dependencies {
     //implementation "com.google.firebase:firebase-lid:$firebaseMessageVersion"
     implementation "com.google.firebase:firebase-messaging:$firebaseMessageVersion"
 
+    //GA
+    implementation 'com.google.android.gms:play-services-analytics:16.0.1'
+
     //admob
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
 

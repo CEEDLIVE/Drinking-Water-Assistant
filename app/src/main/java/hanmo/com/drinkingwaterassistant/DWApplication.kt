@@ -9,12 +9,11 @@ import hanmo.com.drinkingwaterassistant.workers.DailyWorkerUtil
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
-import com.crashlytics.android.answers.AnswersEvent
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.analytics.GoogleAnalytics
+import com.google.android.gms.analytics.Tracker
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
-
 
 
 /**
@@ -26,6 +25,9 @@ class DWApplication : MultiDexApplication() {
         instance = this@DWApplication
         firebaseAnalytics = FirebaseAnalytics.getInstance(this@DWApplication)
     }
+
+    private val sAnalytics = GoogleAnalytics.getInstance(this@DWApplication)
+    private var sTracker: Tracker? = null
 
     companion object {
         var lockScreenShow = false
@@ -46,6 +48,19 @@ class DWApplication : MultiDexApplication() {
         initDB()
         MobileAds.initialize(this@DWApplication, "ca-app-pub-2452228545701512~5634059465")
     }
+
+    @Synchronized
+    internal fun getTracker(): Tracker? {
+        sTracker?.run {
+            DLog.e("sTracker is not null")
+        } ?: kotlin.run {
+            sTracker = sAnalytics.newTracker(R.xml.global_tracker)
+        }
+
+        return sTracker
+    }
+
+
 
     private fun initDB() {
         Realm.init(this)
@@ -85,7 +100,16 @@ class DWApplication : MultiDexApplication() {
         } catch (e: Exception) {
             DLog.e(e.toString())
         }
+    }
 
+    @Synchronized
+    fun getDefaultTracker(): Tracker {
+        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+        if (sTracker == null) {
+            sTracker = sAnalytics.newTracker(R.xml.global_tracker)
+        }
+
+        return sTracker
     }
 
     override fun onTerminate() {

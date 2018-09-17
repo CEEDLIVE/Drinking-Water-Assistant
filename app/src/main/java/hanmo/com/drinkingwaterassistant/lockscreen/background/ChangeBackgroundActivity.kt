@@ -119,7 +119,6 @@ class ChangeBackgroundActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.slide_in_right, 0)
         setContentView(R.layout.activity_changebackground)
 
         compositeDisposable = CompositeDisposable()

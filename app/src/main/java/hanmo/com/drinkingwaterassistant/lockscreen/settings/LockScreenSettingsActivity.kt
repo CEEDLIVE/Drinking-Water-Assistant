@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_lockscreen_settings.*
 import java.util.concurrent.TimeUnit
 
 /**
+ * 잠금화면 환경설정
  * Created by hanmo on 2018. 9. 16..
  */
 class LockScreenSettingsActivity : AppCompatActivity() {
@@ -41,7 +42,6 @@ class LockScreenSettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.slide_in_right, 0)
         setContentView(R.layout.activity_lockscreen_settings)
         compositeDisposable = CompositeDisposable()
 

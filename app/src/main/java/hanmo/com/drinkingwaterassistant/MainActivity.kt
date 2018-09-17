@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.anim.TabletTransformer
+import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreen
 import hanmo.com.drinkingwaterassistant.main.MainFragment
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
@@ -37,15 +38,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
         }
 
+        setLockScreen()
         initViewPagerControls()
         setHistroyButton()
         getSettingsFragmentObserve()
 
     }
 
+    private fun setLockScreen() {
+        if (RealmHelper.instance.getHasLockScreenBool()) {
+            LockScreen.instance.init(this@MainActivity)
+            LockScreen.instance.active()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-
         setAdmobBanner()
     }
 

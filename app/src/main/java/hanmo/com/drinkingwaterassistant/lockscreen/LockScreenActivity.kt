@@ -30,6 +30,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -50,6 +51,8 @@ import java.io.File
 class LockScreenActivity : AppCompatActivity() {
 
     private var waterTable : Goals? = null
+    private var lockscreenTable : LockScreenTable? = null
+
     private lateinit var compositeDisposable: CompositeDisposable
     private val mTimeReceiver = object : BroadcastReceiver() {
 
@@ -68,12 +71,16 @@ class LockScreenActivity : AppCompatActivity() {
                 0 -> {
                     val backgroundIntent = ChangeBackgroundActivity.newIntent(applicationContext)
                     backgroundIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    backgroundIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                     startActivity(backgroundIntent)
+                    overridePendingTransition(R.anim.slide_in_right, 0)
                 }
                 1 -> {
                     val settingsIntent = LockScreenSettingsActivity.newIntent(applicationContext)
                     settingsIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    settingsIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                     startActivity(settingsIntent)
+                    overridePendingTransition(R.anim.slide_in_right, 0)
                 }
             }
             setLottieAnimator(false)
@@ -123,6 +130,7 @@ class LockScreenActivity : AppCompatActivity() {
 
         registerReceiver(mTimeReceiver, intentFilter)
         waterTable = RealmHelper.instance.getTodayWaterGoal()
+        lockscreenTable =  RealmHelper.instance.queryFirst(LockScreenTable::class.java)
         setAddButton()
         setProgressBar()
         setWaterType()
@@ -182,13 +190,17 @@ class LockScreenActivity : AppCompatActivity() {
 
                     val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
                     if (audioManager.ringerMode == AudioManager.RINGER_MODE_VIBRATE || audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT) {
-                        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                        vibrator.vibrate(100)
+                        if (lockscreenTable?.hasVibrate!!) {
+                            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                            vibrator.vibrate(100)
+                        }
                     } else if (audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
-                        val mp = MediaPlayer.create(this@LockScreenActivity, R.raw.dropwater)
-                        mp.start()
-                        mp.setOnCompletionListener {
-                            it.release()
+                        if (lockscreenTable?.hasSound!!) {
+                            val mp = MediaPlayer.create(this@LockScreenActivity, R.raw.dropwater)
+                            mp.start()
+                            mp.setOnCompletionListener {
+                                it.release()
+                            }
                         }
                     }
                 }
@@ -283,7 +295,7 @@ class LockScreenActivity : AppCompatActivity() {
     }
 
     private fun setBackground() {
-        RealmHelper.instance.queryFirst(LockScreenTable::class.java)?.run{
+        lockscreenTable?.run{
             DLog.e(background.toString())
             if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.sample)
             else {
@@ -379,7 +391,6 @@ class LockScreenActivity : AppCompatActivity() {
 
         lockScreenView.setOnTouchListener(object : UnLock(this, lockScreenView) {
             override fun onFinish() {
-                //waveView.setProgress(100)
                 finish()
                 super.onFinish()
             }

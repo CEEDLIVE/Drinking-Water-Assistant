@@ -16,6 +16,7 @@ import hanmo.com.drinkingwaterassistant.notification.MyNotificationManager
 import hanmo.com.drinkingwaterassistant.util.DLog
 
 /**
+ * 잠금화면 서비스
  * Created by hanmo on 2018. 5. 22..
  */
 class LockScreenService : Service() {

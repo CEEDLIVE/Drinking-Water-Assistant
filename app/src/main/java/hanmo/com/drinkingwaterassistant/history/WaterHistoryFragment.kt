@@ -13,6 +13,7 @@ import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.tracking.MainActivityTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import kotlinx.android.synthetic.main.fragment_history.view.*
 
@@ -35,11 +36,6 @@ class WaterHistoryFragment : Fragment() {
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        DLog.e("onCreated!!")
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         DLog.e("onCreateView!!")
         return inflater.inflate(R.layout.fragment_history, container, false)
@@ -48,6 +44,8 @@ class WaterHistoryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         DLog.e("onResume!!")
+
+        MainActivityTrackingUtil.showHistoyView()
 
         if (isAdded) {
             DLog.e("isAdded!!")

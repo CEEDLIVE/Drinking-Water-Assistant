@@ -24,10 +24,7 @@ class DWApplication : MultiDexApplication() {
 
     init {
         instance = this@DWApplication
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this@DWApplication)
     }
-
-    private val sAnalytics = GoogleAnalytics.getInstance(this@DWApplication)
 
     companion object {
         var lockScreenShow = false
@@ -43,21 +40,16 @@ class DWApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        Fabric.with(this, Crashlytics())
-        DLog.e("apllication midnight worker start!!")
+        MobileAds.initialize(this@DWApplication, "ca-app-pub-2452228545701512~5634059465")
         DailyWorkerUtil.applyMidnightWorker()
         initDB()
-        MobileAds.initialize(this@DWApplication, "ca-app-pub-2452228545701512~5634059465")
-        sTracker = getTracker()
+        initTracking()
     }
 
-    @Synchronized
-    private fun getTracker(): Tracker? {
-        sTracker?.run {
-            DLog.e("sTracker is not null")
-        } ?: kotlin.run { sTracker = sAnalytics.newTracker(R.xml.global_tracker) }
-
-        return sTracker
+    private fun initTracking() {
+        sTracker = getDefaultTracker()
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this@DWApplication)
+        Fabric.with(this, Crashlytics())
     }
 
 
@@ -107,6 +99,7 @@ class DWApplication : MultiDexApplication() {
         sTracker?.run {
             return this
         } ?: kotlin.run {
+            val sAnalytics = GoogleAnalytics.getInstance(this@DWApplication)
             return sAnalytics.newTracker(R.xml.global_tracker)
         }
     }

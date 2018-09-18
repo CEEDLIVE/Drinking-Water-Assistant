@@ -39,6 +39,7 @@ import hanmo.com.drinkingwaterassistant.lockscreen.settings.LockScreenSettingsAc
 import hanmo.com.drinkingwaterassistant.lockscreen.util.PathFromURIUtil.getRealPathFromURI
 import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
 import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
+import hanmo.com.drinkingwaterassistant.tracking.LockScreenTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import java.io.File
 
@@ -90,6 +91,7 @@ class LockScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lockscreen)
+        LockScreenTrackingUtil.showLockScreenView()
 
     }
 

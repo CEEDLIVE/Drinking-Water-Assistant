@@ -26,6 +26,7 @@ import hanmo.com.drinkingwaterassistant.history.WaterHistoryAdapter
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.settings.SettingsFragment
+import hanmo.com.drinkingwaterassistant.tracking.MainActivityTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
 import hanmo.com.drinkingwaterassistant.util.RxEventBus
@@ -135,6 +136,8 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         DLog.e("Call onResume!!")
+
+        MainActivityTrackingUtil.showMainView()
 
         activity?.run {
             mContext = this

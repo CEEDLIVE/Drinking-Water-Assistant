@@ -10,9 +10,10 @@ import android.view.View
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import hanmo.com.drinkingwaterassistant.constans.Const
-import hanmo.com.drinkingwaterassistant.main.MainFragment
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.tracking.GATracker
+import hanmo.com.drinkingwaterassistant.tracking.MyTargetActivityTrackingUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -40,6 +41,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mytarget)
 
         compositeDisposable = CompositeDisposable()
+        GATracker.setupAppview("MyTargetWaterActivity Created")
 
         setMyTarget()
         setConfirmButton()
@@ -109,6 +111,7 @@ class MyTargetWaterActivity : AppCompatActivity() {
 
         waterTypeCustomButton.clicks()
                 .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .doOnNext { MyTargetActivityTrackingUtil.clickedCustomWaterTypeButton() }
                 .subscribe {
                     Snackbar.make(waterTypeCustomButton, getString(R.string.prepareCustomWaterService), Snackbar.LENGTH_LONG).show()
                 }.apply { compositeDisposable.add(this) }

@@ -6,21 +6,35 @@ import com.crashlytics.android.answers.CustomEvent
 import hanmo.com.drinkingwaterassistant.DWApplication
 
 /**
+ * 잠금화면 Tracking Util
  * Created by hanmo on 2018. 9. 17..
  */
 object LockScreenTrackingUtil {
 
-    fun turnLockScreenView(turnBool : Boolean?) {
-        Answers.getInstance()
-                .logCustom(CustomEvent("LockScreenTurnOnOff")
-                        .putCustomAttribute("hasLockScreen", turnBool.toString())
-                )
+    fun showLockScreenView() {
+
+        Answers.getInstance().logCustom(CustomEvent("showLockScreenView")
+                        .putCustomAttribute("showLocksScreen", "LockScreen onCreated Called!"))
 
         val bundle = Bundle()
-        bundle.putString("LockScreenTurnOnOff", turnBool.toString())
-        DWApplication.firebaseAnalytics?.logEvent("hasLockScreen", bundle)
+        bundle.putString("showLocksScreen", "LockScreen onCreated Called!")
+        DWApplication.firebaseAnalytics?.logEvent("showLockScreenView", bundle)
+
+        GATracker.setupAppview("showLockScreenView")
+        GATracker.setupEvent("showLocksScreen", "LockScreen onCreated Called!")
+
+    }
+
+    fun turnLockScreenView(turnBool : Boolean?) {
+        Answers.getInstance().logCustom(CustomEvent("LockScreenTurnOnOff")
+                        .putCustomAttribute("hasLockScreen", turnBool.toString()))
+
+        val bundle = Bundle()
+        bundle.putString("hasLockScreen", turnBool.toString())
+        DWApplication.firebaseAnalytics?.logEvent("LockScreenTurnOnOff", bundle)
 
         GATracker.setupAppview("LockScreenOffTypeView")
         GATracker.setupEvent("LockScreenOffType", turnBool.toString())
     }
+
 }

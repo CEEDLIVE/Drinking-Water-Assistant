@@ -6,6 +6,7 @@ import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import hanmo.com.drinkingwaterassistant.tracking.LockScreenTrackingUtil
+import hanmo.com.drinkingwaterassistant.tracking.MyTargetActivityTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import io.realm.*
 import java.util.*
@@ -79,6 +80,7 @@ class RealmHelper {
                 todayYear = Calendar.getInstance().get(Calendar.YEAR)
                 goalWater = goal
             }
+            MyTargetActivityTrackingUtil.setWaterGoal(goal.toString())
         }
     }
 
@@ -91,6 +93,7 @@ class RealmHelper {
                 todayYear = Calendar.getInstance().get(Calendar.YEAR)
                 waterType = type
             }
+            MyTargetActivityTrackingUtil.setWaterType(type.toString())
         }
     }
 

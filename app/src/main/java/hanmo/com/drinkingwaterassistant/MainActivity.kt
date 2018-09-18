@@ -14,14 +14,12 @@ import com.google.android.gms.ads.AdRequest
 import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.anim.TabletTransformer
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreen
-import hanmo.com.drinkingwaterassistant.main.MainFragment
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
+import hanmo.com.drinkingwaterassistant.tracking.MainActivityTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.fragment_main.view.*
-import org.jetbrains.anko.contentView
 import java.util.concurrent.TimeUnit
 
 
@@ -96,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         waterHistoryIcon.clicks()
                 .throttleFirst(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .filter { waterHistoryIcon.alpha > 0.5f }
+                .doOnNext { MainActivityTrackingUtil.clickedHistoryButton() }
                 .subscribe {
                     mainViewPager.setCurrentItem(1, true)
                 }.apply { compositeDisposable.add(this) }
@@ -103,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         waterAlarmIcon.clicks()
                 .throttleFirst(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .filter { waterAlarmIcon.alpha > 0.5f }
+                .doOnNext { MainActivityTrackingUtil.clickedAlarmButton() }
                 .subscribe {
                     Snackbar.make(waterAlarmIcon, getString(R.string.prepareAlarmService), Snackbar.LENGTH_LONG).show()
                 }.apply { compositeDisposable.add(this) }
@@ -112,7 +112,10 @@ class MainActivity : AppCompatActivity() {
     private var viewPagerPageChangeListener: ViewPager.OnPageChangeListener = object : ViewPager.OnPageChangeListener {
 
         override fun onPageSelected(position: Int) {
-
+            when(position) {
+                0 -> { MainActivityTrackingUtil.showMainView() }
+                1 -> { MainActivityTrackingUtil.showHistoyView() }
+            }
         }
 
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {

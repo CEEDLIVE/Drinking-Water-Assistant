@@ -20,7 +20,7 @@ object LockScreenTrackingUtil {
         bundle.putString("LockScreenTurnOnOff", turnBool.toString())
         DWApplication.firebaseAnalytics?.logEvent("hasLockScreen", bundle)
 
-        //DWApplication.setupAppview("LockScreenOffType")
-        //DWApplication.setupEvent("LockScreenOffType", "LockScreenOffType", offType)
+        GATracker.setupAppview("LockScreenOffTypeView")
+        GATracker.setupEvent("LockScreenOffType", turnBool.toString())
     }
 }

@@ -17,6 +17,7 @@ import io.fabric.sdk.android.Fabric
 
 
 /**
+ * My Application
  * Created by hanmo on 2018. 5. 22..
  */
 class DWApplication : MultiDexApplication() {
@@ -27,13 +28,13 @@ class DWApplication : MultiDexApplication() {
     }
 
     private val sAnalytics = GoogleAnalytics.getInstance(this@DWApplication)
-    private var sTracker: Tracker? = null
 
     companion object {
         var lockScreenShow = false
         val notificationId: Int = 1
         var firebaseAnalytics : FirebaseAnalytics? = null
         private var instance: DWApplication? = null
+        var sTracker: Tracker? = null
 
         fun applicationContext() : Context? {
             return instance?.applicationContext
@@ -47,19 +48,17 @@ class DWApplication : MultiDexApplication() {
         DailyWorkerUtil.applyMidnightWorker()
         initDB()
         MobileAds.initialize(this@DWApplication, "ca-app-pub-2452228545701512~5634059465")
+        sTracker = getTracker()
     }
 
     @Synchronized
-    internal fun getTracker(): Tracker? {
+    private fun getTracker(): Tracker? {
         sTracker?.run {
             DLog.e("sTracker is not null")
-        } ?: kotlin.run {
-            sTracker = sAnalytics.newTracker(R.xml.global_tracker)
-        }
+        } ?: kotlin.run { sTracker = sAnalytics.newTracker(R.xml.global_tracker) }
 
         return sTracker
     }
-
 
 
     private fun initDB() {
@@ -103,13 +102,13 @@ class DWApplication : MultiDexApplication() {
     }
 
     @Synchronized
-    fun getDefaultTracker(): Tracker {
+    fun getDefaultTracker(): Tracker? {
         // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-        if (sTracker == null) {
-            sTracker = sAnalytics.newTracker(R.xml.global_tracker)
+        sTracker?.run {
+            return this
+        } ?: kotlin.run {
+            return sAnalytics.newTracker(R.xml.global_tracker)
         }
-
-        return sTracker
     }
 
     override fun onTerminate() {

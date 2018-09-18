@@ -29,7 +29,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.support.v7.widget.LinearLayoutManager
-import android.util.TypedValue
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -43,7 +42,7 @@ import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.tracking.LockScreenTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
-import hanmo.com.drinkingwaterassistant.util.ScrollingGradient
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.io.File
 
 
@@ -54,8 +53,6 @@ class LockScreenActivity : AppCompatActivity() {
 
     private var waterTable : Goals? = null
     private var lockscreenTable : LockScreenTable? = null
-    private val initProgress = 0
-    private val updateProgress = 1
 
     private lateinit var compositeDisposable: CompositeDisposable
     private val mTimeReceiver = object : BroadcastReceiver() {
@@ -137,7 +134,7 @@ class LockScreenActivity : AppCompatActivity() {
         waterTable = RealmHelper.instance.getTodayWaterGoal()
         lockscreenTable =  RealmHelper.instance.queryFirst(LockScreenTable::class.java)
         setAddButton()
-        setProgressBar(initProgress)
+        setProgressBar(Const.initProgress)
         setWaterType()
         setUnlock()
         setTime()
@@ -245,12 +242,13 @@ class LockScreenActivity : AppCompatActivity() {
                 waterTable = realm.where(Goals::class.java).findFirst()
             }
         }
-        setProgressBar(updateProgress)
+        setProgressBar(Const.updateProgress)
     }
 
     private fun setProgressBar(progressStatus: Int) {
         waterTable?.let {
             val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
+            percentLoop(0.0, percent.toDouble())
             waterProgressbar?.run {
                 if (it.todayWater!! >= it.goalWater!!) {
                     if (!isIndeterminate) {
@@ -260,15 +258,10 @@ class LockScreenActivity : AppCompatActivity() {
 
                 max = it.goalWater!!
                 val anim = when(progressStatus) {
-                    initProgress -> {
-                        percentLoop(0.0, percent.toDouble())
-                        ProgressBarAnimation(waterProgressbar, 0f, it.todayWater?.toFloat())
-                    }
+                    Const.initProgress -> { ProgressBarAnimation(this, 0f, it.todayWater?.toFloat()) }
                     else -> {
-                        val halfPercent = percent / 3
-                        percentLoop(halfPercent.toDouble(), percent.toDouble())
                         val currentWater = it.todayWater!! - it.waterType!!
-                        ProgressBarAnimation(waterProgressbar, currentWater.toFloat(), it.todayWater?.toFloat())
+                        ProgressBarAnimation(this, currentWater.toFloat(), it.todayWater?.toFloat())
                     }
                 }
                 anim.duration = 1000
@@ -283,11 +276,24 @@ class LockScreenActivity : AppCompatActivity() {
         Thread(Runnable {
             if (percent != 0.toDouble()) {
                 while (k < percent) {
-                    k += 1.0
+                    var plusvalue = 1.0
+                    when {
+                        percent > 50.toDouble()  -> { plusvalue = 10.0 }
+                        percent > 100.toDouble()  -> { plusvalue = 20.0 }
+                        percent > 200.toDouble()  -> { plusvalue = 50.0 }
+                        percent > 300.toDouble()  -> { plusvalue = 100.0 }
+                    }
+                    k += plusvalue
                     SystemClock.sleep(10L)
                     mHandler.post {
                         val percentTxt = Math.floor(k).toInt().toString() + "%"
                         waterPercent.text = percentTxt
+                    }
+                }
+
+                mHandler.post {
+                    if (percent != Math.floor(k)) {
+                        waterPercent.text = "${percent.toInt()}%"
                     }
                 }
             } else {

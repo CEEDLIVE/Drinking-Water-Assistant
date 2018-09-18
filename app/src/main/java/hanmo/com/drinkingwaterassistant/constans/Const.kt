@@ -23,4 +23,7 @@ object Const {
 
     const val DAILY_WORKER_TAG = "DAILY_WORKER_STATE"
     const val DAILY_WORKER = "DAILY_WORKER"
+
+    const val initProgress = 0
+    const val updateProgress = 1
 }

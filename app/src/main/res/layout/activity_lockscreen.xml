@@ -136,6 +136,7 @@
                 android:id="@+id/waterProgressbar"
                 android:layout_width="280dp"
                 android:layout_height="280dp"
+                android:layoutDirection="rtl"
                 android:indeterminate="false"
                 android:indeterminateDrawable="@drawable/indeterminate_progress"
                 android:progressDrawable="@drawable/circular_progress_bar"

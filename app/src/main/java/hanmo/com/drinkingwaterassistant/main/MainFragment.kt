@@ -2,6 +2,9 @@ package hanmo.com.drinkingwaterassistant.main
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -238,7 +241,17 @@ class MainFragment : Fragment() {
                 val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
                 percentLoop(0.0, percent.toDouble())
                 waterProgressbar.setProgress(it.todayWater!!, it.goalWater!!)
-                todayLeftWaterText.text = "${it.goalWater!! - it.todayWater!!}ml"
+                if (percent < 100) {
+                    todayLeftWaterText.text = "${it.goalWater!! - it.todayWater!!}ml"
+                    mainLayout.setBackgroundColor(resources.getColor(R.color.transparent))
+                } else {
+                    mainLayout.setBackgroundResource(R.drawable.gradient_animation_list)
+                    val animationDrawable = mainLayout.background as AnimationDrawable
+                    animationDrawable.setEnterFadeDuration(3000)
+                    animationDrawable.setExitFadeDuration(3000)
+                    animationDrawable.start()
+                    todayLeftWaterText.text = "0ml"
+                }
             }
         }
 
@@ -250,11 +263,23 @@ class MainFragment : Fragment() {
         Thread(Runnable {
             if (percent != 0.toDouble()) {
                 while (k < percent) {
-                    k += 1.0
+                    var plusvalue = 1.0
+                    when {
+                        percent > 100.toDouble()  -> { plusvalue = 5.0 }
+                        percent > 200.toDouble()  -> { plusvalue = 20.0 }
+                        percent > 300.toDouble()  -> { plusvalue = 30.0 }
+                        percent > 400.toDouble()  -> { plusvalue = 50.0 }
+                    }
+                    k += plusvalue
                     SystemClock.sleep(10L)
                     mHandler.post {
                         val percentTxt = Math.floor(k).toInt().toString() + "%"
                         view?.waterPercent?.text = percentTxt
+                    }
+                }
+                mHandler.post {
+                    if (percent != Math.floor(k)) {
+                        view?.waterPercent?.text = "${percent.toInt()}%"
                     }
                 }
             } else {

@@ -172,7 +172,6 @@
 
         </LinearLayout>
 
-
         <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
             xmlns:progress="http://schemas.android.com/apk/res-auto"
             android:id="@+id/waterProgressbar"

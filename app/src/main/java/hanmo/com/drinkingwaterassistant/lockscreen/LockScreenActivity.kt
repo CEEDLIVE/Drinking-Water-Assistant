@@ -29,6 +29,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.support.v7.widget.LinearLayoutManager
+import android.util.TypedValue
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -41,6 +42,8 @@ import hanmo.com.drinkingwaterassistant.lockscreen.util.UnLockSwipe
 import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.tracking.LockScreenTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
+import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
+import hanmo.com.drinkingwaterassistant.util.ScrollingGradient
 import java.io.File
 
 
@@ -51,6 +54,8 @@ class LockScreenActivity : AppCompatActivity() {
 
     private var waterTable : Goals? = null
     private var lockscreenTable : LockScreenTable? = null
+    private val initProgress = 0
+    private val updateProgress = 1
 
     private lateinit var compositeDisposable: CompositeDisposable
     private val mTimeReceiver = object : BroadcastReceiver() {
@@ -132,7 +137,7 @@ class LockScreenActivity : AppCompatActivity() {
         waterTable = RealmHelper.instance.getTodayWaterGoal()
         lockscreenTable =  RealmHelper.instance.queryFirst(LockScreenTable::class.java)
         setAddButton()
-        setProgressBar()
+        setProgressBar(initProgress)
         setWaterType()
         setUnlock()
         setTime()
@@ -240,16 +245,34 @@ class LockScreenActivity : AppCompatActivity() {
                 waterTable = realm.where(Goals::class.java).findFirst()
             }
         }
-        setProgressBar()
+        setProgressBar(updateProgress)
     }
 
-    private fun setProgressBar() {
+    private fun setProgressBar(progressStatus: Int) {
         waterTable?.let {
-            waterTable = RealmHelper.instance.getTodayWaterGoal()
-            waterTable?.let {
-                val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
-                percentLoop(0.0, percent.toDouble())
-                waterProgressbar.setProgress(it.todayWater!!, it.goalWater!!)
+            val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
+            waterProgressbar?.run {
+                if (it.todayWater!! >= it.goalWater!!) {
+                    if (!isIndeterminate) {
+                        isIndeterminate = true
+                    }
+                }
+
+                max = it.goalWater!!
+                val anim = when(progressStatus) {
+                    initProgress -> {
+                        percentLoop(0.0, percent.toDouble())
+                        ProgressBarAnimation(waterProgressbar, 0f, it.todayWater?.toFloat())
+                    }
+                    else -> {
+                        val halfPercent = percent / 3
+                        percentLoop(halfPercent.toDouble(), percent.toDouble())
+                        val currentWater = it.todayWater!! - it.waterType!!
+                        ProgressBarAnimation(waterProgressbar, currentWater.toFloat(), it.todayWater?.toFloat())
+                    }
+                }
+                anim.duration = 1000
+                startAnimation(anim)
             }
         }
     }

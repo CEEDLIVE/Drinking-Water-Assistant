@@ -120,7 +120,7 @@
             </LinearLayout>
 
 
-            <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+            <!--<antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
                 xmlns:progress="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/waterProgressbar"
                 android:layout_width="match_parent"
@@ -130,7 +130,17 @@
                 progress:progressBackgroundColor="#ffffff"
                 progress:progressColor="#7896CF"
                 progress:progressStrokeWidth="5dp"
-                progress:textColor="@android:color/transparent" />
+                progress:textColor="@android:color/transparent" />-->
+
+            <ProgressBar
+                android:id="@+id/waterProgressbar"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:indeterminate="false"
+                android:indeterminateDrawable="@drawable/indeterminate_progress"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:background="@drawable/circle_shape"
+                style="?android:attr/progressBarStyleHorizontal" />
 
             <ImageView
                 android:id="@+id/addWaterButton"

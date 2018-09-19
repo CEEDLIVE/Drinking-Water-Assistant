@@ -66,7 +66,7 @@ class DWApplication : MultiDexApplication() {
 
         val realmConfiguration = RealmConfiguration.Builder()
                 .name("drink_water.realm")
-                .deleteRealmIfMigrationNeeded()
+                .schemaVersion(0)
                 .build()
 
         Realm.setDefaultConfiguration(realmConfiguration)

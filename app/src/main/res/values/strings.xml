@@ -24,8 +24,8 @@
     <string name="unlock">UnLock</string>
     <string name="hour">h</string>
     <string name="min">m</string>
-    <string name="day">day</string>
-    <string name="month">month</string>
+    <string name="day">d</string>
+    <string name="month">m</string>
     <string name="waterHistory">History</string>
     <string name="selectBackground">Select Background!</string>
     <string name="gallery">my gallery</string>

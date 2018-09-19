@@ -44,4 +44,5 @@
     <string name="lockscrenSoundsOff">버튼 클릭 소리 OFF!</string>
     <string name="lockscrenVibrateOn">버튼 클릭 진동 ON!</string>
     <string name="lockscrenVibrateOff">버튼 클릭 진동 OFF!</string>
+    <string name="versionInfoText">버전 정보</string>
 </resources>

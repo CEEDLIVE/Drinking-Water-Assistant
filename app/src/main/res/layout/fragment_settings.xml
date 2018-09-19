@@ -35,6 +35,7 @@
 
 
     <LinearLayout
+        android:id="@+id/lockscreenLayout"
         android:orientation="horizontal"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
@@ -67,6 +68,40 @@
             android:track="@drawable/switch_track_custom" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/versionInfo"
+        android:orientation="horizontal"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lockscreenLayout" >
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:textSize="20sp"
+            android:textColor="@color/settingTextColor"
+            android:text="@string/versionInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:textSize="20sp"
+            android:textColor="@color/blackColor"
+            android:text="@string/versionInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
     <android.support.constraint.Guideline
         android:id="@+id/settingGuideline"

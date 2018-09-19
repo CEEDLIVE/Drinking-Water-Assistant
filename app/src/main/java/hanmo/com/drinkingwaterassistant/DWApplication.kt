@@ -14,6 +14,9 @@ import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.Tracker
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
+import android.support.multidex.MultiDex
+
+
 
 
 /**
@@ -44,6 +47,11 @@ class DWApplication : MultiDexApplication() {
         DailyWorkerUtil.applyMidnightWorker()
         initDB()
         initTracking()
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this@DWApplication)
     }
 
     private fun initTracking() {

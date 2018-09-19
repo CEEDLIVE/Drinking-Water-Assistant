@@ -50,4 +50,6 @@
     <string name="lockscrenSoundsOff">Turn Off Button Sounds!</string>
     <string name="lockscrenVibrateOn">Turn On Button Vibrate!</string>
     <string name="lockscrenVibrateOff">Turn Off Button Vibrate!</string>
+    <string name="versionInfoText">Version Info</string>
+    <string name="versionInfo">Ver 1.0.0</string>
 </resources>

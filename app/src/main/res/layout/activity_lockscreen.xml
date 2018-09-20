@@ -99,24 +99,128 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/waterTypeImage"
-                    android:src="@drawable/water_type_01"
-                    android:scaleType="centerCrop"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:contentDescription="TODO" />
-
-                <TextView
-                    android:id="@+id/waterPercent"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nanumbareunpen"
-                    android:text="0%"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/waterTypeImage"
+                        android:src="@drawable/water_type_01"
+                        android:scaleType="centerCrop"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:id="@+id/waterPercent"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nanumbareunpen"
+                        android:text="0%"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/todayWater"
+                            android:text="0"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="0.8dp"
+                            android:background="@color/whiteColor"/>
+
+                        <TextView
+                            android:text="@string/todayWaterText"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/goalWater"
+                            android:text="0"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="0.8dp"
+                            android:background="@color/whiteColor"/>
+
+                        <TextView
+                            android:text="@string/todayGoal"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/remainWater"
+                            android:text="0"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="0.8dp"
+                            android:background="@color/whiteColor"/>
+
+                        <TextView
+                            android:text="@string/leftWater"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 

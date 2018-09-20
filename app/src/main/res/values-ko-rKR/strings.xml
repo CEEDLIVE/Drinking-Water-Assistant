@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">WaterPin</string>
-    <string name="todayGoal">오늘 목표</string>
+    <string name="todayGoal">마신물</string>
     <string name="monday">월요일</string>
     <string name="tuesday">화요일</string>
     <string name="wednesday">수요일</string>
@@ -12,7 +12,7 @@
     <string name="water_tracker">water tracker</string>
     <string name="inputMyTargetText">나의 목표 섭취량</string>
     <string name="startConfirm">시작하기</string>
-    <string name="todayWaterText">오늘 마실물</string>
+    <string name="todayWaterText">목표량</string>
     <string name="leftWater">남은양</string>
     <string name="settingText">환경설정</string>
     <string name="locksreenText">잠금화면</string>

@@ -57,4 +57,16 @@ object MainActivityTrackingUtil {
         GATracker.setupAppview("showHistoyView")
         GATracker.setupEvent("showHistory", "showed")
     }
+
+    fun clickedAdView() {
+        Answers.getInstance().logCustom(CustomEvent("MainActivityClickedAdMob")
+                .putCustomAttribute("MainActivityClickedAdMob", "clicked"))
+
+        val bundle = Bundle()
+        bundle.putString("MainActivityClickedAdMob", "clicked")
+        DWApplication.firebaseAnalytics?.logEvent("MainActivityClickedAdMob", bundle)
+
+        GATracker.setupAppview("MainActivityClickedAdMob")
+        GATracker.setupEvent("MainActivityClickedAdMob", "clicked")
+    }
 }

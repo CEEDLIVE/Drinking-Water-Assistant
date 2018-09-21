@@ -29,6 +29,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -42,7 +43,6 @@ import hanmo.com.drinkingwaterassistant.realm.model.LockScreenTable
 import hanmo.com.drinkingwaterassistant.tracking.LockScreenTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
 import hanmo.com.drinkingwaterassistant.util.ProgressBarAnimation
-import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.io.File
 
 
@@ -158,7 +158,6 @@ class LockScreenActivity : AppCompatActivity() {
     }
 
     private fun setAdmob() {
-
         adView.visibility = View.INVISIBLE
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
@@ -167,13 +166,16 @@ class LockScreenActivity : AppCompatActivity() {
             override fun onAdFailedToLoad(p0: Int) {
                 super.onAdFailedToLoad(p0)
                 DLog.e("not loaded  : $p0")
-                //adStatus = "Request - failedToLoad"
             }
             override fun onAdLoaded() {
                 super.onAdLoaded()
-                DLog.e("loaded loaded loaded loaded")
-                //adStatus = "Request - load"
+                DLog.e("Admob loaded")
                 adView.visibility = View.VISIBLE
+            }
+
+            override fun onAdClicked() {
+                super.onAdClicked()
+                LockScreenTrackingUtil.clickedAdView()
             }
         }
     }
@@ -247,8 +249,14 @@ class LockScreenActivity : AppCompatActivity() {
 
     private fun setProgressBar(progressStatus: Int) {
         waterTable?.let {
+            goalWater.text = "${it.todayWater}ml"
+            todayWater.text = "${it.goalWater}ml"
             val percent : Int = (100 * (it.todayWater!!.toDouble() / it.goalWater!!.toDouble())).toInt()
             percentLoop(0.0, percent.toDouble())
+
+            if (percent < 100) { remainWater.text = "${it.goalWater!! - it.todayWater!!}ml" }
+            else { remainWater.text = "0ml" }
+
             waterProgressbar?.run {
                 if (it.todayWater!! >= it.goalWater!!) {
                     if (!isIndeterminate) {
@@ -325,8 +333,7 @@ class LockScreenActivity : AppCompatActivity() {
 
     private fun setBackground() {
         lockscreenTable?.run{
-            DLog.e(background.toString())
-            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.sample)
+            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.image15)
             else {
                 if (hasDrawable!!) {
                     val backgroundImage =  Background(background!!).getImageResourceId(applicationContext)
@@ -339,7 +346,7 @@ class LockScreenActivity : AppCompatActivity() {
 
             }
         } ?: kotlin.run {
-            lockScreenView.setBackgroundResource(R.drawable.sample)
+            lockScreenView.setBackgroundResource(R.drawable.image15)
         }
 
     }
@@ -437,8 +444,18 @@ class LockScreenActivity : AppCompatActivity() {
                 super.onMoved(x)
             }
         })
+    }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        return false
+    }
 
+    override fun onPreparePanel(featureId: Int, view: View?, menu: Menu?): Boolean {
+        return false
+    }
+
+    override fun onPrepareOptionsPanel(view: View?, menu: Menu?): Boolean {
+        return false
     }
 
     override fun onPause() {

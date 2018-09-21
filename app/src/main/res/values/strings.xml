@@ -4,7 +4,7 @@
     <string name="admobId">ca-app-pub-2452228545701512~5634059465</string>
     <string name="admobBanner">ca-app-pub-2452228545701512/8423874337</string>
     <string name="fabricKey">8a672da65b206f92c4873b276005c0a30d5a5cd6</string>
-    <string name="todayGoal">Goal</string>
+    <string name="todayGoal">Today water</string>
     <string name="monday">monday</string>
     <string name="tuesday">tuesday</string>
     <string name="wednesday">wednesday</string>
@@ -15,7 +15,7 @@
     <string name="water_tracker">water tracker</string>
     <string name="inputMyTargetText">Input my goal</string>
     <string name="startConfirm">confirm</string>
-    <string name="todayWaterText">today water</string>
+    <string name="todayWaterText">Goal</string>
     <string name="leftWater">Remain Water</string>
     <string name="settingText">Setting</string>
     <string name="locksreenText">LockScreen</string>

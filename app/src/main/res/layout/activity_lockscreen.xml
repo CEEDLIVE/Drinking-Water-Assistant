@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/transparent"
+    android:background="@drawable/transparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +11,7 @@
         android:id="@+id/waveView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent"
+        android:background="@drawable/transparent"
         wave:above_wave_color="@color/waveMainColor"
         wave:blow_wave_color="@color/wavesubColor"
         wave:wave_height="little"
@@ -22,7 +22,7 @@
         android:id="@+id/lockScreenView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sample"
+        android:background="@drawable/image15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -94,6 +94,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -104,13 +105,14 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <ImageView
                         android:id="@+id/waterTypeImage"
                         android:src="@drawable/water_type_01"
                         android:scaleType="centerCrop"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:contentDescription="TODO" />
+                        android:contentDescription="waterType" />
 
                     <TextView
                         android:id="@+id/waterPercent"
@@ -125,7 +127,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -136,39 +138,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:id="@+id/todayWater"
-                            android:text="0"
-                            android:textSize="15sp"
-                            android:fontFamily="@font/nanumbareunpen"
-                            android:textColor="@color/whiteColor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="0.8dp"
-                            android:background="@color/whiteColor"/>
-
-                        <TextView
-                            android:text="@string/todayWaterText"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/nanumbareunpen"
-                            android:textColor="@color/whiteColor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
                             android:id="@+id/goalWater"
-                            android:text="0"
+                            android:text="0ml"
                             android:textSize="15sp"
                             android:fontFamily="@font/nanumbareunpen"
                             android:textColor="@color/whiteColor"
@@ -193,11 +164,42 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/todayWater"
+                            android:text="0ml"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="0.8dp"
+                            android:background="@color/whiteColor"/>
+
+                        <TextView
+                            android:text="@string/todayWaterText"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/nanumbareunpen"
+                            android:textColor="@color/whiteColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/remainWater"
-                            android:text="0"
+                            android:text="0ml"
                             android:textSize="15sp"
                             android:fontFamily="@font/nanumbareunpen"
                             android:textColor="@color/whiteColor"
@@ -241,6 +243,7 @@
                 android:layout_width="280dp"
                 android:layout_height="280dp"
                 android:layoutDirection="rtl"
+                android:progress="40"
                 android:indeterminate="false"
                 android:indeterminateDrawable="@drawable/indeterminate_progress"
                 android:progressDrawable="@drawable/circular_progress_bar"
@@ -251,6 +254,7 @@
                 android:id="@+id/addWaterButton"
                 android:layout_gravity="bottom|center_horizontal"
                 android:src="@drawable/add_water"
+                android:background="@drawable/transparent"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/addWaterButton" />
@@ -317,7 +321,7 @@
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/transparent"
+            android:background="@drawable/transparent"
             app:adSize="SMART_BANNER"
             app:adUnitId="@string/admobBanner"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -68,9 +68,14 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onAdLoaded() {
                 super.onAdLoaded()
-                DLog.e("loaded loaded loaded loaded")
+                DLog.e("Main adMob loaded")
                 //adStatus = "Request - load"
                 mainAdView.visibility = View.VISIBLE
+            }
+
+            override fun onAdClicked() {
+                super.onAdClicked()
+                MainActivityTrackingUtil.clickedAdView()
             }
         }
     }

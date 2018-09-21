@@ -154,6 +154,18 @@ class RealmHelper {
     }
 
     fun getTodayWaterGoal() : Goals? {
+        val todayWaterGoals = realm.where(Goals::class.java).findFirst()
+        todayWaterGoals?.run {
+            if (todayDate!! != Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+                realm.executeTransaction {
+                    todayDate = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+                    todayMonth = Calendar.getInstance().get(Calendar.MONTH)
+                    todayYear = Calendar.getInstance().get(Calendar.YEAR)
+                    todayWater = 0
+                }
+            }
+        }
+
         return realm.where(Goals::class.java).findFirst()
     }
 

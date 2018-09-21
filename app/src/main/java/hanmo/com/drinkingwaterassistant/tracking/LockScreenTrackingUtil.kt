@@ -37,4 +37,16 @@ object LockScreenTrackingUtil {
         GATracker.setupEvent("LockScreenOffType", turnBool.toString())
     }
 
+    fun clickedAdView() {
+        Answers.getInstance().logCustom(CustomEvent("LockScreenClickedAdMob")
+                .putCustomAttribute("LockScreenClickedAdMob", "clicked"))
+
+        val bundle = Bundle()
+        bundle.putString("LockScreenClickedAdMob", "clicked")
+        DWApplication.firebaseAnalytics?.logEvent("LockScreenClickedAdMob", bundle)
+
+        GATracker.setupAppview("LockScreenClickedAdMob")
+        GATracker.setupEvent("LockScreenClickedAdMob", "clicked")
+    }
+
 }

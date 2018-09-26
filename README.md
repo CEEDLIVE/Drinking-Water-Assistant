@@ -1,4 +1,4 @@
-# Drinking-Water-Assistant
+# WaterPin - Used Lockscreen Water Tracker
 Lock screen application to help you drink water
 
 WaterPin 1.0.0 Release

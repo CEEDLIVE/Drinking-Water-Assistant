@@ -3,7 +3,15 @@ Lock screen application to help you drink water
 
 WaterPin 1.0.0 Release
 
-## 주요화면
+## ScreenShots
+<div>
+<img src="https://user-images.githubusercontent.com/28719698/46078571-86472280-c1cf-11e8-9833-bcba4bf2d500.jpeg" width="160">
+<img src="https://user-images.githubusercontent.com/28719698/46078572-86dfb900-c1cf-11e8-93a2-ca78c685c4d4.jpeg" width="160"> 
+<img src="https://user-images.githubusercontent.com/28719698/46078573-86dfb900-c1cf-11e8-97a5-2f3d06e03b08.jpeg" width="170"> 
+<img src="https://user-images.githubusercontent.com/28719698/46078576-86dfb900-c1cf-11e8-9acd-a8a1c0140c6b.jpeg" width="170"> 
+<img src="https://user-images.githubusercontent.com/28719698/46078577-86dfb900-c1cf-11e8-8598-868b496ddac0.jpeg" width="170">
+</div>
+
 
 ## 기능 
 1. 잠금화면

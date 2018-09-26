@@ -26,7 +26,7 @@ WaterPin 1.0.0 Release
 2. 물 마시는 단위 Custom
 3. FCM 각 화면별 Push가능하도록 및 Push 설정 스위치
 
-### 지원 Version
+## 지원 Version
 minSdkVersion 17
 targetSdkVersion 26
 

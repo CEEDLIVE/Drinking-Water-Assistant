@@ -23,7 +23,6 @@ open class UnLock(val context: Context, val lockScreenView: ConstraintLayout) : 
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-
         when (event.action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_DOWN -> {
                 firstTouchX = event.x + 5f

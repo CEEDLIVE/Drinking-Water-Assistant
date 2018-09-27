@@ -1,6 +1,7 @@
 package hanmo.com.drinkingwaterassistant
 
 import android.support.test.InstrumentationRegistry
+import hanmo.com.drinkingwaterassistant.constans.Const
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -38,10 +39,24 @@ class RealmTest {
 
     @Test
     fun A_initUserPreference() {
+        val currentIdNum = realm.where(Goals::class.java).max("id")
+        val nextId = when (currentIdNum) {
+            null -> {
+                1
+            }
+            else -> {
+                currentIdNum.toInt() + 1
+            }
+        }
+
         val goals = Goals()
-        goals.id = 1
-        goals.goalWater = 100
-        goals.todayWater = 0
+        with(goals) {
+            id = 1
+            goalWater = 100
+            todayWater = 0
+            waterType = Const.type200
+        }
+
 
         realm.executeTransaction {
             realm.copyToRealm(goals)
@@ -49,10 +64,11 @@ class RealmTest {
 
         val testGoals = realm.where(Goals::class.java).findFirst()
         assertNotNull(testGoals)
-        testGoals?.let {
-            assertEquals(1, it.id)
-            assertEquals(0, it.todayWater)
-            assertEquals(100, it.goalWater)
+        testGoals?.run {
+            assertEquals(1, id)
+            assertEquals(0, todayWater)
+            assertEquals(100, goalWater)
+            assertEquals(Const.type200, waterType)
         }
 
     }

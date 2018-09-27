@@ -16,8 +16,7 @@ class BootReceiver : BroadcastReceiver() {
         intent?.run {
             if (action == Intent.ACTION_BOOT_COMPLETED) {
                 if (RealmHelper.instance.getHasLockScreenBool()) {
-                    LockScreen.instance.init(context)
-                    LockScreen.instance.active()
+                    LockScreen.active()
                 }
             }
         }

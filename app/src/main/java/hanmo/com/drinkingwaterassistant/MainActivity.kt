@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setLockScreen() {
         if (RealmHelper.instance.getHasLockScreenBool()) {
-            LockScreen.instance.init(this@MainActivity)
-            LockScreen.instance.active()
+            LockScreen.active()
         }
     }
 

@@ -69,10 +69,9 @@ class SettingsFragment : Fragment() {
             val hasLockScreen = RealmHelper.instance.getHasLockScreenBool()
             lockscreenSwitch.isChecked = hasLockScreen
             if (hasLockScreen) {
-                LockScreen.instance.init(activity)
-                LockScreen.instance.active()
+                LockScreen.active()
             }
-            else { LockScreen.instance.deactivate() }
+            else { LockScreen.deactivate() }
         }
     }
 
@@ -101,11 +100,11 @@ class SettingsFragment : Fragment() {
             lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
                 RealmHelper.instance.updateHasLockScreen(isChecked)
                 if (isChecked) {
-                    LockScreen.instance.active()
+                    LockScreen.active()
                     Snackbar.make(this, getString(R.string.lockscrenOn), Snackbar.LENGTH_LONG).show()
                 }
                 else {
-                    LockScreen.instance.deactivate()
+                    LockScreen.deactivate()
                     Snackbar.make(this, getString(R.string.lockscrenOff), Snackbar.LENGTH_LONG).show()
                 }
             })

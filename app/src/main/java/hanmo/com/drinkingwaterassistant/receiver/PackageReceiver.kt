@@ -27,10 +27,9 @@ class PackageReceiver : BroadcastReceiver() {
                 Intent.ACTION_MY_PACKAGE_REPLACED -> {
                     DLog.d("ACTION_MY_PACKAGE_REPLACED() called!!")
                     if (RealmHelper.instance.getHasLockScreenBool()) {
-                        LockScreen.instance.init(context)
-                        LockScreen.instance.active()
+                        LockScreen.active()
                     } else {
-                        LockScreen.instance.deactivate()
+                        LockScreen.deactivate()
                     }
                 }
             }

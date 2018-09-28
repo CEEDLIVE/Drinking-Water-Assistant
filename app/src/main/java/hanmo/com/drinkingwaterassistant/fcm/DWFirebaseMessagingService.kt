@@ -12,73 +12,62 @@ import com.google.firebase.messaging.RemoteMessage
 import hanmo.com.drinkingwaterassistant.DWApplication
 import hanmo.com.drinkingwaterassistant.R
 import hanmo.com.drinkingwaterassistant.MainActivity
+import hanmo.com.drinkingwaterassistant.constans.RequestCodes
 import hanmo.com.drinkingwaterassistant.notification.MyNotificationManager
-import hanmo.com.drinkingwaterassistant.util.DLog
 
 /**
  * Created by hanmo on 2018. 8. 22..
  */
 class DWFirebaseMessagingService : FirebaseMessagingService() {
 
-    private lateinit var context : Context
+    private val context : Context by lazy { this@DWFirebaseMessagingService }
 
-    /**
-     * FirebaseInstanceIdService is deprecated.
-     * this is new on firebase-messaging:17.1.0
-     */
     override fun onNewToken(token: String?) {
-        DLog.d("new Token: $token")
+        saveDeviceToken(token)
     }
 
-    /**
-     * this method will be triggered every time there is new FCM Message.
-     */
+    private fun saveDeviceToken(token: String?) {
+        val tokenPref = getSharedPreferences("tokenPref", Context.MODE_PRIVATE)
+        tokenPref.edit()?.run {
+            putString("deviceToken", token)
+            apply()
+        }
+
+    }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        DLog.d("From: " + remoteMessage.from)
-        context = this@DWFirebaseMessagingService
-        if(remoteMessage.notification != null) {
-            DLog.d("Notification Message Body: ${remoteMessage.notification?.body}")
-            sendNotification(remoteMessage.notification?.body)
+        remoteMessage.data?.run {
+            sendNotification(this)
         }
     }
 
 
-    private fun sendNotification(body: String?) {
-        val intent = Intent(context, MainActivity::class.java).apply {
+    private fun sendNotification(data: MutableMap<String, String>) {
+        val intent = MainActivity.newIntent(context).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            putExtra("Notification", body)
+            putExtra("viewName", data["viewName"])
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             MyNotificationManager(context).createMainNotificationChannel()
         }
 
-        startForeground(DWApplication.notificationId, createNotificationCompatBuilder(body, intent).build())
+        startForeground(DWApplication.notificationId, createNotificationCompatBuilder(data, intent).build())
     }
 
-    private fun createNotificationCompatBuilder(body: String?, intent: Intent): NotificationCompat.Builder {
+    private fun createNotificationCompatBuilder(data: MutableMap<String, String>, intent: Intent): NotificationCompat.Builder {
 
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(context, RequestCodes.PUSH, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return NotificationCompat.Builder(context,"Notification")
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle("Push Notification FCM")
-                    .setContentText(body)
-                    .setAutoCancel(true)
-                    .setSound(notificationSound)
-                    .setContentIntent(pendingIntent)
-        } else {
-            return NotificationCompat.Builder(context, MyNotificationManager(context).getMainNotificationId())
-                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
-                    .setContentTitle("Drinking Water Notification")
-                    .setContentText(body)
-                    .setAutoCancel(true)
-                    .setSound(notificationSound)
-                    .setContentIntent(pendingIntent)
-        }
+        return NotificationCompat.Builder(context, MyNotificationManager(context).getMainNotificationId())
+                .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+                .setSmallIcon(R.drawable.water_pin_icon)
+                .setContentTitle(data["title"])
+                .setContentText(data["subTitle"])
+                .setAutoCancel(true)
+                .setSound(notificationSound)
+                .setContentIntent(pendingIntent)
     }
 
 }

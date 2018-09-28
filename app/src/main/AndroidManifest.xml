@@ -28,16 +28,17 @@
         android:theme="@style/DWAppTheme">
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".MyTargetWaterActivity"
             android:screenOrientation="portrait"/>
@@ -60,7 +61,6 @@
 
         <activity android:name=".lockscreen.LockScreenActivity"
             android:showOnLockScreen="true"
-            android:screenOrientation="portrait"
             android:launchMode="singleInstance"
             android:theme="@style/lockscreenView"/>
 

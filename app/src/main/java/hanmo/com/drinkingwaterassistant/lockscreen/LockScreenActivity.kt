@@ -23,6 +23,7 @@ import hanmo.com.drinkingwaterassistant.realm.model.WaterHistory
 import java.util.*
 import io.realm.Realm
 import android.animation.ValueAnimator
+import android.content.pm.ActivityInfo
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -53,8 +54,18 @@ class LockScreenActivity : AppCompatActivity() {
 
     private var waterTable : Goals? = null
     private var lockscreenTable : LockScreenTable? = null
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
-    private lateinit var compositeDisposable: CompositeDisposable
+    companion object {
+        fun newIntent(context: Context?) : Intent {
+            return Intent(context, LockScreenActivity::class.java)
+                    .apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                    }
+        }
+    }
+
     private val mTimeReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -95,6 +106,10 @@ class LockScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lockscreen)
         LockScreenTrackingUtil.showLockScreenView()
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
     }
 
 
@@ -124,8 +139,6 @@ class LockScreenActivity : AppCompatActivity() {
         super.onResume()
 
         setAdmob()
-
-        compositeDisposable = CompositeDisposable()
 
         val intentFilter = IntentFilter()
         intentFilter.addAction(Intent.ACTION_TIME_TICK)

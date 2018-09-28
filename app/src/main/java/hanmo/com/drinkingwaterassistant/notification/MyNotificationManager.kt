@@ -16,7 +16,6 @@ class MyNotificationManager(private val context : Context) {
         private val CHANNEL_DESCRIPTION = "Water Assistant CHANEL"
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getMainNotificationId(): String {
         return CHANNEL_ID
     }
@@ -30,7 +29,6 @@ class MyNotificationManager(private val context : Context) {
 
         mChannel.enableVibration(false)
         mChannel.enableLights(false)
-
 
         val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
         mNotificationManager.createNotificationChannel(mChannel)

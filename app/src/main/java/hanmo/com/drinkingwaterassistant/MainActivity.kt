@@ -1,5 +1,7 @@
 package hanmo.com.drinkingwaterassistant
 
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -13,6 +15,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.jakewharton.rxbinding2.view.clicks
 import hanmo.com.drinkingwaterassistant.anim.TabletTransformer
+import hanmo.com.drinkingwaterassistant.constans.Const
+import hanmo.com.drinkingwaterassistant.lockscreen.LockScreenActivity
 import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreen
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
@@ -27,6 +31,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var compositeDisposable: CompositeDisposable
 
+    companion object {
+        fun newIntent(context: Context?) : Intent {
+            return Intent(context, MainActivity::class.java)
+                    .apply {
+                        action = Intent.ACTION_MAIN
+                        addCategory(Intent.CATEGORY_LAUNCHER)
+                    }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,6 +49,11 @@ class MainActivity : AppCompatActivity() {
         if (RealmHelper.instance.queryFirst(Goals::class.java)?.goalWater == 0) {
             startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
         }
+
+        val tokenPref = getSharedPreferences("tokenPref", Context.MODE_PRIVATE)
+        val deviceToken = tokenPref.getString("deviceToken", "")
+
+        DLog.e("device Token : $deviceToken")
 
         setLockScreen()
         initViewPagerControls()
@@ -52,6 +71,28 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         setAdmobBanner()
+
+        pushUpdateView()
+    }
+
+    private fun pushUpdateView() {
+        intent.extras?.run {
+            when(getString("viewName")) {
+                Const.PUSH_VIEW_MAIN -> {
+                    mainViewPager.currentItem = 0
+                }
+                Const.PUSH_VIEW_HISTORY -> {
+                    mainViewPager.currentItem = 1
+                }
+                Const.PUSH_VIEW_MYTARGET -> {
+                    startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
+                }
+                Const.PUSH_VIEW_LOCKSCREEN -> {
+                    startActivity(LockScreenActivity.newIntent(this@MainActivity))
+                }
+            }
+            intent.removeExtra("viewName")
+        }
     }
 
     private fun setAdmobBanner() {
@@ -148,14 +189,20 @@ class MainActivity : AppCompatActivity() {
     private fun initViewPagerControls() {
 
         val myViewPagerAdapter = MyViewPagerAdapter(supportFragmentManager)
+        with(mainViewPager) {
+            adapter = myViewPagerAdapter
+            setPageTransformer(true, TabletTransformer())
+            addOnPageChangeListener(viewPagerPageChangeListener)
+        }
 
-        mainViewPager.adapter = myViewPagerAdapter
-        mainViewPager.setPageTransformer(true, TabletTransformer())
-        mainViewPager.addOnPageChangeListener(viewPagerPageChangeListener)
         tabLayout.setupWithViewPager(mainViewPager, true)
 
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.run { setIntent(this) }
+    }
 
     override fun onDestroy() {
         compositeDisposable.clear()

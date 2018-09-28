@@ -40,6 +40,7 @@ android {
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
     }
 }
 

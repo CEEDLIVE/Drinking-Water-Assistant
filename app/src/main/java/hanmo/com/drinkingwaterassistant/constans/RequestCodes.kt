@@ -5,4 +5,5 @@ package hanmo.com.drinkingwaterassistant.constans
  */
 object RequestCodes {
     const val alarmUpdateCodes = 1001
+    const val PUSH = 1002
 }

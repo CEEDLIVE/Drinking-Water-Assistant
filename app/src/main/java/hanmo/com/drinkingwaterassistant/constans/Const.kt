@@ -24,6 +24,11 @@ object Const {
     const val DAILY_WORKER_TAG = "DAILY_WORKER_STATE"
     const val DAILY_WORKER = "DAILY_WORKER"
 
+    const val PUSH_VIEW_HISTORY = "PUSH VIEW HISTORY"
+    const val PUSH_VIEW_LOCKSCREEN = "PUSH VIEW LOCKSCREEN"
+    const val PUSH_VIEW_MAIN = "PUSH VIEW MAIN"
+    const val PUSH_VIEW_MYTARGET = "PUSH VIEW MY TARGET"
+
     const val initProgress = 0
     const val updateProgress = 1
 }

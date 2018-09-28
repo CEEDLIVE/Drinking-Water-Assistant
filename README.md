@@ -48,6 +48,6 @@ targetSdkVersion 26
 15. Glide Transformations ``` jp.wasabeef:glide-transformations:3.3.0 ```
 16. Permissionsdispatcher ``` com.github.hotchemi:permissionsdispatcher:3.3.1 ```
 17. Fabric ``` io.fabric.tools:gradle:1.+ ```
-18. Kotlin ``` org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41 ```
+18. Kotlin ``` org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.50 ```
 19. Realm ``` io.realm:realm-gradle-plugin:5.0.0 ```
 20. android support Library ``` com.android.support:27.1.1 ```

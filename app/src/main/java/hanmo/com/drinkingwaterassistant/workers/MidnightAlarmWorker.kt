@@ -11,10 +11,9 @@ import java.util.*
  * Created by hanmo on 2018. 8. 29..
  */
 class MidnightAlarmWorker : Worker() {
+
     override fun doWork(): Result {
 
-
-        DLog.e("WorkManager midnightWorker start!!")
         return if (updateTodayWater()) {
             Worker.Result.SUCCESS
         } else Worker.Result.FAILURE
@@ -34,12 +33,11 @@ class MidnightAlarmWorker : Worker() {
                     todayWater = 0
                 }
             }
-            //DLog.e("${realm.where(Goals::class.java).findFirst().toString()}")
+
             DailyWorkerUtil.applyDailyWorker()
             realm.where(Goals::class.java).findFirst()?.todayDate == todayDateOfCal
         } else {
             false
         }
     }
-
 }

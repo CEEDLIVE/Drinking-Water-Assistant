@@ -38,7 +38,8 @@ class SettingsFragment : Fragment() {
             return fragment
         }
     }
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -97,17 +98,16 @@ class SettingsFragment : Fragment() {
 
             initLockScreenSwitch()
 
-            lockscreenSwitch.setOnCheckedChangeListener({ _, isChecked ->
+            lockscreenSwitch.setOnCheckedChangeListener { _, isChecked ->
                 RealmHelper.instance.updateHasLockScreen(isChecked)
                 if (isChecked) {
                     LockScreen.active()
                     Snackbar.make(this, getString(R.string.lockscrenOn), Snackbar.LENGTH_LONG).show()
-                }
-                else {
+                } else {
                     LockScreen.deactivate()
                     Snackbar.make(this, getString(R.string.lockscrenOff), Snackbar.LENGTH_LONG).show()
                 }
-            })
+            }
         }
     }
 

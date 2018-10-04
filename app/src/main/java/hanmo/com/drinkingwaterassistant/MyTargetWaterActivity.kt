@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
  */
 class MyTargetWaterActivity : AppCompatActivity() {
 
-    private lateinit var compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
     private var status = false
     private var waterType : Int? = null
 
@@ -40,7 +40,6 @@ class MyTargetWaterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mytarget)
 
-        compositeDisposable = CompositeDisposable()
         GATracker.setupAppview("MyTargetWaterActivity Created")
 
         setMyTarget()

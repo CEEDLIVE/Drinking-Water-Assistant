@@ -1,5 +1,6 @@
 package hanmo.com.drinkingwaterassistant.workers
 
+import android.content.Context
 import androidx.work.Worker
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.util.DLog
@@ -32,11 +33,9 @@ class DailyWorker : Worker() {
                 }
             }
 
-            //DLog.e("${realm.where(Goals::class.java).findFirst().toString()}")
             realm.where(Goals::class.java).findFirst()?.todayDate == todayDateOfCal
         } else {
             false
         }
     }
-
 }

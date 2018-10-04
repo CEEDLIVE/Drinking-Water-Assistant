@@ -29,7 +29,7 @@ import permissions.dispatcher.*
 @RuntimePermissions
 class ChangeBackgroundActivity : AppCompatActivity() {
 
-    private lateinit var compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
     private lateinit var staggeredGridLayoutManager: StaggeredGridLayoutManager
     private val READ_REQUEST_CODE = 42
 
@@ -120,8 +120,6 @@ class ChangeBackgroundActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_changebackground)
-
-        compositeDisposable = CompositeDisposable()
 
         setCancelButton()
         setBackgroundList()

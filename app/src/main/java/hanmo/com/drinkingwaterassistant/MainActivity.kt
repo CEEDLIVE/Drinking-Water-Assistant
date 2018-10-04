@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     companion object {
         fun newIntent(context: Context?) : Intent {
@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        compositeDisposable = CompositeDisposable()
 
         if (RealmHelper.instance.queryFirst(Goals::class.java)?.goalWater == 0) {
             startActivity(MyTargetWaterActivity.newIntent(this@MainActivity))
@@ -121,6 +120,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getSettingsFragmentObserve() {
+
         FragmentEventsBus.instance.fragmentEventObservable.subscribe {
             when (it) {
                 FragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                     waterAlarmIcon.visibility = View.VISIBLE
                 }
             }
-        }
+        }.apply { compositeDisposable.add(this) }
     }
 
     private fun setHistroyButton() {

@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
  */
 class LockScreenSettingsActivity : AppCompatActivity() {
 
-    lateinit var compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     companion object {
 
@@ -43,7 +43,6 @@ class LockScreenSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lockscreen_settings)
-        compositeDisposable = CompositeDisposable()
 
         setCancelButton()
         initSwitch()

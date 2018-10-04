@@ -82,11 +82,9 @@ object DailyWorkerUtil {
 
     fun applyMidnightWorker() {
 
-        cancelMidnightAlarmWorker()
-
         onTimeDailyWorker = OneTimeWorkRequest
                 .Builder(MidnightAlarmWorker::class.java)
-                .setInitialDelay(getDelayTime(), TimeUnit.SECONDS)
+                .setInitialDelay(getDelayTime(), TimeUnit.MICROSECONDS)
                 .setConstraints(getConstraints())
                 .build()
 
@@ -123,5 +121,9 @@ object DailyWorkerUtil {
             DLog.e("hanmo cancel Daily Worker !!")
             workManager.cancelWorkById(this.id)
         }
+    }
+
+    fun cancelAllWorker() {
+        workManager.cancelAllWork()
     }
 }

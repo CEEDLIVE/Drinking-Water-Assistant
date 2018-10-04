@@ -48,7 +48,7 @@ import java.util.concurrent.TimeUnit
 @SuppressLint("SetTextI18n")
 class MainFragment : Fragment() {
 
-    private lateinit var compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
     private var waterTable : Goals? = null
     private lateinit var historyAdapter : WaterHistoryAdapter
     private lateinit var mContext : Context
@@ -76,7 +76,6 @@ class MainFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        compositeDisposable = CompositeDisposable()
 
         val rootView = inflater.inflate(R.layout.fragment_main, container, false)
         /*DailyWorkerUtil.getWorksState().observe(this, Observer {
@@ -124,7 +123,7 @@ class MainFragment : Fragment() {
                     }
                 }
             }
-        }
+        }.apply { compositeDisposable.add(this) }
     }
 
     private fun replaceFragment(fragment: Fragment, tag : String) {

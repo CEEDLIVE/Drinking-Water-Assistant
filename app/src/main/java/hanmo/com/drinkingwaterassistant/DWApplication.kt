@@ -31,10 +31,11 @@ class DWApplication : MultiDexApplication() {
 
     companion object {
         var lockScreenShow = false
-        val notificationId: Int = 1
         var firebaseAnalytics : FirebaseAnalytics? = null
-        private var instance: DWApplication? = null
         var sTracker: Tracker? = null
+
+        val notificationId: Int = 1
+        private var instance: DWApplication? = null
 
         fun applicationContext() : Context? {
             return instance?.applicationContext

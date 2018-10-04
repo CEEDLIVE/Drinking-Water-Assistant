@@ -95,7 +95,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
         fun bindView(waterHistoryData: WaterHistory?) {
             with(itemView) {
                 itemChildLayout.visibility = View.GONE
-                waterHistoryData?.let {
+                waterHistoryData?.let { it ->
                     itemTodayGoal.text = "${WaterCalculateUtil.totalTodayWater(it.todayDate)}ml"
                     itemTodayGoalDate.text = WaterCalculateUtil.formatDate(it.addWaterTime, true)
 
@@ -127,7 +127,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                     override fun onAnimationStart(animation: Animation?) {
                         itemView.drowIcon.setImageResource(R.drawable.ic_drop_down)
                         AlphaAnim.startAppearAlphaAnim(itemView.waterGoal)
-                        AlphaAnim.startFadeAlphaAnim(itemView.itemWaterGoal, View.GONE)
+                        AlphaAnim.startFadeAlphaAnim(itemView.itemWaterGoal)
                     }
 
                 })
@@ -142,7 +142,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
                     override fun onAnimationStart(animation: Animation?) {
                         itemView.drowIcon.setImageResource(R.drawable.ic_drop_up)
                         AlphaAnim.startAppearAlphaAnim(itemView.itemWaterGoal)
-                        AlphaAnim.startFadeAlphaAnim(itemView.waterGoal, View.INVISIBLE)
+                        AlphaAnim.startFadeAlphaAnim(itemView.waterGoal)
                     }
 
                 })

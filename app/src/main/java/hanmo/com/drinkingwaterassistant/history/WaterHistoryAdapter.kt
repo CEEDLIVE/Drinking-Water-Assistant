@@ -89,7 +89,7 @@ class WaterHistoryAdapter(private val context : Context, private val waterHistor
             LayoutInflater.from(parent.context).inflate(R.layout.item_history_today_goal, parent, false)), View.OnClickListener {
 
         init {
-            itemView.placeCard.setOnClickListener(this)
+            itemView.waterInfoCard.setOnClickListener(this)
         }
 
         fun bindView(waterHistoryData: WaterHistory?) {

@@ -17,6 +17,7 @@ buildscript {
     ext.SUPPORT_VERSION = '28.0.0'
     ext.LOTTIE = '2.5.4'
     ext.work_version = "1.0.0-alpha09"
+    ext.leakCanaryVersion = '1.6.1'
 
 
     repositories {

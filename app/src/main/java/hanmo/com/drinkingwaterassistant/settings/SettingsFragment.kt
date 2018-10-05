@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +47,7 @@ class SettingsFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_settings, container, false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            RevealAnimationUtil.registerStartRevealAnimation(rootView, resources.getColor(R.color.mainColor), resources.getColor(R.color.whiteColor), object : AnimationFinishedListener {
+            RevealAnimationUtil.registerStartRevealAnimation(rootView, ContextCompat.getColor(context!!, R.color.mainColor), ContextCompat.getColor(context!!, R.color.whiteColor), object : AnimationFinishedListener {
                 override fun onAnimationFinished() {
                     if (!MainFragment.possibleDeleteItem) {
                         FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED)
@@ -125,7 +126,7 @@ class SettingsFragment : Fragment() {
                     .subscribe {
                         FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_DESTROYED)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            RevealAnimationUtil.registerExitRevealAnimation(view, resources.getColor(R.color.mainColor), resources.getColor(R.color.whiteColor), object : AnimationFinishedListener {
+                            RevealAnimationUtil.registerExitRevealAnimation(view, ContextCompat.getColor(context!!, R.color.mainColor), ContextCompat.getColor(context!!, R.color.whiteColor), object : AnimationFinishedListener {
                                 override fun onAnimationFinished() {
                                     DLog.e("animation Close")
                                     FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED)

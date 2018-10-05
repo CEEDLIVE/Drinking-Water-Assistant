@@ -38,6 +38,7 @@ class WaterHistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         DLog.e("onCreateView!!")
+
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
@@ -60,7 +61,11 @@ class WaterHistoryFragment : Fragment() {
                 throw IllegalStateException("this application does not Context!!")
             }
         }
-        
+
+        initHistoryList()
+    }
+
+    private fun initHistoryList() {
         val slideDownAnim= AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_list_animation_fall_down)
         view?.historyList?.run {
             layoutAnimation = slideDownAnim
@@ -69,7 +74,5 @@ class WaterHistoryFragment : Fragment() {
             adapter = historyAdapter
             setHasFixedSize(true)
         }
-
     }
-
 }

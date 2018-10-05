@@ -37,7 +37,6 @@ object RevealAnimationUtil {
 
     fun registerStartRevealAnimation(view: View?, startColor : Int, endColor : Int, listener: AnimationFinishedListener) {
         view?.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                 v.removeOnLayoutChangeListener(this)
                 val cx = view.right - dpToPx(20)

@@ -2,9 +2,7 @@ package hanmo.com.drinkingwaterassistant.main
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -31,8 +29,7 @@ import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.settings.SettingsFragment
 import hanmo.com.drinkingwaterassistant.tracking.MainActivityTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
-import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
-import hanmo.com.drinkingwaterassistant.util.RxEventBus
+import hanmo.com.drinkingwaterassistant.util.SettingsFragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.view.*
@@ -93,15 +90,15 @@ class MainFragment : Fragment() {
     }
 
     private fun getSettingsFragmentObserve() {
-        FragmentEventsBus.instance.fragmentEventObservable.subscribe {
+        SettingsFragmentEventsBus.fragmentEventObservable.subscribe {
             view?.run {
                 when (it) {
-                    FragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
+                    SettingsFragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
                         settingButton.isEnabled = false
                         possibleDeleteItem = false
                         setAddWaterList()
                     }
-                    FragmentEventsBus.ACTION_FRAGMENT_DESTROYED -> {
+                    SettingsFragmentEventsBus.ACTION_FRAGMENT_DESTROYED -> {
                         possibleDeleteItem = true
                         settingButton.isEnabled = true
                         myTargetButton.visibility = View.VISIBLE
@@ -109,14 +106,14 @@ class MainFragment : Fragment() {
                         waterInfoLayout.visibility = View.VISIBLE
                         waterProgressbarFrame.visibility = View.VISIBLE
                     }
-                    FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED -> {
+                    SettingsFragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED -> {
                         settingButton.isEnabled = false
                         myTargetButton.visibility = View.GONE
                         settingButton.visibility = View.GONE
                         waterInfoLayout.visibility = View.GONE
                         waterProgressbarFrame.visibility = View.GONE
                     }
-                    FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED -> {
+                    SettingsFragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED -> {
                         settingButton.isEnabled = true
                         possibleDeleteItem = true
                         setAddWaterList()
@@ -200,15 +197,14 @@ class MainFragment : Fragment() {
     }
 
     private fun setSettingsButton() {
-        view?.run {
-            settingButton.clicks()
+        view?.settingButton?.run {
+            clicks()
                     .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .filter { possibleDeleteItem }
                     .subscribe {
-                        FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_CREATED)
+                        SettingsFragmentEventsBus.postFragmentAction(SettingsFragmentEventsBus.ACTION_FRAGMENT_CREATED)
                         replaceFragment(SettingsFragment.newInstance(), "settings")
-                    }
-                    .apply { compositeDisposable.add(this) }
+                    }.apply { compositeDisposable.add(this) }
         }
     }
 

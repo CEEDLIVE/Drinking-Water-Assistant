@@ -22,7 +22,7 @@ import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.realm.model.Goals
 import hanmo.com.drinkingwaterassistant.tracking.MainActivityTrackingUtil
 import hanmo.com.drinkingwaterassistant.util.DLog
-import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
+import hanmo.com.drinkingwaterassistant.util.SettingsFragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
@@ -121,13 +121,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun getSettingsFragmentObserve() {
 
-        FragmentEventsBus.instance.fragmentEventObservable.subscribe {
+        SettingsFragmentEventsBus.fragmentEventObservable.subscribe {
             when (it) {
-                FragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
+                SettingsFragmentEventsBus.ACTION_FRAGMENT_CREATED -> {
                     waterHistoryIcon.visibility = View.GONE
                     waterAlarmIcon.visibility = View.GONE
                 }
-                FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED -> {
+                SettingsFragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED -> {
                     waterHistoryIcon.visibility = View.VISIBLE
                     waterAlarmIcon.visibility = View.VISIBLE
                 }

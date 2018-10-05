@@ -18,7 +18,7 @@ import hanmo.com.drinkingwaterassistant.lockscreen.util.LockScreen
 import hanmo.com.drinkingwaterassistant.main.MainFragment
 import hanmo.com.drinkingwaterassistant.realm.RealmHelper
 import hanmo.com.drinkingwaterassistant.util.DLog
-import hanmo.com.drinkingwaterassistant.util.FragmentEventsBus
+import hanmo.com.drinkingwaterassistant.util.SettingsFragmentEventsBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
@@ -50,7 +50,7 @@ class SettingsFragment : Fragment() {
             RevealAnimationUtil.registerStartRevealAnimation(rootView, ContextCompat.getColor(context!!, R.color.mainColor), ContextCompat.getColor(context!!, R.color.whiteColor), object : AnimationFinishedListener {
                 override fun onAnimationFinished() {
                     if (!MainFragment.possibleDeleteItem) {
-                        FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED)
+                        SettingsFragmentEventsBus.postFragmentAction(SettingsFragmentEventsBus.ACTION_FRAGMENT_START_ANIMATION_FINISHED)
                         setLockscreenSwitch()
                     }
                 }
@@ -120,19 +120,21 @@ class SettingsFragment : Fragment() {
                     .filter { isEnabled }
                     .doOnNext {
                         reverseAnimationSpeed()
-                        settingsCloseButton.playAnimation()
-                        settingsCloseButton.isEnabled = false
+                        playAnimation()
+                        isEnabled = false
                     }
                     .subscribe {
-                        FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_DESTROYED)
+                        SettingsFragmentEventsBus.postFragmentAction(SettingsFragmentEventsBus.ACTION_FRAGMENT_DESTROYED)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             RevealAnimationUtil.registerExitRevealAnimation(view, ContextCompat.getColor(context!!, R.color.mainColor), ContextCompat.getColor(context!!, R.color.whiteColor), object : AnimationFinishedListener {
                                 override fun onAnimationFinished() {
-                                    DLog.e("animation Close")
-                                    FragmentEventsBus.instance.postFragmentAction(FragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED)
+                                    DLog.e("fade reveal animation Finished")
+                                    SettingsFragmentEventsBus.postFragmentAction(SettingsFragmentEventsBus.ACTION_FRAGMENT_END_ANIMATION_FINISHED)
                                     activity?.run { supportFragmentManager.beginTransaction().remove(this@SettingsFragment).commitAllowingStateLoss() }
                                 }
                             })
+                        } else {
+                            activity?.run { supportFragmentManager.beginTransaction().remove(this@SettingsFragment).commitAllowingStateLoss() }
                         }
                     }.apply { compositeDisposable.add(this) }
         }

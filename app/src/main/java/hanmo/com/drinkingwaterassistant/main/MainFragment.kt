@@ -10,6 +10,7 @@ import android.os.SystemClock
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
+import android.support.v4.util.Pair
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -172,27 +173,22 @@ class MainFragment : Fragment() {
 
     private fun setMyTargetButton() {
         view?.run {
-            val intent = MyTargetWaterActivity.newIntent(activity)
-            val logoImage = findViewById<LottieAnimationView>(R.id.myTargetImage)
-            val typeImage = findViewById<ImageView>(R.id.waterTypeIcon)
-            val todayTextHolder = findViewById<TextView>(R.id.waterGoal)
-            val logoImagePair = android.support.v4.util.Pair.create(logoImage as View, "tImage")
-            val typeImagePair = android.support.v4.util.Pair.create(typeImage as View, "typeImage")
-            val targetTextPair = android.support.v4.util.Pair.create(todayTextHolder as View, "tName")
+            val myTargetIntent = MyTargetWaterActivity.newIntent(mContext)
+            val logoImagePair = Pair.create(myTargetImage as View, "logoImage")
+            val typeImagePair = Pair.create(waterTypeIcon as View, "typeImage")
+            val targetTextPair = Pair.create(waterGoal as View, "waterText")
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, logoImagePair, targetTextPair, typeImagePair)
 
             myTargetButton.clicks()
                     .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .subscribe {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            ActivityCompat.startActivity(activity!!, intent, options.toBundle())
+                            ActivityCompat.startActivity(mContext, myTargetIntent, options.toBundle())
                         } else {
-                            startActivity(intent)
+                            startActivity(myTargetIntent)
                         }
-
                     }
                     .apply { compositeDisposable.add(this) }
-
         }
     }
 
@@ -242,9 +238,11 @@ class MainFragment : Fragment() {
                 } else {
                     mainLayout.setBackgroundResource(R.drawable.gradient_animation_list)
                     val animationDrawable = mainLayout.background as AnimationDrawable
-                    animationDrawable.setEnterFadeDuration(3000)
-                    animationDrawable.setExitFadeDuration(3000)
-                    animationDrawable.start()
+                    with(animationDrawable) {
+                        setEnterFadeDuration(3000)
+                        setExitFadeDuration(3000)
+                        start()
+                    }
                     todayLeftWaterText.text = "0ml"
                 }
             }

@@ -23,7 +23,7 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_gravity="center|top"
-            android:transitionName="tImage"
+            android:transitionName="logoImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
@@ -104,10 +104,9 @@
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
                     android:layout_marginEnd="20dp"
-                    android:textColorHint="#BDBDBD"
+                    android:textColorHint="@color/textHintColor"
                     android:textSize="14sp"
-                    android:transitionName="tName"
-                    tools:targetApi="lollipop" />
+                    android:transitionName="waterText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -284,7 +283,7 @@
         android:id="@+id/myTargetConfirmButton"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="45dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
         android:background="@drawable/bg_target_confirm_button"

@@ -183,7 +183,7 @@ class LockScreenActivity : AppCompatActivity() {
             override fun onAdLoaded() {
                 super.onAdLoaded()
                 DLog.e("Admob loaded")
-                adView.visibility = View.VISIBLE
+                //adView.visibility = View.VISIBLE
             }
 
             override fun onAdClicked() {

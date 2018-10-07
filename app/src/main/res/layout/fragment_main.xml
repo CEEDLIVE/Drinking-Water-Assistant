@@ -69,14 +69,13 @@
 
                 <TextView
                     android:id="@+id/waterGoal"
-                    android:transitionName="tName"
+                    android:transitionName="waterText"
                     android:fontFamily="@font/nanumbareunpen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="3dp"
                     android:textColor="@color/whiteColor"
-                    android:textSize="18sp"
-                    tools:targetApi="lollipop" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:fontFamily="@font/nanumbareunpen"
@@ -228,15 +227,14 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/myTargetImage"
-            android:transitionName="tImage"
+            android:transitionName="logoImage"
             android:layout_gravity="center|top"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
             app:lottie_autoPlay="true"
             app:lottie_fileName="wales.json"
-            app:lottie_loop="true"
-            tools:targetApi="lollipop" />
+            app:lottie_loop="true" />
 
         <TextView
             android:layout_width="wrap_content"

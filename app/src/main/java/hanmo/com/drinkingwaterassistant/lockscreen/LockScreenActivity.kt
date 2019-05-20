@@ -159,13 +159,16 @@ class LockScreenActivity : AppCompatActivity() {
     private fun setWaterType() {
         when(waterTable?.waterType) {
             Const.type200 -> {
-                waterTypeImage.setImageResource(R.drawable.water_type_01)
+//                waterTypeImage.setImageResource(R.drawable.water_type_01)
+                waterTypeImage.setImageResource(R.drawable.click_water_alarm)
             }
             Const.type300 -> {
-                waterTypeImage.setImageResource(R.drawable.water_type_03)
+//                waterTypeImage.setImageResource(R.drawable.water_type_03)
+                waterTypeImage.setImageResource(R.drawable.click_water_alarm)
             }
             Const.type500 -> {
-                waterTypeImage.setImageResource(R.drawable.water_type_02)
+//                waterTypeImage.setImageResource(R.drawable.water_type_02)
+                waterTypeImage.setImageResource(R.drawable.click_water_alarm)
             }
         }
     }
@@ -346,7 +349,8 @@ class LockScreenActivity : AppCompatActivity() {
 
     private fun setBackground() {
         lockscreenTable?.run{
-            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.image15)
+//            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.image15)
+            if (background?.isEmpty()!!) lockScreenView.setBackgroundResource(R.drawable.click_water_alarm)
             else {
                 if (hasDrawable!!) {
                     val backgroundImage =  Background(background!!).getImageResourceId(applicationContext)
@@ -359,7 +363,8 @@ class LockScreenActivity : AppCompatActivity() {
 
             }
         } ?: kotlin.run {
-            lockScreenView.setBackgroundResource(R.drawable.image15)
+//            lockScreenView.setBackgroundResource(R.drawable.image15)
+            lockScreenView.setBackgroundResource(R.drawable.click_water_alarm)
         }
 
     }

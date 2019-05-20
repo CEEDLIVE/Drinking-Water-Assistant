@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- android:src="@drawable/cancel" -->
     <ImageButton
         android:id="@+id/cancelButton"
         android:layout_width="40dp"
@@ -28,7 +29,7 @@
         android:background="@android:color/transparent"
         android:padding="5dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/cancel"
+        android:src="@drawable/click_water_alarm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

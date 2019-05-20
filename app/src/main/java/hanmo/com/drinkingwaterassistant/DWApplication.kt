@@ -109,7 +109,8 @@ class DWApplication : MultiDexApplication() {
             return this
         } ?: kotlin.run {
             val sAnalytics = GoogleAnalytics.getInstance(this@DWApplication)
-            return sAnalytics.newTracker(R.xml.global_tracker)
+//            return sAnalytics.newTracker(R.xml.global_tracker)
+            return sAnalytics.newTracker(R.xml.leak_canary_file_paths)
         }
     }
 

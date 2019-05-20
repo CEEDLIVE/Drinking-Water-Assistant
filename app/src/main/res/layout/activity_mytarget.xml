@@ -159,9 +159,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
+                    <!-- android:src="@drawable/water_type_01" -->
                     <ImageView
                         android:id="@+id/waterType200"
-                        android:src="@drawable/water_type_01"
+                        android:src="@drawable/click_water_alarm"
                         android:scaleType="centerCrop"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
@@ -175,9 +176,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
+                    <!-- android:src="@drawable/checkmark" -->
                     <ImageView
                         android:id="@+id/waterType200checkmark"
-                        android:src="@drawable/checkmark"
+                        android:src="@drawable/click_water_alarm"
                         android:scaleType="centerCrop"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />
@@ -192,9 +194,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
+                    <!-- android:src="@drawable/water_type_03" -->
                     <ImageView
                         android:id="@+id/waterType300"
-                        android:src="@drawable/water_type_03"
+                        android:src="@drawable/click_water_alarm"
                         android:scaleType="centerCrop"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
@@ -208,9 +211,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
+                    <!-- android:src="@drawable/checkmark" -->
                     <ImageView
                         android:id="@+id/waterType300checkmark"
-                        android:src="@drawable/checkmark"
+                        android:src="@drawable/click_water_alarm"
                         android:scaleType="centerCrop"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />
@@ -225,9 +229,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
+                    <!-- android:src="@drawable/water_type_02" -->
                     <ImageView
                         android:id="@+id/waterType500"
-                        android:src="@drawable/water_type_02"
+                        android:src="@drawable/click_water_alarm"
                         android:scaleType="centerCrop"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
@@ -241,9 +246,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
+                    <!-- android:src="@drawable/checkmark" -->
                     <ImageView
                         android:id="@+id/waterType500checkmark"
-                        android:src="@drawable/checkmark"
+                        android:src="@drawable/click_water_alarm"
                         android:scaleType="centerCrop"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />

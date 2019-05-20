@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- android:background="@drawable/transparent" -->
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/transparent"
+    android:background="@drawable/bg_percent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- android:background="@drawable/transparent" -->
     <com.john.waveview.WaveView
         xmlns:wave="http://schemas.android.com/apk/res-auto"
         android:id="@+id/waveView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/transparent"
+        android:background="@drawable/bg_percent"
         wave:above_wave_color="@color/waveMainColor"
         wave:blow_wave_color="@color/wavesubColor"
         wave:wave_height="little"
         wave:wave_hz="normal"
         wave:wave_length="middle" />
 
+    <!-- android:background="@drawable/image15" -->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/lockScreenView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/image15"
+        android:background="@drawable/bg_percent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -106,9 +109,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
+                    <!-- android:src="@drawable/water_type_01" -->
                     <ImageView
                         android:id="@+id/waterTypeImage"
-                        android:src="@drawable/water_type_01"
+                        android:src="@drawable/click_water_alarm"
                         android:scaleType="centerCrop"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
@@ -238,6 +242,9 @@
                 progress:progressStrokeWidth="5dp"
                 progress:textColor="@android:color/transparent" />-->
 
+            <!-- android:indeterminateDrawable="@drawable/indeterminate_progress" -->
+            <!-- android:progressDrawable="@drawable/circular_progress_bar" -->
+            <!-- android:background="@drawable/circle_shape" -->
             <ProgressBar
                 android:id="@+id/waterProgressbar"
                 android:layout_width="280dp"
@@ -245,16 +252,17 @@
                 android:layoutDirection="rtl"
                 android:progress="40"
                 android:indeterminate="false"
-                android:indeterminateDrawable="@drawable/indeterminate_progress"
-                android:progressDrawable="@drawable/circular_progress_bar"
-                android:background="@drawable/circle_shape"
+                android:indeterminateDrawable="@drawable/water_progressbar"
+                android:progressDrawable="@drawable/custom_progress_primary"
+                android:background="@drawable/bg_percent"
                 style="?android:attr/progressBarStyleHorizontal" />
 
+            <!-- add_water -->
             <ImageView
                 android:id="@+id/addWaterButton"
                 android:layout_gravity="bottom|center_horizontal"
-                android:src="@drawable/add_water"
-                android:background="@drawable/transparent"
+                android:src="@drawable/click_water_alarm"
+                android:background="@drawable/bg_percent"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/addWaterButton" />
@@ -316,12 +324,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/menuButton" />
 
-
+        <!-- android:background="@drawable/transparent" -->
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/transparent"
+            android:background="@drawable/bg_percent"
             app:adSize="SMART_BANNER"
             app:adUnitId="@string/admobBanner"
             app:layout_constraintBottom_toBottomOf="parent"

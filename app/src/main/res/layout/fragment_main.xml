@@ -199,11 +199,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline2">
 
+        <!-- android:src="@drawable/water_settings" -->
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="10dp"
-            android:src="@drawable/water_settings"
+            android:src="@drawable/ic_water_setting"
             android:contentDescription="setting button" />
 
         <TextView

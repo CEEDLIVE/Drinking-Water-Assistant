@@ -26,12 +26,13 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <!-- android:src="@drawable/gallery" -->
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@drawable/gallery"
+                android:src="@drawable/click_water_alarm"
                 android:contentDescription="@string/gallery" />
 
             <TextView

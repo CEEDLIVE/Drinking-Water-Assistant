@@ -49,7 +49,8 @@ class UnLockSwipe : RelativeLayout {
     }
 
     fun reset() {
-        lockedImage?.setImageResource(R.drawable.locked)
+//        lockedImage?.setImageResource(R.drawable.locked)
+        lockedImage?.setImageResource(R.drawable.click_water_custom)
         slideButton?.run {
             DLog.e("call reset!")
             val params = layoutParams as RelativeLayout.LayoutParams
@@ -110,7 +111,8 @@ class UnLockSwipe : RelativeLayout {
 
         if (event.action == MotionEvent.ACTION_DOWN) { //126
             if (event.x >= sliderPosition && event.x < sliderPosition + thumbWidth) {
-                lockedImage?.setImageResource(R.drawable.unlocked)
+//                lockedImage?.setImageResource(R.drawable.unlocked)
+                lockedImage?.setImageResource(R.drawable.click_water_custom)
                 sliding = true
                 initialSlidingX = event.x
                 initialSliderPosition = sliderPosition

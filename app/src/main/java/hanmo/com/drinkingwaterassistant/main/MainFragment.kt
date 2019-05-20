@@ -160,13 +160,16 @@ class MainFragment : Fragment() {
         val waterType = RealmHelper.instance.queryFirst(Goals::class.java)?.waterType
         when(waterType) {
             Const.type200 -> {
-                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_01)
+//                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_01)
+                view?.waterTypeIcon?.setImageResource(R.drawable.click_water_custom)
             }
             Const.type300 -> {
-                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_03)
+//                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_03)
+                view?.waterTypeIcon?.setImageResource(R.drawable.click_water_custom)
             }
             Const.type500 -> {
-                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_02)
+//                view?.waterTypeIcon?.setImageResource(R.drawable.water_type_02)
+                view?.waterTypeIcon?.setImageResource(R.drawable.click_water_custom)
             }
         }
     }
@@ -236,7 +239,8 @@ class MainFragment : Fragment() {
                     todayLeftWaterText.text = "${it.goalWater!! - it.todayWater!!}ml"
                     mainLayout.setBackgroundColor(resources.getColor(R.color.transparent))
                 } else {
-                    mainLayout.setBackgroundResource(R.drawable.gradient_animation_list)
+//                    mainLayout.setBackgroundResource(R.drawable.gradient_animation_list)
+                    mainLayout.setBackgroundResource(R.drawable.bg_main_list)
                     val animationDrawable = mainLayout.background as AnimationDrawable
                     with(animationDrawable) {
                         setEnterFadeDuration(3000)

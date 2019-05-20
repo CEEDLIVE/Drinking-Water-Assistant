@@ -62,7 +62,8 @@ class DWFirebaseMessagingService : FirebaseMessagingService() {
 
         return NotificationCompat.Builder(context, MyNotificationManager(context).getMainNotificationId())
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-                .setSmallIcon(R.drawable.water_pin_icon)
+//                .setSmallIcon(R.drawable.water_pin_icon)
+                .setSmallIcon(R.drawable.ic_aaaa)
                 .setContentTitle(data["title"])
                 .setContentText(data["subTitle"])
                 .setAutoCancel(true)

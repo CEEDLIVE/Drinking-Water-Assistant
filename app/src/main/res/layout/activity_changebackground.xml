@@ -7,6 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- android:src="@drawable/cancel" -->
+    <!-- android:background="@drawable/transparent" -->
     <ImageButton
         android:id="@+id/cancelButton"
         android:layout_width="40dp"
@@ -15,8 +17,8 @@
         android:scaleType="centerCrop"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/cancel"
-        android:background="@drawable/transparent"
+        android:src="@drawable/bg_mainframe"
+        android:background="@drawable/bg_percent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
